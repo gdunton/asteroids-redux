@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="13.0">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>360</x>
+      <y>290</y>
+      <w>260</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>GameLogic
+--
+Level currentLevel
+list&lt;Asteroid&gt; asteroidList
+Player player
+--
+Initialize()
+Update( float dt )</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>980</x>
+      <y>270</y>
+      <w>200</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>StandardLevel
+--
+GameLogic* parent
+--
+virtual Initialize(parent)
+virtual Complete() = 0
+virtual AsteroidDestroyed(){}</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>720</x>
+      <y>270</y>
+      <w>200</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>Level
+--
+GameLogic* parent
+--
+virtual Initialize(parent)
+virtual Complete() = 0
+virtual AsteroidDestroyed(){}
+virtual Update( float dt ){}</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>950</x>
+      <y>310</y>
+      <w>50</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>10.0;10.0;30.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>110</x>
+      <y>320</y>
+      <w>140</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>MainGameState
+--
+GameLogic* game
+--
+Update( float dt )</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>240</x>
+      <y>340</y>
+      <w>140</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>120.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>610</x>
+      <y>330</y>
+      <w>130</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;110.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Text</id>
+    <coordinates>
+      <x>1010</x>
+      <y>400</y>
+      <w>170</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>StandardLevels track the number of asteroids left in the game</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Text</id>
+    <coordinates>
+      <x>720</x>
+      <y>400</y>
+      <w>100</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>Levels add all the asteroids to the asteroid list</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Text</id>
+    <coordinates>
+      <x>740</x>
+      <y>490</y>
+      <w>170</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>Blank AsteroidDestroyed function allows subclasses to register the events for scoring</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>980</x>
+      <y>470</y>
+      <w>200</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>SingleAsteroidLevel
+--
+GameLogic* parent
+--
+virtual Initialize(parent)
+virtual Complete() = 0
+virtual AsteroidDestroyed(){}</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>910</x>
+      <y>310</y>
+      <w>90</w>
+      <h>220</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;50.0;10.0;50.0;200.0;70.0;200.0</additional_attributes>
+  </element>
+  <element>
+    <id>Text</id>
+    <coordinates>
+      <x>1000</x>
+      <y>600</y>
+      <w>170</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>SingleAsteroid creates a single asteroid that will split into many smaller asteroids not only 2</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Text</id>
+    <coordinates>
+      <x>370</x>
+      <y>430</y>
+      <w>210</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>Update() does usual collision detection on asteroids but also checks whether levels are complete
+Switches levels when finished</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>890</x>
+      <y>710</y>
+      <w>380</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>Asteroid
+--
+Split( numberOfTimes:int ): list&lt;Asteroid&gt;</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Text</id>
+    <coordinates>
+      <x>960</x>
+      <y>790</y>
+      <w>270</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>When splitting the asteroids the list of new asteroids is sent back to the caller to be inserted into the asteroid list</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>950</x>
+      <y>100</y>
+      <w>50</w>
+      <h>240</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>10.0;220.0;10.0;10.0;30.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>980</x>
+      <y>60</y>
+      <w>200</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>BeltLevel
+--
+GameLogic* parent
+--
+virtual Initialize(parent)
+virtual Complete() = 0
+virtual Update( float dt )</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Text</id>
+    <coordinates>
+      <x>990</x>
+      <y>190</y>
+      <w>170</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>BeltLevels track the time in level and dont(?) count score</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>

@@ -1,0 +1,5 @@
+Build/
+Temp/
+.git
+.vs/
+*.suo

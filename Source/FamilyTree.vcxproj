@@ -1,0 +1,234 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Actor\Asteroid.cpp" />
+    <ClCompile Include="Actor\Bullet.cpp" />
+    <ClCompile Include="Actor\CollisionShape.cpp" />
+    <ClCompile Include="Actor\GameEntity.cpp" />
+    <ClCompile Include="Actor\PhysicsObject.cpp" />
+    <ClCompile Include="Actor\Player.cpp" />
+    <ClCompile Include="Actor\Quadtree.cpp" />
+    <ClCompile Include="Content\AudioManager.cpp" />
+    <ClCompile Include="Content\Channel.cpp" />
+    <ClCompile Include="Content\DebugLevel.cpp" />
+    <ClCompile Include="Content\MeteorShowerLevel.cpp" />
+    <ClCompile Include="Content\StandardLevel.cpp" />
+    <ClCompile Include="Content\TextureManager.cpp" />
+    <ClCompile Include="Content\MyWav.cpp" />
+    <ClCompile Include="Content\WaveCallback.cpp" />
+    <ClCompile Include="EventManager\AnimationClock.cpp" />
+    <ClCompile Include="GameMain\ControlScreenState.cpp" />
+    <ClCompile Include="GameMain\GameLogic.cpp" />
+    <ClCompile Include="GameMain\GameOverState.cpp" />
+    <ClCompile Include="GameMain\GamePausedState.cpp" />
+    <ClCompile Include="GameMain\GameStateManager.cpp" />
+    <ClCompile Include="GameMain\Globals.cpp" />
+    <ClCompile Include="GameMain\LevelCompleteState.cpp" />
+    <ClCompile Include="GameMain\LevelStartState.cpp" />
+    <ClCompile Include="GameMain\MainGameState.cpp" />
+    <ClCompile Include="GameMain\MainMenuState.cpp" />
+    <ClCompile Include="Content\Menu.cpp" />
+    <ClCompile Include="Content\MenuItem.cpp" />
+    <ClCompile Include="Graphics\Camera.cpp" />
+    <ClCompile Include="Graphics\DebugFont.cpp" />
+    <ClCompile Include="Graphics\Font.cpp" />
+    <ClCompile Include="Graphics\Model2D.cpp" />
+    <ClCompile Include="Content\ModelManager.cpp" />
+    <ClCompile Include="Graphics\Line.cpp" />
+    <ClCompile Include="EventManager\Timer.cpp" />
+    <ClCompile Include="GameMain\Game.cpp" />
+    <ClCompile Include="Graphics\GraphicsDeviceManager.cpp" />
+    <ClCompile Include="GameMain\Main.cpp" />
+    <ClCompile Include="Graphics\Particle.cpp" />
+    <ClCompile Include="Graphics\ParticleSystem.cpp" />
+    <ClCompile Include="Graphics\Sprite.cpp" />
+    <ClCompile Include="Input\Keyboard.cpp" />
+    <ClCompile Include="Input\KeyboardState.cpp" />
+    <ClCompile Include="UserInterface\Window.cpp" />
+    <ClCompile Include="Utilities\MathTypes.cpp" />
+    <ClCompile Include="Utilities\Functions.cpp" />
+    <ClCompile Include="Utilities\WinWav.cpp" />
+    <ClCompile Include="Utilities\STD.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">STD.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Actor\Asteroid.h" />
+    <ClInclude Include="Actor\Bullet.h" />
+    <ClInclude Include="Actor\CollisionShape.h" />
+    <ClInclude Include="Actor\GameEntity.h" />
+    <ClInclude Include="Actor\PhysicsObject.h" />
+    <ClInclude Include="Actor\Player.h" />
+    <ClInclude Include="Actor\Quadtree.h" />
+    <ClInclude Include="Content\AudioManager.h" />
+    <ClInclude Include="Content\Channel.h" />
+    <ClInclude Include="Content\DebugLevel.h" />
+    <ClInclude Include="Content\Level.h" />
+    <ClInclude Include="Content\MeteorShowerLevel.h" />
+    <ClInclude Include="Content\StandardLevel.h" />
+    <ClInclude Include="Content\TextureManager.h" />
+    <ClInclude Include="Content\MyWav.h" />
+    <ClInclude Include="Content\WaveCallback.h" />
+    <ClInclude Include="EventManager\AnimationClock.h" />
+    <ClInclude Include="GameMain\ControlScreenState.h" />
+    <ClInclude Include="GameMain\GameLogic.h" />
+    <ClInclude Include="GameMain\GameOverState.h" />
+    <ClInclude Include="GameMain\GamePausedState.h" />
+    <ClInclude Include="GameMain\GameState.h" />
+    <ClInclude Include="GameMain\GameStateManager.h" />
+    <ClInclude Include="GameMain\Globals.h" />
+    <ClInclude Include="GameMain\LevelCompleteState.h" />
+    <ClInclude Include="GameMain\LevelStartState.h" />
+    <ClInclude Include="GameMain\MainGameState.h" />
+    <ClInclude Include="GameMain\MainMenuState.h" />
+    <ClInclude Include="Content\Menu.h" />
+    <ClInclude Include="Content\MenuItem.h" />
+    <ClInclude Include="Graphics\Camera.h" />
+    <ClInclude Include="Graphics\DebugFont.h" />
+    <ClInclude Include="Graphics\Font.h" />
+    <ClInclude Include="Graphics\Model2D.h" />
+    <ClInclude Include="Content\ModelManager.h" />
+    <ClInclude Include="Graphics\Line.h" />
+    <ClInclude Include="Debugging\Error.h" />
+    <ClInclude Include="EventManager\Timer.h" />
+    <ClInclude Include="GameMain\Game.h" />
+    <ClInclude Include="Graphics\GraphicsDeviceManager.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="Utilities\Interfaces.h" />
+    <ClInclude Include="Graphics\Particle.h" />
+    <ClInclude Include="Graphics\ParticleSystem.h" />
+    <ClInclude Include="Graphics\Sprite.h" />
+    <ClInclude Include="Input\Keyboard.h" />
+    <ClInclude Include="Input\KeyboardState.h" />
+    <ClInclude Include="UserInterface\Window.h" />
+    <ClInclude Include="UserInterface\WindowsEventListener.h" />
+    <ClInclude Include="Utilities\FastDelegate.h" />
+    <ClInclude Include="Utilities\Functions.h" />
+    <ClInclude Include="Utilities\MathTypes.h" />
+    <ClInclude Include="Utilities\STD.h" />
+    <ClInclude Include="Utilities\templates.h" />
+    <ClInclude Include="Utilities\WinWav.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="icon1.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{88BF65F6-658A-49E5-9063-3455A41703EB}</ProjectGuid>
+    <RootNamespace>FamilyTree</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)..\Build\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IntDir>$(SolutionDir)..\Temp\$(ProjectName)$(PlatformName)$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <TargetName>$(ProjectName)$(PlatformName)$(Configuration)</TargetName>
+    <IncludePath>$(DXSDK_DIR)\Include;$(ProjectDir)Utilities\;D:\Program Files %28x86%29\Visual Leak Detector\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(DXSDK_DIR)\Lib\x86;D:\Program Files %28x86%29\Visual Leak Detector\lib\Win32;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>$(DXSDK_DIR)\Include;$(ProjectDir)Utilities\;$(IncludePath)</IncludePath>
+    <TargetName>Asteroids</TargetName>
+    <IntDir>$(SolutionDir)..\Temp\$(ProjectName)$(PlatformName)$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)..\Build\</OutDir>
+    <LibraryPath>$(DXSDK_DIR)\Lib\x86\;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>D:\Program Files (x86)\Visual Leak Detector\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>STD.h</PrecompiledHeaderFile>
+      <PreprocessorDefinitions>_DEBUG;DEBUG;WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <Profile>true</Profile>
+      <AdditionalDependencies>Winmm.lib;xaudio2.lib;d3d11.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>STD.h</PrecompiledHeaderFile>
+      <PreprocessorDefinitions>RELEASE;WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories />
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+    <Import Project="packages\directxtk_desktop_2015.2017.12.13.1\build\native\directxtk_desktop_2015.targets" Condition="Exists('packages\directxtk_desktop_2015.2017.12.13.1\build\native\directxtk_desktop_2015.targets')" />
+  </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('packages\directxtk_desktop_2015.2017.12.13.1\build\native\directxtk_desktop_2015.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\directxtk_desktop_2015.2017.12.13.1\build\native\directxtk_desktop_2015.targets'))" />
+  </Target>
+</Project>

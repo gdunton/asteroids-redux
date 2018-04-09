@@ -320,11 +320,11 @@ void Player::TickInvulnerability( float dt )
 		}
 
 	default:
-		ASSERTMSG( state != inPulse || state != pulseComplete || state != stopped, "Shouldn't occur" );
 		break;
 	}
 
 	// Set the model color
-	const Color col( 255, 255, 255, alpha );
+	float alphaFactor = static_cast<float>(alpha) / 255.0f;
+	const Color col(1.0f * alphaFactor, 1.0f * alphaFactor, 1.0f * alphaFactor, 1.0f);
 	model->SetColor( col );
 }

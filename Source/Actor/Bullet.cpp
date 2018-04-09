@@ -15,8 +15,8 @@ Bullet::Bullet()
 	lifetime = MAX_LIFETIME;
 }
 
-Bullet::Bullet( const MyVector2& _pos, const MyVector2& _size, float _rot,
-	Model2D* _model, const MyVector2& _velocity )
+Bullet::Bullet( const Vector2& _pos, const Vector2& _size, float _rot,
+	Model2D* _model, const Vector2& _velocity )
 	: PhysicsObject( _pos, _size, _rot, _model, _velocity, 10 )
 {
 	lifetime = 0.0f;

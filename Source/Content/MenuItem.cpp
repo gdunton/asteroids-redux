@@ -8,10 +8,10 @@
 MenuItem::MenuItem()
 {
 	text = "";
-	centerPos = MyVector2(0,0);
+	centerPos = Vector2(0,0);
 }
 
-MenuItem::MenuItem( GameState* parent, MenuSelectDelegate _selectAction, MyVector2 pos,
+MenuItem::MenuItem( GameState* parent, MenuSelectDelegate _selectAction, Vector2 pos,
 				   String _text, int height, String fontName, Color color) : 
 		selectAction( _selectAction ), centerPos( pos ), text( _text )
 {
@@ -30,7 +30,7 @@ void MenuItem::Select()
 
 void MenuItem::Render()
 {
-	MyVector2 size = font.GetTextSize( text );
-	MyVector2 position = centerPos - static_cast<MyVector2>(size / 2);
+	Vector2 size = font.GetTextSize( text );
+	Vector2 position = centerPos - static_cast<Vector2>(size / 2);
 	font.DrawString(text, position);
 }

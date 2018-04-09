@@ -14,7 +14,7 @@ using MathTypes::Rectangle;
 //----------------------------------------------------------------------
 // Vector function definitions
 //----------------------------------------------------------------------
-MyVector2 RotatePoint( const MyVector2& vec, float angle )
+Vector2 RotatePoint( const Vector2& vec, float angle )
 {
 	// Rotate the vec around the origin by the angle
 	angle = -angle;
@@ -22,20 +22,20 @@ MyVector2 RotatePoint( const MyVector2& vec, float angle )
 	float s = sin(angle);
 	float c = cos(angle);
 
-	MyVector2 final(0, 0);
+	Vector2 final(0, 0);
 	final.x = ((vec.x * c) - (vec.y * s));
 	final.y = ((vec.x * s) + (vec.y * c));
 
 	return final;
 }
 
-float distanceBetween( const MyVector2& point1, const MyVector2& point2 )
+float distanceBetween( const Vector2& point1, const Vector2& point2 )
 {
-	MyVector2 from = point1 - point2;
+	Vector2 from = point1 - point2;
 	return from.Length();
 }
 
-float distanceSquared( const MyVector2& p1, const MyVector2& p2 )
+float distanceSquared( const Vector2& p1, const Vector2& p2 )
 {
 	float dx = p2.x - p1.x;
 	float dy = p2.y - p1.y;
@@ -43,23 +43,23 @@ float distanceSquared( const MyVector2& p1, const MyVector2& p2 )
 	return dx*dx + dy*dy;
 }
 
-float Length( const MyVector2& vector )
+float Length( const Vector2& vector )
 {
 	return vector.Length();
 }
 
-float LengthSquared( const MyVector2& vector )
+float LengthSquared( const Vector2& vector )
 {
 	return (vector.x * vector.x) + (vector.y * vector.y);
 }
 
-void Normalize( MyVector2& vec )
+void Normalize( Vector2& vec )
 {
 	float length = vec.Length();
 	vec /= length;
 }
 
-float Dot( const MyVector2& point1, const MyVector2& point2 )
+float Dot( const Vector2& point1, const Vector2& point2 )
 {
 	return point1.Dot(point2);
 }
@@ -67,7 +67,7 @@ float Dot( const MyVector2& point1, const MyVector2& point2 )
 //-------------------------------------------------------
 // World wrap math functions
 //-------------------------------------------------------
-void WrapVector2( int width, int height, MyVector2& pos )
+void WrapVector2( int width, int height, Vector2& pos )
 {
 	// Force the player to wrap around the world
 	// Check that the position doesn't wrap around the screen
@@ -86,8 +86,8 @@ void WrapVector2( int width, int height, MyVector2& pos )
 	}	
 }
 
-void GetShortestWrappedDistance( const MyVector2& p1, const MyVector2& p2, 
-	const int worldW, const int worldH, MyVector2& out )
+void GetShortestWrappedDistance( const Vector2& p1, const Vector2& p2, 
+	const int worldW, const int worldH, Vector2& out )
 {
 	// Get the half distances
 	double hWH = worldH / 2;
@@ -118,7 +118,7 @@ bool MathTypes::Rectangle::Intersects( const Circle& circle ) const
 bool MathTypes::Rectangle::Contains( const Circle& circle ) const
 {
 	// is circle within a rectangle shrunk by the radius of the circle
-	MyVector2 pos = circle.position - position;
+	Vector2 pos = circle.position - position;
 	if( (pos.x - circle.radius) >= 0 && (pos.x + circle.radius) <= size.x &&
 		(pos.y - circle.radius) >= 0 && (pos.y + circle.radius) <= size.y )
 	{
@@ -133,7 +133,7 @@ bool MathTypes::Rectangle::Contains( const Circle& circle ) const
 void MathTypes::Rectangle::Draw( Camera& camera )
 {
 	World world;
-	world.pos = position + static_cast<MyVector2>(size / 2);
+	world.pos = position + static_cast<Vector2>(size / 2);
 	world.rot = 0;
 	world.scale = size / 2.0f;
 	ModelManager::GetModel("Quad")->Render(camera, world);

@@ -10,8 +10,8 @@
 class Camera
 {
 private:
-	MyVector2 center;
-	MyVector2 size;
+	Vector2 center;
+	Vector2 size;
 
 	// The window client dimensions
 	int windowWidth;
@@ -21,19 +21,19 @@ public:
 	Camera();
 	~Camera();
 
-	void Initialize( const MyVector2& center, const MyVector2& size, const int windowWidth, const int windowHeight );
+	void Initialize( const Vector2& center, const Vector2& size, const int windowWidth, const int windowHeight );
 
 	// Takes world position and outputs a point with coords in the client dimensions
-	MyVector2 ConvertWorldToScreenPos( const MyVector2& worldPos ) const;
+	Vector2 ConvertWorldToScreenPos( const Vector2& worldPos ) const;
 
 	// Get rectangle to help find objects in camera view
 	MathTypes::Rectangle GetScreenRect() const;
 
-	const MyVector2& GetCenter() const { return center; }
-	const MyVector2& GetSize() const { return size; }
+	const Vector2& GetCenter() const { return center; }
+	const Vector2& GetSize() const { return size; }
 
-	void SetCenter( const MyVector2& _center ) { center = _center; }
-	void SetSize( const MyVector2& _size ) { size = _size; }
+	void SetCenter( const Vector2& _center ) { center = _center; }
+	void SetSize( const Vector2& _size ) { size = _size; }
 };
 
 #endif

@@ -52,16 +52,16 @@ void GameLogic::Initialize(Game* _game)
 	lifeModel = ModelManager::GetModel( "Player" );
 	
 	// Initialize the player
-	player = Player( MyVector2( 0, 0 ), MyVector2( 2, 3 ), 0,  
-		ModelManager::GetInstance().GetModel("PlayerAlt"), MyVector2(0,0), 5, 
+	player = Player( Vector2( 0, 0 ), Vector2( 2, 3 ), 0,  
+		ModelManager::GetInstance().GetModel("PlayerAlt"), Vector2(0,0), 5, 
 		WORLD_WIDTH, WORLD_HEIGHT);
 
 	// Initialize the quad tree
-	quadtree.Initialize( NULL, MathTypes::Rectangle(MyVector2(-(float)WORLD_WIDTH / 2, -(float)WORLD_HEIGHT / 2), 
-		MyVector2(WORLD_WIDTH,WORLD_HEIGHT)), 0 );
+	quadtree.Initialize( NULL, MathTypes::Rectangle(Vector2(-(float)WORLD_WIDTH / 2, -(float)WORLD_HEIGHT / 2), 
+		Vector2(WORLD_WIDTH,WORLD_HEIGHT)), 0 );
 
-	worldArea = MathTypes::Rectangle( MyVector2( -WORLD_WIDTH - (WORLD_WIDTH / 2), -WORLD_HEIGHT - (WORLD_HEIGHT / 2) ),
-		MyVector2( WORLD_WIDTH * 3, WORLD_HEIGHT * 3 ) );
+	worldArea = MathTypes::Rectangle( Vector2( -WORLD_WIDTH - (WORLD_WIDTH / 2), -WORLD_HEIGHT - (WORLD_HEIGHT / 2) ),
+		Vector2( WORLD_WIDTH * 3, WORLD_HEIGHT * 3 ) );
 
 	font.Initialize( 20, false, WHITE);
 }
@@ -125,7 +125,7 @@ void GameLogic::Update( const float dt )
 			{
 				if( bulletArray[j].GetAlive() )
 				{
-					if( bulletArray[j].CheckCollision(*begin, MyVector2(0,0)) )
+					if( bulletArray[j].CheckCollision(*begin, Vector2(0,0)) )
 					{
 						
 
@@ -264,8 +264,8 @@ void GameLogic::Render( bool showLives, bool showLevelNum )
 	{
 		for( int i = 0; i < player.GetLives(); i++ )
 		{
-			MyVector2 pos(15 + (i*20),18);
-			lifeModel->Render( pos, MyVector2(6,6), PI );
+			Vector2 pos(15 + (i*20),18);
+			lifeModel->Render( pos, Vector2(6,6), PI );
 		}
 	}
 
@@ -274,8 +274,8 @@ void GameLogic::Render( bool showLives, bool showLevelNum )
 	{
 		String levelStr;
 		to_String( currentLevel->GetLevelNumber(), 1, levelStr );
-		MyVector2 size = font.GetTextSize( "Level: " + levelStr );
-		MyVector2 pos( (WINDOW_WIDTH/2) - (size.x/2), 7 );
+		Vector2 size = font.GetTextSize( "Level: " + levelStr );
+		Vector2 pos( (WINDOW_WIDTH/2) - (size.x/2), 7 );
 		font.DrawString( "Level: " + levelStr, pos );
 	}
 

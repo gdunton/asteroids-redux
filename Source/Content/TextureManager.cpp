@@ -42,13 +42,13 @@ Texture* TextureManager::GetTexture( const String& name )
 	return m_textureMap[name].view;
 }
 
-MyVector2 TextureManager::GetDimensions(const String& name) 
+Vector2 TextureManager::GetDimensions(const String& name) 
 {
 	D3D11_TEXTURE2D_DESC desc;
 	ZeroMemory(&desc, sizeof(desc));
 	m_textureMap[name].texture->GetDesc(&desc);
 
-	return MyVector2(desc.Width, desc.Height);
+	return Vector2(desc.Width, desc.Height);
 }
 
 void TextureManager::CreateTransparencyRect()

@@ -17,7 +17,7 @@ typedef fastdelegate::FastDelegate0<> MenuSelectDelegate;
 class MenuItem
 {
 private:
-	MyVector2 centerPos;
+	Vector2 centerPos;
 	String text;
 	Font font;
 
@@ -28,7 +28,7 @@ public:
 
 	MenuItem();
 	MenuItem( GameState* parent, MenuSelectDelegate _selectAction, 
-		MyVector2 strinCenterPos, String _text, int height, String fontName, Color color);
+		Vector2 strinCenterPos, String _text, int height, String fontName, Color color);
 	~MenuItem();
 
 	// Calls the delegate
@@ -37,7 +37,7 @@ public:
 	// Draw the string to screen
 	void Render();
 
-	MyVector2 GetPosition() { return centerPos; }
+	Vector2 GetPosition() { return centerPos; }
 };
 
 #endif

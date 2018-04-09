@@ -24,11 +24,11 @@ LevelStartState::LevelStartState( GameStateManager* _parent )
 	countDownText = "3";
 
 	// calculate the position of the text on screen
-	MyVector2 size = font.GetTextSize( onScreenText );
-	textPosition = MyVector2( (WINDOW_WIDTH / 2) - (size.x / 2), 
+	Vector2 size = font.GetTextSize( onScreenText );
+	textPosition = Vector2( (WINDOW_WIDTH / 2) - (size.x / 2), 
 		(WINDOW_HEIGHT / 2) - (size.y / 2) - 50 );
 	size = font.GetTextSize( countDownText );
-	countDownPos = MyVector2( (WINDOW_WIDTH / 2) - (size.x / 2), 
+	countDownPos = Vector2( (WINDOW_WIDTH / 2) - (size.x / 2), 
 		(WINDOW_HEIGHT / 2) - (size.y / 2) - 20 );
 
 }
@@ -66,7 +66,7 @@ void LevelStartState::Render()
 	parent->GetGameLogic().Render();
 
 	// Darken the level using the transparent sprite
-	background.Draw( MyVector2(0, 0), MyVector2(WINDOW_WIDTH, WINDOW_HEIGHT), 0.6f );
+	background.Draw( Vector2(0, 0), Vector2(WINDOW_WIDTH, WINDOW_HEIGHT), 0.6f );
 
 	// Draw the text onto the window
 	font.DrawString( onScreenText, textPosition );

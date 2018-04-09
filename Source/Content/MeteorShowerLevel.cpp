@@ -29,7 +29,7 @@ void MeteorShowerLevel::Initialize()
 	// Create the camera
 	std::vector<Camera>& cameras = parent->GetCameras();
 	cameras.push_back( Camera() );
-	cameras[0].Initialize( MyVector2( 0, 0 ), MyVector2( WORLD_WIDTH*0.99f, WORLD_HEIGHT*0.985f ), WINDOW_WIDTH, WINDOW_HEIGHT );		 // Center-Center
+	cameras[0].Initialize( Vector2( 0, 0 ), Vector2( WORLD_WIDTH*0.99f, WORLD_HEIGHT*0.985f ), WINDOW_WIDTH, WINDOW_HEIGHT );		 // Center-Center
 
 	int numAsteroids = MIN_ASTEROIDS_PER_COUNTDOWN + Random() * 
 		(MAX_ASTEROIDS_PER_COUNTDOWN - MIN_ASTEROIDS_PER_COUNTDOWN) * 4;
@@ -88,7 +88,7 @@ void MeteorShowerLevel::Update( float dt )
 
 void MeteorShowerLevel::CreateAsteroid( Asteroid& asteroid )
 {
-	MyVector2 pos = MyVector2( 
+	Vector2 pos = Vector2( 
 				Random( (WORLD_WIDTH/2) + 30 , WORLD_WIDTH + WORLD_WIDTH/2), 
 				Random( -WORLD_HEIGHT/2, WORLD_HEIGHT/2 ) );
 	float rot = Random( -PI, PI );
@@ -109,7 +109,7 @@ void MeteorShowerLevel::CreateAsteroid( Asteroid& asteroid )
 
 	float maxVelY = WORLD_HEIGHT/2 - 20;
 	float minVelY = -WORLD_WIDTH / 2 + 20;
-	MyVector2 vel = MyVector2( -WORLD_WIDTH/2, minVelY + Random() * (maxVelY - minVelY) );
+	Vector2 vel = Vector2( -WORLD_WIDTH/2, minVelY + Random() * (maxVelY - minVelY) );
 	vel -= pos;
 	Normalize( vel );
 	vel *= Random(2, 20);

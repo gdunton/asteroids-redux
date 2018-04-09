@@ -21,8 +21,8 @@ private:
 
 public:
 	Asteroid();
-	Asteroid(const MyVector2& pos, const float& size, float rot, Model2D* model, 
-		const MyVector2& velocity, float mass, int health );
+	Asteroid(const Vector2& pos, const float& size, float rot, Model2D* model, 
+		const Vector2& velocity, float mass, int health );
 
 	void Update( float dt );
 	void Render( Camera& camera ) const;

@@ -16,7 +16,7 @@ public:
 
 public:
 	Texture* GetTexture( const String& name );
-	MyVector2 GetDimensions( const String& name );
+	Vector2 GetDimensions( const String& name );
 
 protected:
 	TextureManager();

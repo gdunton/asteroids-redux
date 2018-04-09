@@ -22,15 +22,15 @@ void DebugLevel::Initialize()
 	{
 		cameras.push_back( Camera() );
 	}
-	cameras[0].Initialize( MyVector2( 0, 0 ), MyVector2( WORLD_WIDTH*0.99f, WORLD_HEIGHT*0.985f ), WINDOW_WIDTH, WINDOW_HEIGHT );		 // Center-Center
-	cameras[1].Initialize( MyVector2( -WORLD_WIDTH, 0 ), MyVector2( WORLD_WIDTH*0.99f, WORLD_HEIGHT*0.985f ), WINDOW_WIDTH, WINDOW_HEIGHT );	 // Left-Center
-	cameras[2].Initialize( MyVector2( WORLD_WIDTH, 0 ), MyVector2( WORLD_WIDTH*0.99f, WORLD_HEIGHT*0.985f ), WINDOW_WIDTH, WINDOW_HEIGHT );	 // Right-Center
-	cameras[3].Initialize( MyVector2( -WORLD_WIDTH, WORLD_HEIGHT ), MyVector2( WORLD_WIDTH*0.99f, WORLD_HEIGHT*0.985f ), WINDOW_WIDTH, WINDOW_HEIGHT ); // Left-Top
-	cameras[4].Initialize( MyVector2( 0, WORLD_HEIGHT ), MyVector2( WORLD_WIDTH*0.99f, WORLD_HEIGHT*0.985f ), WINDOW_WIDTH, WINDOW_HEIGHT );    // Center-Top
-	cameras[5].Initialize( MyVector2( WORLD_WIDTH, WORLD_HEIGHT ), MyVector2( WORLD_WIDTH*0.99f, WORLD_HEIGHT*0.985f ), WINDOW_WIDTH, WINDOW_HEIGHT );  // Right-Top
-	cameras[6].Initialize( MyVector2( -WORLD_WIDTH, -WORLD_HEIGHT ), MyVector2( WORLD_WIDTH*0.99f, WORLD_HEIGHT*0.985f ), WINDOW_WIDTH, WINDOW_HEIGHT );// Left-Bottom
-	cameras[7].Initialize( MyVector2( 0, -WORLD_HEIGHT ), MyVector2( WORLD_WIDTH*0.99f, WORLD_HEIGHT*0.985f ), WINDOW_WIDTH, WINDOW_HEIGHT );	 // Center-Bottom
-	cameras[8].Initialize( MyVector2( WORLD_WIDTH, -WORLD_HEIGHT ), MyVector2( WORLD_WIDTH*0.99f, WORLD_HEIGHT*0.985f ), WINDOW_WIDTH, WINDOW_HEIGHT ); // Right-Bottom
+	cameras[0].Initialize( Vector2( 0, 0 ), Vector2( WORLD_WIDTH*0.99f, WORLD_HEIGHT*0.985f ), WINDOW_WIDTH, WINDOW_HEIGHT );		 // Center-Center
+	cameras[1].Initialize( Vector2( -WORLD_WIDTH, 0 ), Vector2( WORLD_WIDTH*0.99f, WORLD_HEIGHT*0.985f ), WINDOW_WIDTH, WINDOW_HEIGHT );	 // Left-Center
+	cameras[2].Initialize( Vector2( WORLD_WIDTH, 0 ), Vector2( WORLD_WIDTH*0.99f, WORLD_HEIGHT*0.985f ), WINDOW_WIDTH, WINDOW_HEIGHT );	 // Right-Center
+	cameras[3].Initialize( Vector2( -WORLD_WIDTH, WORLD_HEIGHT ), Vector2( WORLD_WIDTH*0.99f, WORLD_HEIGHT*0.985f ), WINDOW_WIDTH, WINDOW_HEIGHT ); // Left-Top
+	cameras[4].Initialize( Vector2( 0, WORLD_HEIGHT ), Vector2( WORLD_WIDTH*0.99f, WORLD_HEIGHT*0.985f ), WINDOW_WIDTH, WINDOW_HEIGHT );    // Center-Top
+	cameras[5].Initialize( Vector2( WORLD_WIDTH, WORLD_HEIGHT ), Vector2( WORLD_WIDTH*0.99f, WORLD_HEIGHT*0.985f ), WINDOW_WIDTH, WINDOW_HEIGHT );  // Right-Top
+	cameras[6].Initialize( Vector2( -WORLD_WIDTH, -WORLD_HEIGHT ), Vector2( WORLD_WIDTH*0.99f, WORLD_HEIGHT*0.985f ), WINDOW_WIDTH, WINDOW_HEIGHT );// Left-Bottom
+	cameras[7].Initialize( Vector2( 0, -WORLD_HEIGHT ), Vector2( WORLD_WIDTH*0.99f, WORLD_HEIGHT*0.985f ), WINDOW_WIDTH, WINDOW_HEIGHT );	 // Center-Bottom
+	cameras[8].Initialize( Vector2( WORLD_WIDTH, -WORLD_HEIGHT ), Vector2( WORLD_WIDTH*0.99f, WORLD_HEIGHT*0.985f ), WINDOW_WIDTH, WINDOW_HEIGHT ); // Right-Bottom
 
 	parent->GetPlayer().Reset();
 }

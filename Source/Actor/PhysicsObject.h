@@ -21,10 +21,10 @@ protected:
 	CollisionShape collision;
 
 public:
-	MyVector2 velocity;
-	PhysicsObject() : GameEntity(), velocity( MyVector2( 0, 0 ) ), mass( 0.0f ){ }
-	PhysicsObject( const MyVector2& pos, const MyVector2& size, float rot,
-		Model2D* model, const MyVector2& velocity, float mass );
+	Vector2 velocity;
+	PhysicsObject() : GameEntity(), velocity( Vector2( 0, 0 ) ), mass( 0.0f ){ }
+	PhysicsObject( const Vector2& pos, const Vector2& size, float rot,
+		Model2D* model, const Vector2& velocity, float mass );
 
 	virtual void Update( float dt ) = 0;
 
@@ -33,11 +33,11 @@ public:
 
 	// Deternine whether object intersects another asteroid
 	// returns true if collision occured
-	bool CheckCollision( PhysicsObject& object, MyVector2& minTranslation );
+	bool CheckCollision( PhysicsObject& object, Vector2& minTranslation );
 
 	// Moves two physicsObjects apart by minTranslation but takes into account
 	// whether the world wraps around
-	void AdvancedMoveApart( PhysicsObject& ob, MyVector2& minTranslation );
+	void AdvancedMoveApart( PhysicsObject& ob, Vector2& minTranslation );
 
 	// Both asteroids will then be moved outside of each other 
 	// and their velocities will be recalculated
@@ -46,7 +46,7 @@ public:
 	// Accessors
 	virtual MathTypes::Circle GetCircle() const;
 
-	MyVector2 GetVelocity() const { return velocity; }
+	Vector2 GetVelocity() const { return velocity; }
 	float GetMass() const { return mass; }
 };
 

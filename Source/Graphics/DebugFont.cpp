@@ -13,7 +13,7 @@ DebugFont::DebugFont()
 	font.Initialize(20, false, WHITE);
 }
 
-void DebugFont::DrawString( String text, MyVector2 position )
+void DebugFont::DrawString( String text, Vector2 position )
 {
 	DebugFont::GetInstance().font.DrawString( text, position );
 }

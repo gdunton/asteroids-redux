@@ -25,7 +25,7 @@ GameOverState::GameOverState( GameStateManager* _parent ) :
 	items->push_back( MenuItem(
 		this, 
 		fastdelegate::MakeDelegate(this, &GameOverState::SelectRestartGame), 
-		MyVector2(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2), 
+		Vector2(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2), 
 		"Restart",
 		20,
 		"Ariel",
@@ -33,7 +33,7 @@ GameOverState::GameOverState( GameStateManager* _parent ) :
 	items->push_back( MenuItem(
 		this, 
 		fastdelegate::MakeDelegate(this, &GameOverState::SelectMainMenu), 
-		MyVector2(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 + 40), 
+		Vector2(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 + 40), 
 		"Main Menu",
 		20,
 		"Ariel",
@@ -68,14 +68,14 @@ void GameOverState::Render()
 	parent->GetGameLogic().Render(false, false);
 
 	// Darken the game
-	background.Draw(MyVector2(0, 0), MyVector2(WINDOW_WIDTH, WINDOW_HEIGHT), 0.7f);
+	background.Draw(Vector2(0, 0), Vector2(WINDOW_WIDTH, WINDOW_HEIGHT), 0.7f);
 
 	// Draw menu
 	menu.Render();
 
 	// Draw the title
-	MyVector2 size = font.GetTextSize( "Game Over" );
-	MyVector2 textPos( (WINDOW_WIDTH / 2) - (size.x / 2), (WINDOW_HEIGHT / 2) - (size.y / 2) - (WINDOW_HEIGHT / 4));
+	Vector2 size = font.GetTextSize( "Game Over" );
+	Vector2 textPos( (WINDOW_WIDTH / 2) - (size.x / 2), (WINDOW_HEIGHT / 2) - (size.y / 2) - (WINDOW_HEIGHT / 4));
 	font.DrawString( "Game Over", textPos );
 }
 

@@ -22,9 +22,9 @@ private:
 	Font font;
 
 	// Variables to show text and position
-	MyVector2 textPosition;
+	Vector2 textPosition;
 	String onScreenText;
-	MyVector2 countDownPos;
+	Vector2 countDownPos;
 	String countDownText;
 
 	const static float INTRO_TIME;

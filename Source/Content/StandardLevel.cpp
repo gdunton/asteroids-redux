@@ -23,15 +23,15 @@ void StandardLevel::Initialize()
 	{
 		cameras.push_back( Camera() );
 	}
-	cameras[0].Initialize( MyVector2( 0, 0 ), MyVector2( WORLD_WIDTH*0.99f, WORLD_HEIGHT*0.985f ), WINDOW_WIDTH, WINDOW_HEIGHT );		 // Center-Center
-	cameras[1].Initialize( MyVector2( -WORLD_WIDTH, 0 ), MyVector2( WORLD_WIDTH*0.99f, WORLD_HEIGHT*0.985f ), WINDOW_WIDTH, WINDOW_HEIGHT );	 // Left-Center
-	cameras[2].Initialize( MyVector2( WORLD_WIDTH, 0 ), MyVector2( WORLD_WIDTH*0.99f, WORLD_HEIGHT*0.985f ), WINDOW_WIDTH, WINDOW_HEIGHT );	 // Right-Center
-	cameras[3].Initialize( MyVector2( -WORLD_WIDTH, WORLD_HEIGHT ), MyVector2( WORLD_WIDTH*0.99f, WORLD_HEIGHT*0.985f ), WINDOW_WIDTH, WINDOW_HEIGHT ); // Left-Top
-	cameras[4].Initialize( MyVector2( 0, WORLD_HEIGHT ), MyVector2( WORLD_WIDTH*0.99f, WORLD_HEIGHT*0.985f ), WINDOW_WIDTH, WINDOW_HEIGHT );    // Center-Top
-	cameras[5].Initialize( MyVector2( WORLD_WIDTH, WORLD_HEIGHT ), MyVector2( WORLD_WIDTH*0.99f, WORLD_HEIGHT*0.985f ), WINDOW_WIDTH, WINDOW_HEIGHT );  // Right-Top
-	cameras[6].Initialize( MyVector2( -WORLD_WIDTH, -WORLD_HEIGHT ), MyVector2( WORLD_WIDTH*0.99f, WORLD_HEIGHT*0.985f ), WINDOW_WIDTH, WINDOW_HEIGHT );// Left-Bottom
-	cameras[7].Initialize( MyVector2( 0, -WORLD_HEIGHT ), MyVector2( WORLD_WIDTH*0.99f, WORLD_HEIGHT*0.985f ), WINDOW_WIDTH, WINDOW_HEIGHT );	 // Center-Bottom
-	cameras[8].Initialize( MyVector2( WORLD_WIDTH, -WORLD_HEIGHT ), MyVector2( WORLD_WIDTH*0.99f, WORLD_HEIGHT*0.985f ), WINDOW_WIDTH, WINDOW_HEIGHT ); // Right-Bottom
+	cameras[0].Initialize( Vector2( 0, 0 ), Vector2( WORLD_WIDTH*0.99f, WORLD_HEIGHT*0.985f ), WINDOW_WIDTH, WINDOW_HEIGHT );		 // Center-Center
+	cameras[1].Initialize( Vector2( -WORLD_WIDTH, 0 ), Vector2( WORLD_WIDTH*0.99f, WORLD_HEIGHT*0.985f ), WINDOW_WIDTH, WINDOW_HEIGHT );	 // Left-Center
+	cameras[2].Initialize( Vector2( WORLD_WIDTH, 0 ), Vector2( WORLD_WIDTH*0.99f, WORLD_HEIGHT*0.985f ), WINDOW_WIDTH, WINDOW_HEIGHT );	 // Right-Center
+	cameras[3].Initialize( Vector2( -WORLD_WIDTH, WORLD_HEIGHT ), Vector2( WORLD_WIDTH*0.99f, WORLD_HEIGHT*0.985f ), WINDOW_WIDTH, WINDOW_HEIGHT ); // Left-Top
+	cameras[4].Initialize( Vector2( 0, WORLD_HEIGHT ), Vector2( WORLD_WIDTH*0.99f, WORLD_HEIGHT*0.985f ), WINDOW_WIDTH, WINDOW_HEIGHT );    // Center-Top
+	cameras[5].Initialize( Vector2( WORLD_WIDTH, WORLD_HEIGHT ), Vector2( WORLD_WIDTH*0.99f, WORLD_HEIGHT*0.985f ), WINDOW_WIDTH, WINDOW_HEIGHT );  // Right-Top
+	cameras[6].Initialize( Vector2( -WORLD_WIDTH, -WORLD_HEIGHT ), Vector2( WORLD_WIDTH*0.99f, WORLD_HEIGHT*0.985f ), WINDOW_WIDTH, WINDOW_HEIGHT );// Left-Bottom
+	cameras[7].Initialize( Vector2( 0, -WORLD_HEIGHT ), Vector2( WORLD_WIDTH*0.99f, WORLD_HEIGHT*0.985f ), WINDOW_WIDTH, WINDOW_HEIGHT );	 // Center-Bottom
+	cameras[8].Initialize( Vector2( WORLD_WIDTH, -WORLD_HEIGHT ), Vector2( WORLD_WIDTH*0.99f, WORLD_HEIGHT*0.985f ), WINDOW_WIDTH, WINDOW_HEIGHT ); // Right-Bottom
 
 	
 	int numAsteroids = 0;
@@ -60,7 +60,7 @@ void StandardLevel::Initialize()
 	// Initialize all of the asteroids 
 	for( int i = 0; i < numAsteroids; ++i )
 	{
-		MyVector2 pos = MyVector2( Random( -100, 100 ), Random( -100, 100 ) );
+		Vector2 pos = Vector2( Random( -100, 100 ), Random( -100, 100 ) );
 		float rot = Random( -PI, PI );
 		// Create the health then base the size, mass and velocity on health
 		float random = Random();
@@ -78,7 +78,7 @@ void StandardLevel::Initialize()
 		float size = sizeScale * (Asteroid::MAX_SIZE - Asteroid::MIN_SIZE) + Asteroid::MIN_SIZE;
 		int mass = sizeScale * (Asteroid::MAX_MASS - Asteroid::MIN_MASS) + Asteroid::MIN_MASS;
 
-		MyVector2 vel = MyVector2( Random( -10, 10 ), Random( -10, 10 ) ); 
+		Vector2 vel = Vector2( Random( -10, 10 ), Random( -10, 10 ) ); 
 		vel *= (2-(sizeScale/2)); // make smaller asteroids faster
 
 		// Pick random model

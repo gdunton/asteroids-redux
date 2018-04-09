@@ -79,12 +79,12 @@ void Menu::Update()
 void Menu::Render()
 {
 	// draw the pointer to symbolize the selected menu item
-	MyVector2 pointerPos1 = (*menuItems)[currentItemIndex].GetPosition();
-	MyVector2 pointerPos2 = pointerPos1;
+	Vector2 pointerPos1 = (*menuItems)[currentItemIndex].GetPosition();
+	Vector2 pointerPos2 = pointerPos1;
 	pointerPos1.x -= pointerOffset;
 	pointerPos2.x += pointerOffset;
-	pointerModel->Render( pointerPos1, MyVector2(7, 7), 0 );
-	pointerModel->Render( pointerPos2, MyVector2(7, 7), 0 );
+	pointerModel->Render( pointerPos1, Vector2(7, 7), 0 );
+	pointerModel->Render( pointerPos2, Vector2(7, 7), 0 );
 
 	// draw all the menu items
 	for (MenuItem& item : *menuItems)

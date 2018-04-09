@@ -26,7 +26,7 @@ GamePausedState::GamePausedState( GameStateManager* parent ) :
 	items->push_back( MenuItem(
 		this,
 		fastdelegate::MakeDelegate( this, &GamePausedState::SelectMainMenu),
-		MyVector2( WINDOW_WIDTH / 2, (WINDOW_HEIGHT / 2) + 30 ),
+		Vector2( WINDOW_WIDTH / 2, (WINDOW_HEIGHT / 2) + 30 ),
 		"Main Menu",
 		20,
 		"Ariel",
@@ -34,7 +34,7 @@ GamePausedState::GamePausedState( GameStateManager* parent ) :
 	items->push_back( MenuItem(
 		this,
 		fastdelegate::MakeDelegate( this, &GamePausedState::SelectContinueGame),
-		MyVector2( WINDOW_WIDTH / 2, (WINDOW_HEIGHT / 2) ),
+		Vector2( WINDOW_WIDTH / 2, (WINDOW_HEIGHT / 2) ),
 		"Return",
 		20,
 		"Ariel",
@@ -83,14 +83,14 @@ void GamePausedState::Render()
 	parent->GetGameLogic().Render();
 
 	// Partialy obscure the game using translucent texture
-	background.Draw( MyVector2(0, 0), MyVector2(WINDOW_WIDTH, WINDOW_HEIGHT), 0.7f );
+	background.Draw( Vector2(0, 0), Vector2(WINDOW_WIDTH, WINDOW_HEIGHT), 0.7f );
 
 	// Draw the menu
 	menu.Render();
 
 	// Render the title
-	MyVector2 size = font.GetTextSize( "Paused" );
-	MyVector2 textPos( (WINDOW_WIDTH / 2) - (size.x / 2), (WINDOW_HEIGHT / 2) - (size.y / 2) - (WINDOW_HEIGHT / 4));
+	Vector2 size = font.GetTextSize( "Paused" );
+	Vector2 textPos( (WINDOW_WIDTH / 2) - (size.x / 2), (WINDOW_HEIGHT / 2) - (size.y / 2) - (WINDOW_HEIGHT / 4));
 	font.DrawString( "Paused", textPos );
 }
 

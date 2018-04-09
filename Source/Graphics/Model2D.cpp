@@ -19,7 +19,7 @@ void Model2D::Render( Camera& camera, const World& world )
 	line.Render( &camera, points, world );
 }
 
-void Model2D::Render( MyVector2& screenPos, MyVector2& scale, float rot )
+void Model2D::Render( Vector2& screenPos, Vector2& scale, float rot )
 {
 	// Object already in screen pos so no need for a camera
 	line.Render( NULL, points, World( screenPos, scale, rot ) );
@@ -27,7 +27,7 @@ void Model2D::Render( MyVector2& screenPos, MyVector2& scale, float rot )
 
 void Model2D::CalculateModelStats()
 {
-	MyVector2 centerTotal = MyVector2(0, 0);
+	Vector2 centerTotal = Vector2(0, 0);
 	float averageRadius = 0;
 
 	// Calculate the average radius from the center
@@ -35,7 +35,7 @@ void Model2D::CalculateModelStats()
 	for( auto begin = points.begin(), end = points.end();
 		begin != end; ++begin )
 	{
-		averageRadius += distanceBetween( MyVector2(0,0), *begin );
+		averageRadius += distanceBetween( Vector2(0,0), *begin );
 		i++;
 	}
 	averageRadius /= i;

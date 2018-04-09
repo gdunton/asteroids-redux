@@ -23,7 +23,7 @@ MainMenuState::MainMenuState( GameStateManager* parent ) :
 	items->push_back( MenuItem(
 		this,
 		fastdelegate::MakeDelegate( this, &MainMenuState::SelectExit ),
-		MyVector2( WINDOW_WIDTH / 2, (WINDOW_HEIGHT / 2) + 30 ),
+		Vector2( WINDOW_WIDTH / 2, (WINDOW_HEIGHT / 2) + 30 ),
 		"Exit Game",
 		20,
 		"Ariel",
@@ -31,7 +31,7 @@ MainMenuState::MainMenuState( GameStateManager* parent ) :
 	items->push_back( MenuItem(
 		this,
 		fastdelegate::MakeDelegate( this, &MainMenuState::SelectControls ),
-		MyVector2( WINDOW_WIDTH / 2, (WINDOW_HEIGHT / 2) ),
+		Vector2( WINDOW_WIDTH / 2, (WINDOW_HEIGHT / 2) ),
 		"Controls",
 		20,
 		"Ariel",
@@ -39,7 +39,7 @@ MainMenuState::MainMenuState( GameStateManager* parent ) :
 	items->push_back( MenuItem(
 		this,
 		fastdelegate::MakeDelegate( this, &MainMenuState::SelectStartGame ),
-		MyVector2( WINDOW_WIDTH / 2, (WINDOW_HEIGHT / 2) - 30 ),
+		Vector2( WINDOW_WIDTH / 2, (WINDOW_HEIGHT / 2) - 30 ),
 		"Start Game",
 		20,
 		"Ariel",
@@ -79,17 +79,17 @@ void MainMenuState::Render()
 	// Render the game
 	parent->GetGameLogic().Render(false, false);
 
-	background.Draw( MyVector2(0, 0), MyVector2(WINDOW_WIDTH, WINDOW_HEIGHT), 0.6f );
+	background.Draw( Vector2(0, 0), Vector2(WINDOW_WIDTH, WINDOW_HEIGHT), 0.6f );
 
 	menu.Render();
 
-	MyVector2 size = titleFont.GetTextSize( "Asteroids Redux" );
-	MyVector2 textPos( (WINDOW_WIDTH / 2) - (size.x / 2), (WINDOW_HEIGHT / 2) - (size.y / 2) - (WINDOW_HEIGHT / 4));
+	Vector2 size = titleFont.GetTextSize( "Asteroids Redux" );
+	Vector2 textPos( (WINDOW_WIDTH / 2) - (size.x / 2), (WINDOW_HEIGHT / 2) - (size.y / 2) - (WINDOW_HEIGHT / 4));
 	titleFont.DrawString( "Asteroids Redux", textPos );
 
 	// draw the menu controls to the screen
 	size = subFont1.GetTextSize( "Menu Navigation: Up/Down and Enter" );
-	textPos = MyVector2( WINDOW_WIDTH - size.x - 7, WINDOW_HEIGHT - size.y - 7 );
+	textPos = Vector2( WINDOW_WIDTH - size.x - 7, WINDOW_HEIGHT - size.y - 7 );
 	subFont1.DrawString( "Menu Navigation: Up/Down and Enter", textPos );
 }
 

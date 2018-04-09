@@ -25,10 +25,10 @@ public:
 	void Destroy();
 
 	// Renders text to screen. Uses screen position NOT world pos
-	void DrawString( String str, MyVector2 position );
+	void DrawString( String str, Vector2 position );
 
 	// Returns the size of the text when rendered
-	MyVector2 GetTextSize( String str );
+	Vector2 GetTextSize( String str );
 };
 
 #endif

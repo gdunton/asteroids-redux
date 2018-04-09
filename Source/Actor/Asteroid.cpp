@@ -24,9 +24,9 @@ Asteroid::Asteroid()
 	alive = false;
 }
 
-Asteroid::Asteroid( const MyVector2& pos, const float& size, float rot,
-		Model2D* model, const MyVector2& velocity, float mass, int _health )
-		: PhysicsObject( pos, MyVector2(size,size), rot, model, velocity, mass ), 
+Asteroid::Asteroid( const Vector2& pos, const float& size, float rot,
+		Model2D* model, const Vector2& velocity, float mass, int _health )
+		: PhysicsObject( pos, Vector2(size,size), rot, model, velocity, mass ), 
 		health( _health )
 {
 	alive = true;
@@ -49,12 +49,12 @@ void Asteroid::Render( Camera& camera ) const
 		GameEntity::Render( camera );
         
 #ifdef PHYSICS_DEBUG_INFO
-		MyVector2 screenPos = camera.ConvertWorldToScreenPos( world.pos );
+		Vector2 screenPos = camera.ConvertWorldToScreenPos( world.pos );
 
         // Render the bounding circle of the asteroid to the screen
 		MathTypes::Circle c = GetCircle();
         ModelManager::GetModel("Circle")->SetColor( BLUE );
-		ModelManager::GetModel("Circle")->Render( camera, World( c.position, MyVector2(c.radius, c.radius), 0 ) );
+		ModelManager::GetModel("Circle")->Render( camera, World( c.position, Vector2(c.radius, c.radius), 0 ) );
 #endif
 	}
 }
@@ -94,13 +94,13 @@ void Asteroid::SplitAsteroids( Asteroid& asteroid )
 	}
 
 	// Set the velocity to push the objects apart
-	MyVector2 res(0,0);
+	Vector2 res(0,0);
 	if( CheckCollision( asteroid, res ) )
 	{
 		AdvancedMoveApart( asteroid, res );
 		PerformCollisionCalculation( asteroid );
 
-		MyVector2 tangent = MyVector2( -velocity.y, velocity.x );
+		Vector2 tangent = Vector2( -velocity.y, velocity.x );
 
 		// Set the velocity to push the objects apart
 		velocity += tangent * 0.5f;

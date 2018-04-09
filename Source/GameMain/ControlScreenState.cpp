@@ -97,11 +97,11 @@ void ControlScreenState::Render()
 	parent->GetGameLogic().Render(false, false);
 
 	// Render the background to grey out the game
-	background.Draw( MyVector2(0, 0), MyVector2(WINDOW_WIDTH, WINDOW_HEIGHT), 0.17f );
+	background.Draw( Vector2(0, 0), Vector2(WINDOW_WIDTH, WINDOW_HEIGHT), 0.17f );
 
 	// Draw the titles
-	MyVector2 size = titleFont.GetTextSize( "Controls" );
-	MyVector2 textPos( (WINDOW_WIDTH / 2) - (size.x / 2), (WINDOW_HEIGHT / 2) - (size.y / 2) - (WINDOW_HEIGHT / 4));
+	Vector2 size = titleFont.GetTextSize( "Controls" );
+	Vector2 textPos( (WINDOW_WIDTH / 2) - (size.x / 2), (WINDOW_HEIGHT / 2) - (size.y / 2) - (WINDOW_HEIGHT / 4));
 	titleFont.DrawString( "Controls", textPos );
 
 
@@ -120,6 +120,6 @@ void ControlScreenState::Render()
 
 	// Print the message showing how to leave
 	size = subFont1.GetTextSize( "Press Esc or Return to go to Main Menu" );
-	textPos = MyVector2( WINDOW_WIDTH - size.x - 7, WINDOW_HEIGHT - size.y - 7 );
+	textPos = Vector2( WINDOW_WIDTH - size.x - 7, WINDOW_HEIGHT - size.y - 7 );
 	subFont1.DrawString( "Press Esc or Return to go to Main Menu", textPos );
 }

@@ -17,7 +17,7 @@ public:
 	friend class ModelManager;
 
 private:
-	std::vector<MyVector2> points;
+	std::vector<Vector2> points;
 	Line line;
 
 	float modelRadius;
@@ -27,14 +27,14 @@ public:
 	~Model2D();
 
 	void Render( Camera& camera, const World& world );
-	void Render( MyVector2& screenPosition, MyVector2& scale, float rotation );
+	void Render( Vector2& screenPosition, Vector2& scale, float rotation );
 
 	// Calculates the radius of the model
 	void CalculateModelStats();
 
 	float GetModelRadius() { return modelRadius; }
 
-	const std::vector<MyVector2>& GetPoints() { return points; }
+	const std::vector<Vector2>& GetPoints() { return points; }
 
 	void SetColor( Color color ) { line.SetColor( color ); }
 };

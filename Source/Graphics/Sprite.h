@@ -18,13 +18,13 @@ private:
 
 	static DirectX::SpriteBatch* spriteBatch;
 
-	MyVector2 spriteSize;
+	Vector2 spriteSize;
 
 public:
 	Sprite();
 
 	void Initialize( const String& textureName );
-	void Draw( const MyVector2& _position, const MyVector2& _size, const float alpha );
+	void Draw( const Vector2& _position, const Vector2& _size, const float alpha );
 
 	static void SetSpriteBatch(DirectX::SpriteBatch* sb);
 };

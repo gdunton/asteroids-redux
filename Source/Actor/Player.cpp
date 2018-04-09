@@ -27,11 +27,11 @@ Player::Player()
 {
 	lives = STARTING_LIVES;
 	startingWorld = World();
-	startingVelocity = MyVector2(0,0);
+	startingVelocity = Vector2(0,0);
 }
 
-Player::Player( const MyVector2& _pos, const MyVector2& _size, float _rot,
-		Model2D* _model, const MyVector2& _velocity, float _mass,
+Player::Player( const Vector2& _pos, const Vector2& _size, float _rot,
+		Model2D* _model, const Vector2& _velocity, float _mass,
 		int _WORLD_WIDTH, int _WORLD_HEIGHT )
 		: PhysicsObject( _pos, _size, _rot, _model, _velocity, _mass )
 {
@@ -110,7 +110,7 @@ void Player::TurnAntiClockwise( float dt )
 
 void Player::Boost( float dt )
 {
-	MyVector2 direction( 0, 1 );
+	Vector2 direction( 0, 1 );
 
 	direction = RotatePoint( direction, world.rot );
 	velocity += direction * ACCELERATION * dt;
@@ -151,10 +151,10 @@ void Player::FireBullet()
 		if( !bulletsArray[i].GetAlive() ) // bullet not alive
 		{
 			// Get the player direction
-			MyVector2 direction( 0, 1 );
+			Vector2 direction( 0, 1 );
 			direction = RotatePoint( direction, world.rot );
 			// Create new bullet
-			bulletsArray[i] = Bullet( world.pos, MyVector2( 1,1 ), world.rot, 
+			bulletsArray[i] = Bullet( world.pos, Vector2( 1,1 ), world.rot, 
 				ModelManager::GetInstance().GetModel("Player"), 
 				direction * Bullet::FIRING_SPEED );
 

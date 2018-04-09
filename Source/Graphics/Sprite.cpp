@@ -22,7 +22,7 @@ void Sprite::Initialize( const String& textureName )
 	spriteSize = TextureManager::GetInstance().GetDimensions(textureName);
 }
 
-void Sprite::Draw( const MyVector2& _pos, const MyVector2& _size, const float alpha )
+void Sprite::Draw( const Vector2& _pos, const Vector2& _size, const float alpha )
 {
 	spriteBatch->Begin();
 	spriteBatch->Draw(m_pTex, _pos, DirectX::SimpleMath::Vector4(0.0f, 0.0f, 0.0f, alpha));

@@ -25,11 +25,11 @@ void Line::Initialize( const Color color )
 	SetColor( color );
 }
 
-void Line::Render( Camera* camera, const std::vector<MyVector2>& points, const World& world )
+void Line::Render( Camera* camera, const std::vector<Vector2>& points, const World& world )
 {
 	std::vector<DirectX::VertexPositionColor> outPoints;
 	outPoints.reserve(points.size());
-	std::transform(points.begin(), points.end(), std::back_inserter(outPoints), [&world, camera, color = m_color](MyVector2 point)
+	std::transform(points.begin(), points.end(), std::back_inserter(outPoints), [&world, camera, color = m_color](Vector2 point)
 	{
 		point = world.TransformPoint(point);
 		if (camera != nullptr)

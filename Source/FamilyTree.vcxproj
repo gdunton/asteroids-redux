@@ -166,6 +166,9 @@
     <TargetName>$(ProjectName)$(PlatformName)$(Configuration)</TargetName>
     <IncludePath>$(DXSDK_DIR)\Include;$(ProjectDir)Utilities\;D:\Program Files %28x86%29\Visual Leak Detector\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(DXSDK_DIR)\Lib\x86;D:\Program Files %28x86%29\Visual Leak Detector\lib\Win32;$(LibraryPath)</LibraryPath>
+    <CodeAnalysisRuleSet>NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <EnableCppCoreCheck>true</EnableCppCoreCheck>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IncludePath>$(DXSDK_DIR)\Include;$(ProjectDir)Utilities\;$(IncludePath)</IncludePath>
@@ -182,6 +185,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>STD.h</PrecompiledHeaderFile>
       <PreprocessorDefinitions>_DEBUG;DEBUG;WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <EnablePREfast>true</EnablePREfast>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>

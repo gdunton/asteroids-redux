@@ -213,7 +213,7 @@ void Quadtree::CheckCollisions()
 		++b2;
 		for( ; b2 != end; ++b2 )
 		{
-			MyVector2 res( 0, 0 );
+			Vector2 res( 0, 0 );
 			if( (*begin).phys->CheckCollision( *(*b2).phys, res ) )
 			{
 				(*begin).phys->AdvancedMoveApart( *(*b2).phys, res );
@@ -234,7 +234,7 @@ void Quadtree::ComputeCollisionAgainstChildren( PhysicsObject& ob )
 		// then check object against all children objects
 		for( PhysicsObjectRef& phys : physObjs )
 		{
-			MyVector2 res( 0, 0 );
+			Vector2 res( 0, 0 );
 			if( ob.CheckCollision( *phys.phys, res ) )
 			{
 				ob.AdvancedMoveApart( *phys.phys, res );
@@ -264,9 +264,9 @@ bool Quadtree::SplitQuad()
 	Quadtree newChildren[4];
 	// Initialize each of the new children
 	newChildren[0].Initialize( this, MathTypes::Rectangle( bounds.position, bounds.size / 2 ), level + 1 );
-	newChildren[1].Initialize( this, MathTypes::Rectangle( bounds.position + MyVector2(bounds.size.x / 2, 0), bounds.size / 2 ), level + 1 );
-	newChildren[2].Initialize( this, MathTypes::Rectangle( bounds.position + MyVector2(0, bounds.size.y / 2), bounds.size / 2 ), level + 1 );
-	newChildren[3].Initialize( this, MathTypes::Rectangle( bounds.position + static_cast<MyVector2>(bounds.size / 2), bounds.size / 2 ), level + 1 );
+	newChildren[1].Initialize( this, MathTypes::Rectangle( bounds.position + Vector2(bounds.size.x / 2, 0), bounds.size / 2 ), level + 1 );
+	newChildren[2].Initialize( this, MathTypes::Rectangle( bounds.position + Vector2(0, bounds.size.y / 2), bounds.size / 2 ), level + 1 );
+	newChildren[3].Initialize( this, MathTypes::Rectangle( bounds.position + static_cast<Vector2>(bounds.size / 2), bounds.size / 2 ), level + 1 );
 #ifdef PHYSICS_DEBUG_INFO
 	newChildren[0].id = (level + 1) * 10 + 1;
 	newChildren[1].id = (level + 1) * 10 + 2;
@@ -432,13 +432,13 @@ void Quadtree::DrawQuads( Camera& camera )
 #ifdef PHYSICS_DEBUG_INFO
 	bounds.Draw( camera );
 	// Draw name of quad
-	MyVector2 pos = camera.ConvertWorldToScreenPos( bounds.position + (bounds.size / 2) );
+	Vector2 pos = camera.ConvertWorldToScreenPos( bounds.position + (bounds.size / 2) );
 	DebugFont::DrawString( std::to_string( id ), pos ); 
 	// Draw the id of the quad on the position of each asteroid
 	for( PhysicsObjectRef& phys : physObjs )
 	{
 		PhysicsObject* p = phys.phys;
-		MyVector2 pPos = camera.ConvertWorldToScreenPos( p->GetPos() );
+		Vector2 pPos = camera.ConvertWorldToScreenPos( p->GetPos() );
 		DebugFont::DrawString( std::to_string( id ), pPos );
 	}
 	

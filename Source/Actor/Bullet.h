@@ -21,8 +21,8 @@ private:
 
 public:
 	Bullet();
-	Bullet( const MyVector2& _pos, const MyVector2& _size, float _rot,
-		Model2D* _model, const MyVector2& velocity );
+	Bullet( const Vector2& _pos, const Vector2& _size, float _rot,
+		Model2D* _model, const Vector2& velocity );
 
 	// Move the bullet 
 	void Update( float dt );

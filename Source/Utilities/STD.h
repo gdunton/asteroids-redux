@@ -31,7 +31,7 @@ using std::list;
 #include <SimpleMath.h>
 
 // The used vector with some operators
-using MyVector2 = DirectX::SimpleMath::Vector2;
+using Vector2 = DirectX::SimpleMath::Vector2;
 
 
 // The typedefs for matrices and colors

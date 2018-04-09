@@ -101,7 +101,7 @@ void Game::VRender()
 	
 	// Draw the frames per second on screen
 #ifdef DEBUG
-	//font.DrawString( fpsString, MyVector2( 0, 0 ) );
+	//font.DrawString( fpsString, Vector2( 0, 0 ) );
 #endif
 
 	GraphicsDeviceManager::GetInstance().EndScene();

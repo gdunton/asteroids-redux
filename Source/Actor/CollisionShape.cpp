@@ -16,7 +16,7 @@ CollisionShape::CollisionShape() :
 }
 
 // empty points and add all the points passed in
-void CollisionShape::Initialize( const vector<MyVector2>& p )
+void CollisionShape::Initialize( const vector<Vector2>& p )
 {
 	// Clear all of the previous points
 	points.clear();
@@ -33,12 +33,12 @@ void CollisionShape::SetWorld( const World& w )
 
 // Get the transformed points. Check whether they are seperable, return the minimum resolution
 // vector so that the objects can be moved.
-bool CollisionShape::CheckCollision( CollisionShape& s2, MyVector2& outResolution )
+bool CollisionShape::CheckCollision( CollisionShape& s2, Vector2& outResolution )
 {
 	// Move both objects so that they are at the center of the world. Stop issued with wrap around world
-	MyVector2 moveDistance(0, 0);
+	Vector2 moveDistance(0, 0);
 	//	if there is a difference between the shortest distance and the wrap around distance
-	MyVector2 wrappedDistance;
+	Vector2 wrappedDistance;
 	if( wrapAround )
 	{
 		GetShortestWrappedDistance( s2.world.pos, world.pos, WORLD_WIDTH, WORLD_HEIGHT, wrappedDistance );
@@ -61,11 +61,11 @@ bool CollisionShape::CheckCollision( CollisionShape& s2, MyVector2& outResolutio
 	}	
 
 	// Get the transformed points
-	shared_ptr<vector<MyVector2>> ptr1 = GetTransformedPoints();
-	shared_ptr<vector<MyVector2>> ptr2 = s2.GetTransformedPoints();
+	shared_ptr<vector<Vector2>> ptr1 = GetTransformedPoints();
+	shared_ptr<vector<Vector2>> ptr2 = s2.GetTransformedPoints();
 
-	MyVector2 mtd1(0,0);
-	MyVector2 mtd2(0,0);
+	Vector2 mtd1(0,0);
+	Vector2 mtd2(0,0);
 
 	// Check whether the two list are seperable. Each one must be checked to get an
     // accurate required movement vector
@@ -105,9 +105,9 @@ bool CollisionShape::CheckCollision( CollisionShape& s2, MyVector2& outResolutio
 
 // Transform each point by the world values and return a smart pointer
 // to an allocated vector storing all the points
-const shared_ptr<vector<MyVector2>> CollisionShape::GetTransformedPoints() const 
+const shared_ptr<vector<Vector2>> CollisionShape::GetTransformedPoints() const 
 {
-	shared_ptr<vector<MyVector2>> ptr(new vector<MyVector2>());
+	shared_ptr<vector<Vector2>> ptr(new vector<Vector2>());
 
 	for( auto begin = points.begin(), end = points.end(); begin != end; ++begin )
 	{
@@ -119,17 +119,17 @@ const shared_ptr<vector<MyVector2>> CollisionShape::GetTransformedPoints() const
 
 // Check each edge in a list against another set of points to determine whether the
 // two shaped intersect
-bool CollisionShape::CheckPointListSeperability( vector<MyVector2>& p1, vector<MyVector2>& p2,
-												MyVector2& outMtd )
+bool CollisionShape::CheckPointListSeperability( vector<Vector2>& p1, vector<Vector2>& p2,
+												Vector2& outMtd )
 {
-	std::vector<MyVector2> mtds;
+	std::vector<Vector2> mtds;
 
 	// For each number if sides
 	for( unsigned int i = 0; i < p1.size()-1; i++ )
 	{
 		//	Create the seperation axis as normal to a side
-		MyVector2 seperator = p1[i] - p1[(i+1) % (p1.size()-1)];
-		seperator = MyVector2(seperator.y, -seperator.x);
+		Vector2 seperator = p1[i] - p1[(i+1) % (p1.size()-1)];
+		seperator = Vector2(seperator.y, -seperator.x);
 		Normalize( seperator );
 
 		//	project each of the points on the shapes to find a max and a min along the seperation axis
@@ -160,7 +160,7 @@ bool CollisionShape::CheckPointListSeperability( vector<MyVector2>& p1, vector<M
 		else
 		{
 			// Calculate the overlap to work out the minimum translation distance
-			MyVector2 tempMTD;
+			Vector2 tempMTD;
 			float d0 = t1Max - t2Min;
 			float d1 = t2Max - t1Min;
 			float depth = (d0 < d1) ? d0 : d1;
@@ -184,9 +184,9 @@ bool CollisionShape::CheckPointListSeperability( vector<MyVector2>& p1, vector<M
 
 // Checks whether an object has been moved due to world wrap and moves it back into
 // position
-void CollisionShape::RestorePosition( MyVector2& moveDistance, MyVector2& outPosition )
+void CollisionShape::RestorePosition( Vector2& moveDistance, Vector2& outPosition )
 {
-	if( distanceSquared( moveDistance, MyVector2(0,0) ) != 0 ) // then object needs to be moved
+	if( distanceSquared( moveDistance, Vector2(0,0) ) != 0 ) // then object needs to be moved
 	{
 		outPosition += moveDistance;
 		if( wrapAround )

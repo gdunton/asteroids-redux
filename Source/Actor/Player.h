@@ -39,7 +39,7 @@ private:
 
 	// Variables for resetting the player
 	World startingWorld;
-	MyVector2 startingVelocity;
+	Vector2 startingVelocity;
 
 	// Variables for invulnerability 
 	bool invulnerable;
@@ -57,8 +57,8 @@ private:
 
 public:
 	Player();
-	Player( const MyVector2& pos, const MyVector2& size, float rot,
-		Model2D* model, const MyVector2& velocity, float mass,
+	Player( const Vector2& pos, const Vector2& size, float rot,
+		Model2D* model, const Vector2& velocity, float mass,
 		int worldWidth, int worldHeight );
 
 	void Update( float dt );

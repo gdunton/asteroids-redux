@@ -25,8 +25,8 @@ protected:
 
 public:
 	// Constructors
-	GameEntity() : world( MyVector2(0,0), MyVector2(1,1), 0 ), model(NULL), id(0) { }
-	GameEntity( const MyVector2& _pos, const MyVector2& _size, const float _rot,
+	GameEntity() : world( Vector2(0,0), Vector2(1,1), 0 ), model(NULL), id(0) { }
+	GameEntity( const Vector2& _pos, const Vector2& _size, const float _rot,
 		Model2D* _model ) :
 		world(_pos, _size, _rot ), model( _model ), wrapAroundWorld( true )
 	{
@@ -40,8 +40,8 @@ public:
 	void WrapPosition();
 
 	// Accessors
-	MyVector2 GetPos() const { return world.pos; }
-	MyVector2 GetSize() const { return world.scale; }
+	Vector2 GetPos() const { return world.pos; }
+	Vector2 GetSize() const { return world.scale; }
 	float GetRot() const { return world.rot; }
 	Model2D* GetModel() const { return model; }
 	const World& GetWorld() const { return world; }

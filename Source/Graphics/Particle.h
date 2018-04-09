@@ -28,13 +28,13 @@ private:
 	float alpha;
 	float initialLife;
 
-	MyVector2 scale;
+	Vector2 scale;
 
-	MyVector2 pos;
+	Vector2 pos;
 	
-	MyVector2 velocity;
+	Vector2 velocity;
 	// The points in the line
-	std::vector<MyVector2> points;
+	std::vector<Vector2> points;
 	Line line;
 
 	// The amound that each particle will stretch by each frame
@@ -44,7 +44,7 @@ public:
 	Particle();
 	~Particle();
 
-	void Initialize( MyVector2 p1, MyVector2 p2, MyVector2 pos, MyVector2 scale, MyVector2 velocity, 
+	void Initialize( Vector2 p1, Vector2 p2, Vector2 pos, Vector2 scale, Vector2 velocity, 
 		float rotation, float rotationSpeed, float lifespan );
 
 	void Update( float dt );

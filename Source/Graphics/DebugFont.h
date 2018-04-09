@@ -22,7 +22,7 @@ protected:
 public:
 	// Single function to draw text onto screen. Uses screen position
 	// NOT world
-	static void DrawString( String text, MyVector2 position );
+	static void DrawString( String text, Vector2 position );
 	~DebugFont();
 };
 

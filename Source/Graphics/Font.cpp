@@ -42,7 +42,7 @@ void Font::Destroy()
 {
 }
 
-void Font::DrawString( String str, MyVector2 position )
+void Font::DrawString( String str, Vector2 position )
 {
 	// Actually draw the text to screen
 	GraphicsDeviceManager::GetInstance().GetSpriteBatch()->Begin();
@@ -54,11 +54,11 @@ void Font::DrawString( String str, MyVector2 position )
 	GraphicsDeviceManager::GetInstance().GetSpriteBatch()->End();
 }
 
-MyVector2 Font::GetTextSize( String str )
+Vector2 Font::GetTextSize( String str )
 {
 	WString wStr;
 	StringToWString(str, wStr);
 	DirectX::XMVECTOR result = font->MeasureString(wStr.c_str());
 
-	return MyVector2(DirectX::XMVectorGetX(result), DirectX::XMVectorGetY(result));
+	return Vector2(DirectX::XMVectorGetX(result), DirectX::XMVectorGetY(result));
 }

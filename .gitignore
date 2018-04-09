@@ -3,3 +3,4 @@ Temp/
 .git
 .vs/
 *.suo
+Source/packages

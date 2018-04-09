@@ -9,23 +9,24 @@
 #ifndef SPRITE_H
 #define SPRITE_H
 #include "../Content/TextureManager.h"
+#include <SpriteBatch.h>
 
 class Sprite
 {
 private:
 	Texture* m_pTex;
-	//LPD3DXSPRITE m_pSprite;
+
+	static DirectX::SpriteBatch* spriteBatch;
 
 	MyVector2 spriteSize;
 
 public:
 	Sprite();
-	~Sprite();
 
 	void Initialize( const String& textureName );
-	void Draw( const MyVector2& _position );
-	void Draw( const MyVector2& _position, const MyVector2& _size );
 	void Draw( const MyVector2& _position, const MyVector2& _size, const float alpha );
+
+	static void SetSpriteBatch(DirectX::SpriteBatch* sb);
 };
 
 #endif

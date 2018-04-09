@@ -19,7 +19,7 @@
 GamePausedState::GamePausedState( GameStateManager* parent ) :
 	GameState( parent )
 {
-	font.Initialize( 30, false, "Ariel", WHITE );
+	font.Initialize( 30, false, WHITE);
 
 	// Create the menu
 	std::shared_ptr<std::vector<MenuItem>> items(new std::vector<MenuItem>());
@@ -39,7 +39,7 @@ GamePausedState::GamePausedState( GameStateManager* parent ) :
 		20,
 		"Ariel",
 		WHITE ) );
-	menu = Menu( this, items, 60 );
+	menu = Menu( this, items, 100 );
 
 	Keyboard::GetInstance().GetKeyboardState( prevKbState );
 
@@ -83,15 +83,15 @@ void GamePausedState::Render()
 	parent->GetGameLogic().Render();
 
 	// Partialy obscure the game using translucent texture
-	background.Draw( MyVector2(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2), MyVector2(WINDOW_WIDTH, WINDOW_HEIGHT), 0.6f );
+	background.Draw( MyVector2(0, 0), MyVector2(WINDOW_WIDTH, WINDOW_HEIGHT), 0.7f );
+
+	// Draw the menu
+	menu.Render();
 
 	// Render the title
 	MyVector2 size = font.GetTextSize( "Paused" );
 	MyVector2 textPos( (WINDOW_WIDTH / 2) - (size.x / 2), (WINDOW_HEIGHT / 2) - (size.y / 2) - (WINDOW_HEIGHT / 4));
 	font.DrawString( "Paused", textPos );
-
-	// Draw the menu
-	menu.Render();
 }
 
 void GamePausedState::SelectContinueGame()

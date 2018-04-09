@@ -13,6 +13,8 @@
 #include <PrimitiveBatch.h>
 #include <VertexTypes.h>
 #include <Effects.h>
+#include <SpriteBatch.h>
+#include <SpriteFont.h>
 
 class GraphicsDeviceManager : public Singleton<GraphicsDeviceManager>
 {
@@ -30,9 +32,10 @@ private:
 	ID3D11RenderTargetView* m_pRenderTargetView;
 	ID3D11DepthStencilView* m_pDepthStencilView;
 
-
+	std::unique_ptr<DirectX::SpriteBatch> spriteBatch;
 	std::unique_ptr<DirectX::PrimitiveBatch<DirectX::VertexPositionColor>> primitiveBatch;
 	std::unique_ptr<DirectX::BasicEffect> basicEffect;
+	std::unique_ptr<DirectX::SpriteFont> font;
 
 	ID3D11InputLayout* m_pInputLayout;
 
@@ -50,6 +53,7 @@ public:
 
 	// Stops the graphics device rendering
 	void EndScene();
+	DirectX::SpriteBatch* GetSpriteBatch();
 };
 
 

@@ -5,7 +5,7 @@
 #include "STD.h"
 #include "TextureManager.h"
 #include "..\Graphics\GraphicsDeviceManager.h"
-#include <WICTextureLoader.h>
+#include "../GameMain/Globals.h"
 
 template<> TextureManager* Singleton<TextureManager>::instance = NULL;
 
@@ -22,10 +22,16 @@ TextureManager::~TextureManager()
 	for( auto begin = m_textureMap.begin(), end = m_textureMap.end(); begin != end;
 		++begin )
 	{
-		if( begin->second ) 
+		if (begin->second.texture != nullptr)
 		{
-			begin->second->Release();
-			begin->second = NULL;
+			begin->second.texture->Release();
+			begin->second.texture = nullptr;
+		}
+
+		if (begin->second.view != nullptr)
+		{
+			begin->second.view->Release();
+			begin->second.view = nullptr;
 		}
 	}
 }
@@ -33,38 +39,66 @@ TextureManager::~TextureManager()
 Texture* TextureManager::GetTexture( const String& name )
 {
 	// Find the texture in the map 
-	return m_textureMap[name];
+	return m_textureMap[name].view;
+}
+
+MyVector2 TextureManager::GetDimensions(const String& name) 
+{
+	D3D11_TEXTURE2D_DESC desc;
+	ZeroMemory(&desc, sizeof(desc));
+	m_textureMap[name].texture->GetDesc(&desc);
+
+	return MyVector2(desc.Width, desc.Height);
 }
 
 void TextureManager::CreateTransparencyRect()
 {
 	// Create the texture
-	//IDirect3DTexture9* tex = NULL;
-	//D3DXCreateTexture( GraphicsDeviceManager::GetInstance().GetDevice(), 1, 1, 0, 0, D3DFMT_A8R8G8B8, D3DPOOL_MANAGED, &tex );
+	D3D11_TEXTURE2D_DESC desc;
 
+	desc.Width = WINDOW_WIDTH;
+	desc.Height = WINDOW_HEIGHT;
+	desc.MipLevels = 1;
+	desc.ArraySize = 1;
+	desc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+	desc.SampleDesc.Count = 1;
+	desc.SampleDesc.Quality = 0;
+	desc.Usage = D3D11_USAGE_DEFAULT;
+	desc.BindFlags = D3D11_BIND_SHADER_RESOURCE;
+	desc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+	desc.MiscFlags = 0;
 
-	DirectX::CreateWICTextureFromMemory(GraphicsDeviceManager::GetInstance().GetDevice(), )
+	ID3D11Texture2D* texture = NULL;
 
-	//ASSERT( tex != NULL );
+	float* buffer = new float[WINDOW_WIDTH * WINDOW_HEIGHT * 4];
 
-	//// load the pixel into it
-	//D3DLOCKED_RECT lockRect;
-	//HRESULT hr = tex->LockRect( 0, &lockRect, NULL, 0 );
-	//ASSERT( SUCCEEDED( hr ) );
-	//BYTE* bits = (BYTE*)lockRect.pBits;
-	//Color color = D3DCOLOR_ARGB( 255, 0, 0, 0 ); // Set the color to black
-	//
-	//for( int i = 0; i < 1; ++i )
-	//{
-	//	for( int j = 0; j < 1; ++j )
-	//	{
-	//		memcpy( &bits[ lockRect.Pitch * i + 4 * j ], &color, 4 );
-	//	}
-	//}
+	for (int y = 0; y < WINDOW_HEIGHT * WINDOW_WIDTH * 4; ++y) 
+	{
+		buffer[y] = 1.0f;
+	}
 
-	//hr = tex->UnlockRect( 0 );
-	//ASSERT( SUCCEEDED( hr ) );
-	//
-	//// save in the map as transparency
-	//m_textureMap["transparent"] = tex;
+	D3D11_SUBRESOURCE_DATA texData;
+	texData.SysMemPitch = WINDOW_WIDTH * sizeof(float) * 4;
+	texData.SysMemSlicePitch = WINDOW_WIDTH * WINDOW_HEIGHT * sizeof(float) * 4;
+	texData.pSysMem = (void*)buffer;
+
+	HRESULT hr = GraphicsDeviceManager::GetInstance().GetDevice()->CreateTexture2D(&desc, &texData, &texture);
+	ASSERT(hr == S_OK);
+
+	delete[] buffer;
+
+	ID3D11ShaderResourceView* resourceView = NULL;
+	D3D11_SHADER_RESOURCE_VIEW_DESC viewDesc;
+	viewDesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+	viewDesc.ViewDimension = D3D10_SRV_DIMENSION_TEXTURE2D;
+	viewDesc.Texture2D.MipLevels = 1;
+	viewDesc.Texture2D.MostDetailedMip = 0;
+
+	hr = GraphicsDeviceManager::GetInstance().GetDevice()->CreateShaderResourceView(texture, &viewDesc, &resourceView);
+	ASSERT(hr == S_OK);
+
+	ResourcePair p;
+	p.texture = texture;
+	p.view = resourceView;
+	m_textureMap["transparent"] = p;
 }

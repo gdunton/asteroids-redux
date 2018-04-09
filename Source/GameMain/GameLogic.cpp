@@ -63,7 +63,7 @@ void GameLogic::Initialize(Game* _game)
 	worldArea = MathTypes::Rectangle( MyVector2( -WORLD_WIDTH - (WORLD_WIDTH / 2), -WORLD_HEIGHT - (WORLD_HEIGHT / 2) ),
 		MyVector2( WORLD_WIDTH * 3, WORLD_HEIGHT * 3 ) );
 
-	font.Initialize( 20, false, "Ariel", WHITE );
+	font.Initialize( 20, false, WHITE);
 }
 
 // Resets the game and starts a level for the background of the main menu

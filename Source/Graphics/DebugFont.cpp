@@ -10,7 +10,7 @@ template<> DebugFont* Singleton<DebugFont>::instance = 0;
 
 DebugFont::DebugFont()
 {
-	font.Initialize(20, false, "Arial", WHITE );
+	font.Initialize(20, false, WHITE);
 }
 
 void DebugFont::DrawString( String text, MyVector2 position )

@@ -24,8 +24,8 @@ String const ControlScreenState::controlStrings[] = {
 ControlScreenState::ControlScreenState( GameStateManager* _parent )
 	: GameState( _parent )
 {
-	titleFont.Initialize( 40, false, "Ariel", WHITE );
-	subFont1.Initialize( 20, false, "Ariel", ColorRGBA( 255, 255, 255, 255 ) );
+	titleFont.Initialize( 40, false, WHITE);
+	subFont1.Initialize( 20, false, ColorRGBA( 255, 255, 255, 255 ));
 
 	background.Initialize( "transparent" );
 
@@ -97,7 +97,7 @@ void ControlScreenState::Render()
 	parent->GetGameLogic().Render(false, false);
 
 	// Render the background to grey out the game
-	background.Draw( MyVector2(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2), MyVector2(WINDOW_WIDTH, WINDOW_HEIGHT), 0.17f );
+	background.Draw( MyVector2(0, 0), MyVector2(WINDOW_WIDTH, WINDOW_HEIGHT), 0.17f );
 
 	// Draw the titles
 	MyVector2 size = titleFont.GetTextSize( "Controls" );

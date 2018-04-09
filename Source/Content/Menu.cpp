@@ -21,7 +21,7 @@ Menu::Menu()
 Menu::Menu(GameState* parent, std::shared_ptr<std::vector<MenuItem>> items, int _pointerOffset) :
 	parentState( parent ), menuItems( items ), pointerOffset( _pointerOffset )
 {
-	font.Initialize( 20, false, "Ariel", WHITE );
+	font.Initialize( 20, false, WHITE);
 
 	// Calculate current Item Index by finding the menu item with the smallest Y position
 	int y = 10000;
@@ -78,17 +78,17 @@ void Menu::Update()
 
 void Menu::Render()
 {
-	// draw all the menu items
-	for( MenuItem& item : *menuItems )
-	{
-		item.Render();
-	}
-
 	// draw the pointer to symbolize the selected menu item
 	MyVector2 pointerPos1 = (*menuItems)[currentItemIndex].GetPosition();
 	MyVector2 pointerPos2 = pointerPos1;
 	pointerPos1.x -= pointerOffset;
 	pointerPos2.x += pointerOffset;
-	pointerModel->Render( pointerPos1, MyVector2(5, 5), 0 );
-	pointerModel->Render( pointerPos2, MyVector2(5, 5), 0 );
+	pointerModel->Render( pointerPos1, MyVector2(7, 7), 0 );
+	pointerModel->Render( pointerPos2, MyVector2(7, 7), 0 );
+
+	// draw all the menu items
+	for (MenuItem& item : *menuItems)
+	{
+		item.Render();
+	}
 }

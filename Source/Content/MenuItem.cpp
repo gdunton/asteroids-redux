@@ -15,7 +15,7 @@ MenuItem::MenuItem( GameState* parent, MenuSelectDelegate _selectAction, MyVecto
 				   String _text, int height, String fontName, Color color) : 
 		selectAction( _selectAction ), centerPos( pos ), text( _text )
 {
-	font.Initialize( height, false, fontName, color );
+	font.Initialize( height, false, color);
 }
 
 MenuItem::~MenuItem()

@@ -18,7 +18,7 @@
 GameOverState::GameOverState( GameStateManager* _parent ) :
 	GameState( _parent )
 {
-	font.Initialize( 30, false, "Ariel", WHITE );
+	font.Initialize( 30, false, WHITE);
 
 	// Create the menu
 	std::shared_ptr<std::vector<MenuItem>> items(new std::vector<MenuItem>());
@@ -38,7 +38,7 @@ GameOverState::GameOverState( GameStateManager* _parent ) :
 		20,
 		"Ariel",
 		WHITE) );
-	menu = Menu( this, items, 60 );
+	menu = Menu( this, items, 100 );
 
 	background.Initialize( "transparent" );
 }
@@ -65,18 +65,18 @@ void GameOverState::Exit()
 void GameOverState::Render()
 {	
 	// Draw game
-	parent->GetGameLogic().Render();
+	parent->GetGameLogic().Render(false, false);
 
 	// Darken the game
-	background.Draw( MyVector2(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2), MyVector2(WINDOW_WIDTH, WINDOW_HEIGHT), 0.7f );
+	background.Draw(MyVector2(0, 0), MyVector2(WINDOW_WIDTH, WINDOW_HEIGHT), 0.7f);
+
+	// Draw menu
+	menu.Render();
 
 	// Draw the title
 	MyVector2 size = font.GetTextSize( "Game Over" );
 	MyVector2 textPos( (WINDOW_WIDTH / 2) - (size.x / 2), (WINDOW_HEIGHT / 2) - (size.y / 2) - (WINDOW_HEIGHT / 4));
 	font.DrawString( "Game Over", textPos );
-
-	// Draw menu
-	menu.Render();
 }
 
 void GameOverState::SelectMainMenu()

@@ -5,6 +5,7 @@
 #include "STD.h"
 #include "Font.h"
 #include "GraphicsDeviceManager.h"
+#include <SpriteFont.h>
 
 Font::Font()
 {
@@ -21,30 +22,20 @@ Font::~Font()
 	}
 }
 
-void Font::Initialize( int height, bool italic, String name, Color _color )
+void Font::Initialize(int height, bool italic, Color _color)
 {
 	// Create the font description
-	//D3DXFONT_DESC fd;
-	//ZeroMemory( &fd, sizeof( fd ) );
-	//fd.Height = height;
-	//fd.Width = 0;
-	//fd.Weight = FW_NORMAL;
-	//fd.MipLevels = 1;
-	//fd.Italic = italic;
-	//fd.CharSet = DEFAULT_CHARSET;
-	//fd.OutputPrecision = OUT_DEFAULT_PRECIS;
-	//fd.Quality = ANTIALIASED_QUALITY;
-	//fd.PitchAndFamily = DEFAULT_PITCH | FF_DONTCARE;
-	//// Convert the string into a wide string then input into description
-	//WString wStr;
-	//StringToWString( name, wStr );
-	//wcscpy( fd.FaceName, wStr.c_str() );
-	//// Create the font
-	//D3DXCreateFontIndirect( GraphicsDeviceManager::GetInstance().GetDevice(),
-	//	&fd, &font );
+	String assetsDir;
+	GetAssetsDir(assetsDir);
+	assetsDir += "arial.spritefont";
 
-	//// Store the color 
-	//color = _color;
+	WString wStr;
+	StringToWString(assetsDir, wStr);
+
+	font = new DirectX::SpriteFont(GraphicsDeviceManager::GetInstance().GetDevice(), wStr.c_str());
+
+	// Store the color 
+	color = _color;
 }
 
 void Font::Destroy()
@@ -53,20 +44,21 @@ void Font::Destroy()
 
 void Font::DrawString( String str, MyVector2 position )
 {
-	RECT fontRect = { position.x, position.y, 0, 0 };
-
 	// Actually draw the text to screen
-	//font->DrawTextA( NULL, str.c_str(), -1, &fontRect, DT_LEFT | DT_NOCLIP, color );
+	GraphicsDeviceManager::GetInstance().GetSpriteBatch()->Begin();
+	
+	WString wStr;
+	StringToWString(str, wStr);
+	font->DrawString(GraphicsDeviceManager::GetInstance().GetSpriteBatch(), wStr.c_str(), position);
+
+	GraphicsDeviceManager::GetInstance().GetSpriteBatch()->End();
 }
 
 MyVector2 Font::GetTextSize( String str )
 {
-	RECT fontRect = { 0, 0, 0, 0 };
+	WString wStr;
+	StringToWString(str, wStr);
+	DirectX::XMVECTOR result = font->MeasureString(wStr.c_str());
 
-	// Get the size of the string from the font
-	/*int textHeight = font->DrawTextA( NULL, str.c_str(), -1, &fontRect, 
-		DT_CALCRECT | DT_NOCLIP | DT_LEFT, BLACK );
-	fontRect.bottom = fontRect.top + textHeight;*/
-
-	return MyVector2( fontRect.right, fontRect.bottom );
+	return MyVector2(DirectX::XMVectorGetX(result), DirectX::XMVectorGetY(result));
 }

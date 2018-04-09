@@ -70,6 +70,8 @@ bool GraphicsDeviceManager::Initialize( Window& window, bool windowed )
 	if (hr != S_OK) return false;
 	ASSERT( m_pGraphicsDevice != NULL );
 
+	spriteBatch = std::make_unique<DirectX::SpriteBatch>(m_pDeviceContext);
+
 	primitiveBatch = std::make_unique<DirectX::PrimitiveBatch<DirectX::VertexPositionColor>>(m_pDeviceContext);
 	basicEffect = std::make_unique<DirectX::BasicEffect>(m_pGraphicsDevice);
 	basicEffect->SetProjection(DirectX::XMMatrixOrthographicOffCenterRH(0,
@@ -99,6 +101,16 @@ bool GraphicsDeviceManager::Initialize( Window& window, bool windowed )
 	m_pGraphicsDevice->CreateDepthStencilView(depthStencil, &depthStencilViewDesc, &m_pDepthStencilView);
 	depthStencil->Release();
 
+	// Sprite font stuff
+	String assetsDir;
+	GetAssetsDir(assetsDir);
+	assetsDir += "arial.spritefont";
+
+	WString wStr;
+	StringToWString(assetsDir, wStr);
+
+	font = std::make_unique<DirectX::SpriteFont>(m_pGraphicsDevice, wStr.c_str());
+
 	return true;
 }
 
@@ -121,8 +133,6 @@ void GraphicsDeviceManager::BeginScene( const Color& backColor )
 	basicEffect->Apply(m_pDeviceContext);
 	m_pDeviceContext->IASetInputLayout(m_pInputLayout);
 
-	primitiveBatch->Begin();
-	
 	sceneStarted = true;
 }
 
@@ -130,8 +140,12 @@ void GraphicsDeviceManager::EndScene()
 {
 	// Stop rendering and present the back buffer
 	ASSERT( sceneStarted );
-	primitiveBatch->End();
 	m_pSwapChain->Present(1, 0);
 
 	sceneStarted = false;
+}
+
+DirectX::SpriteBatch* GraphicsDeviceManager::GetSpriteBatch() 
+{
+	return spriteBatch.get();
 }

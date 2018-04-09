@@ -44,10 +44,10 @@ MainMenuState::MainMenuState( GameStateManager* parent ) :
 		20,
 		"Ariel",
 		WHITE ) );
-	menu = Menu(this, items, 60);
+	menu = Menu(this, items, 100);
 
-	titleFont.Initialize( 40, false, "Ariel", WHITE );
-	subFont1.Initialize( 20, false, "Ariel", WHITE );
+	titleFont.Initialize( 40, false, WHITE);
+	subFont1.Initialize( 20, false, WHITE);
 
 	background.Initialize( "transparent" );
 }
@@ -79,7 +79,9 @@ void MainMenuState::Render()
 	// Render the game
 	parent->GetGameLogic().Render(false, false);
 
-	background.Draw( MyVector2(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2), MyVector2(WINDOW_WIDTH, WINDOW_HEIGHT), 0.6f );
+	background.Draw( MyVector2(0, 0), MyVector2(WINDOW_WIDTH, WINDOW_HEIGHT), 0.6f );
+
+	menu.Render();
 
 	MyVector2 size = titleFont.GetTextSize( "Asteroids Redux" );
 	MyVector2 textPos( (WINDOW_WIDTH / 2) - (size.x / 2), (WINDOW_HEIGHT / 2) - (size.y / 2) - (WINDOW_HEIGHT / 4));
@@ -89,8 +91,6 @@ void MainMenuState::Render()
 	size = subFont1.GetTextSize( "Menu Navigation: Up/Down and Enter" );
 	textPos = MyVector2( WINDOW_WIDTH - size.x - 7, WINDOW_HEIGHT - size.y - 7 );
 	subFont1.DrawString( "Menu Navigation: Up/Down and Enter", textPos );
-
-	menu.Render();
 }
 
 void MainMenuState::SelectStartGame()

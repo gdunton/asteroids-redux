@@ -6,6 +6,7 @@
 #include <algorithm>
 #include "Line.h"
 #include "Camera.h"
+#include "GraphicsDeviceManager.h"
 
 Batch* Line::m_pLine = nullptr;
 
@@ -39,5 +40,7 @@ void Line::Render( Camera* camera, const std::vector<MyVector2>& points, const W
 	});
 
 	// Draw all points
+	GraphicsDeviceManager::GetInstance().GetBatch()->Begin();
 	m_pLine->Draw(D3D_PRIMITIVE_TOPOLOGY_LINESTRIP, &outPoints[0], outPoints.size());
+	GraphicsDeviceManager::GetInstance().GetBatch()->End();
 }

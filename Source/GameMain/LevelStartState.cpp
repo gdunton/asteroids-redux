@@ -16,7 +16,7 @@ const float LevelStartState::INTRO_TIME = 3.0f;
 LevelStartState::LevelStartState( GameStateManager* _parent )
 	: GameState( _parent )
 {
-	font.Initialize( 20, false, "Ariel", WHITE );
+	font.Initialize( 20, false, WHITE);
 	background.Initialize( "transparent" );
 
 	// Set the initial text
@@ -66,8 +66,7 @@ void LevelStartState::Render()
 	parent->GetGameLogic().Render();
 
 	// Darken the level using the transparent sprite
-	background.Draw( MyVector2(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2), 
-		MyVector2(WINDOW_WIDTH, WINDOW_HEIGHT), 0.6f );
+	background.Draw( MyVector2(0, 0), MyVector2(WINDOW_WIDTH, WINDOW_HEIGHT), 0.6f );
 
 	// Draw the text onto the window
 	font.DrawString( onScreenText, textPosition );

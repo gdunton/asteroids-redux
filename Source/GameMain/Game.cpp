@@ -69,7 +69,7 @@ void Game::Initialize( const HINSTANCE hInstance )
 	AudioManager::LoadAllAssets();
 
 	// Create the main font
-	font.Initialize( 22, false, "Arial", GREEN );
+	font.Initialize( 22, false, GREEN);
 
 	// Initialize the game logic
 	m_gameLogic.Initialize(this);
@@ -78,6 +78,7 @@ void Game::Initialize( const HINSTANCE hInstance )
 	gameStateManager.SetInitialState( std::shared_ptr<MainMenuState>( new MainMenuState( &gameStateManager ) ) );
 
 	Line::SetLine(GraphicsDeviceManager::GetInstance().GetBatch());
+	Sprite::SetSpriteBatch(GraphicsDeviceManager::GetInstance().GetSpriteBatch());
 }
 
 void Game::InternalUpdate( const double deltaTime )
@@ -100,7 +101,7 @@ void Game::VRender()
 	
 	// Draw the frames per second on screen
 #ifdef DEBUG
-	font.DrawString( fpsString, MyVector2( 0, 0 ) );
+	//font.DrawString( fpsString, MyVector2( 0, 0 ) );
 #endif
 
 	GraphicsDeviceManager::GetInstance().EndScene();

@@ -21,7 +21,7 @@ public:
 	Font();
 	~Font();
 
-	void Initialize( int height, bool italic, String name, Color color );
+	void Initialize(int height, bool italic, Color color);
 	void Destroy();
 
 	// Renders text to screen. Uses screen position NOT world pos

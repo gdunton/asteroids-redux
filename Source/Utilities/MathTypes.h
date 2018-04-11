@@ -28,11 +28,11 @@ float Dot( const Vector2& point1, const Vector2& point2 );
 // World wrap math functions
 //-------------------------------------------------------
 // Math function for wrapping a position around the world
-void WrapVector2( int worldWidth, int worldHeight, Vector2& pos );
+void WrapVector2(float worldWidth, float worldHeight, Vector2& pos);
 
 // Wrap around function that gets the distance between two points based on the size of the world
-void GetShortestWrappedDistance( const Vector2& point1, const Vector2& point2, 
-	const int worldWidth, const int worldHeight, Vector2& outDistance );
+void GetShortestWrappedDistance(const Vector2& point1, const Vector2& point2,
+                                float worldWidth, float worldHeight, Vector2& outDistance);
 
 //-------------------------------------------------------
 // Inline functions
@@ -72,7 +72,7 @@ inline int NegativeMod( int i, int modulas )
 // Allow modulas that operates with floating point negative numbers
 inline float NegativeMod( float i, int modulas )
 {
-	return fmod((fmod( i, modulas) + modulas), modulas);
+	return static_cast<float>(fmod((fmod(i, modulas) + modulas), modulas));
 }
 
 //-----------------------------------------------------

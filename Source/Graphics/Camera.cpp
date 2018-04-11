@@ -18,13 +18,13 @@ Camera::~Camera()
 {
 }
 
-void Camera::Initialize( const Vector2& _center, const Vector2& _size, 
-	const int _windowWidth, const int _windowHeight )
+void Camera::Initialize(const Vector2& _center, const Vector2& _size,
+                        float _windowWidth, float _windowHeight)
 {
 	center = _center;
 	size = _size;
-	windowWidth = _windowWidth;
-	windowHeight = _windowHeight;
+	windowWidth = static_cast<int>(_windowWidth);
+	windowHeight = static_cast<int>(_windowHeight);
 }
 
 Vector2 Camera::ConvertWorldToScreenPos( const Vector2& wPos ) const

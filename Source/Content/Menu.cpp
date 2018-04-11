@@ -5,10 +5,10 @@
 #include "STD.h"
 #include "Menu.h"
 
-#include "..\GameMain\GameState.h"
-#include "..\Input\Keyboard.h"
-#include "..\Graphics\Model2D.h"
-#include "..\Content\ModelManager.h"
+#include "../GameMain/GameState.h"
+#include "../Input/Keyboard.h"
+#include "../Graphics/Model2D.h"
+#include "../Content/ModelManager.h"
 
 Menu::Menu()
 {
@@ -24,9 +24,9 @@ Menu::Menu(GameState* parent, std::shared_ptr<std::vector<MenuItem>> items, int 
 	font.Initialize( 20, false, WHITE);
 
 	// Calculate current Item Index by finding the menu item with the smallest Y position
-	int y = 10000;
+	float y = 10000;
 
-	for( int i = 0; i < menuItems->size(); ++i )
+	for( size_t i = 0; i < menuItems->size(); ++i )
 	{
 		if( (*menuItems)[i].GetPosition().y <= y ) // if y smaller
 		{

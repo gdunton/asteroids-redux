@@ -7,9 +7,9 @@
 #ifndef MENU_H
 #define MENU_H
 
-#include "..\Graphics\Font.h"
+#include "../Graphics/Font.h"
 #include "MenuItem.h"
-#include "..\Input\KeyboardState.h"
+#include "../Input/KeyboardState.h"
 
 class Model2D;
 class GameState;

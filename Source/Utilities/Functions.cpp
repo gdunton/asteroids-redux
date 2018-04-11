@@ -14,7 +14,7 @@ void AsteroidToParticles( Asteroid& asteroid, std::vector<Particle>& outVec )
 
 	outVec.reserve( points.size() );
 
-	for( int i = 0; i < points.size(); ++i )
+	for( size_t i = 0; i < points.size(); ++i )
 	{
 		Vector2 p1, p2, pos;
 		p1 = asteroid.GetWorld().TransformPoint(points[i]);

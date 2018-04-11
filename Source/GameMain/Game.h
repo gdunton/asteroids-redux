@@ -9,12 +9,12 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include "..\UserInterface\Window.h"
-#include "..\EventManager\Timer.h"
+#include "../UserInterface/Window.h"
+#include "../EventManager/Timer.h"
 #include "GameLogic.h"
 #include "GameStateManager.h"
 
-#include "..\Graphics\Font.h"
+#include "../Graphics/Font.h"
 
 class Game : public IGame
 {

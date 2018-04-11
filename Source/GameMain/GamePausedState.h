@@ -10,11 +10,11 @@
 #define GAME_PAUSED_STATE_H
 
 #include "GameState.h"
-#include "..\Graphics\Font.h"
-#include "..\Content\Menu.h"
-#include "..\Input\KeyboardState.h"
+#include "../Graphics/Font.h"
+#include "../Content/Menu.h"
+#include "../Input/KeyboardState.h"
 
-#include "..\Graphics\Sprite.h"
+#include "../Graphics/Sprite.h"
 
 class GameStateManager;
 

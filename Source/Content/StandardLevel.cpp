@@ -5,10 +5,10 @@
 #include "STD.h"
 #include "StandardLevel.h"
 
-#include "..\GameMain\GameLogic.h"
-#include "..\GameMain\Globals.h"
+#include "../GameMain/GameLogic.h"
+#include "../GameMain/Globals.h"
 
-#include "..\Actor\Asteroid.h"
+#include "../Actor/Asteroid.h"
 
 StandardLevel::StandardLevel( GameLogic* parent, int levelNumber )
 	: Level( parent, levelNumber )
@@ -21,17 +21,21 @@ void StandardLevel::Initialize()
 	std::vector<Camera>& cameras = parent->GetCameras();
 	for( int i = 0; i < 9; i++ )
 	{
-		cameras.push_back( Camera() );
+		cameras.emplace_back();
 	}
-	cameras[0].Initialize( Vector2( 0, 0 ), Vector2( WORLD_WIDTH*0.99f, WORLD_HEIGHT*0.985f ), WINDOW_WIDTH, WINDOW_HEIGHT );		 // Center-Center
-	cameras[1].Initialize( Vector2( -WORLD_WIDTH, 0 ), Vector2( WORLD_WIDTH*0.99f, WORLD_HEIGHT*0.985f ), WINDOW_WIDTH, WINDOW_HEIGHT );	 // Left-Center
-	cameras[2].Initialize( Vector2( WORLD_WIDTH, 0 ), Vector2( WORLD_WIDTH*0.99f, WORLD_HEIGHT*0.985f ), WINDOW_WIDTH, WINDOW_HEIGHT );	 // Right-Center
-	cameras[3].Initialize( Vector2( -WORLD_WIDTH, WORLD_HEIGHT ), Vector2( WORLD_WIDTH*0.99f, WORLD_HEIGHT*0.985f ), WINDOW_WIDTH, WINDOW_HEIGHT ); // Left-Top
-	cameras[4].Initialize( Vector2( 0, WORLD_HEIGHT ), Vector2( WORLD_WIDTH*0.99f, WORLD_HEIGHT*0.985f ), WINDOW_WIDTH, WINDOW_HEIGHT );    // Center-Top
-	cameras[5].Initialize( Vector2( WORLD_WIDTH, WORLD_HEIGHT ), Vector2( WORLD_WIDTH*0.99f, WORLD_HEIGHT*0.985f ), WINDOW_WIDTH, WINDOW_HEIGHT );  // Right-Top
-	cameras[6].Initialize( Vector2( -WORLD_WIDTH, -WORLD_HEIGHT ), Vector2( WORLD_WIDTH*0.99f, WORLD_HEIGHT*0.985f ), WINDOW_WIDTH, WINDOW_HEIGHT );// Left-Bottom
-	cameras[7].Initialize( Vector2( 0, -WORLD_HEIGHT ), Vector2( WORLD_WIDTH*0.99f, WORLD_HEIGHT*0.985f ), WINDOW_WIDTH, WINDOW_HEIGHT );	 // Center-Bottom
-	cameras[8].Initialize( Vector2( WORLD_WIDTH, -WORLD_HEIGHT ), Vector2( WORLD_WIDTH*0.99f, WORLD_HEIGHT*0.985f ), WINDOW_WIDTH, WINDOW_HEIGHT ); // Right-Bottom
+
+	const float width = static_cast<float>(WORLD_WIDTH);
+	const float height = static_cast<float>(WORLD_HEIGHT);
+
+	cameras[0].Initialize( Vector2( 0, 0 ), Vector2(width*0.99f, height*0.985f ), WINDOW_WIDTH, WINDOW_HEIGHT );		 // Center-Center
+	cameras[1].Initialize( Vector2( -width, 0 ), Vector2(width*0.99f, height*0.985f ), WINDOW_WIDTH, WINDOW_HEIGHT );	 // Left-Center
+	cameras[2].Initialize( Vector2(width, 0 ), Vector2(width*0.99f, height*0.985f ), WINDOW_WIDTH, WINDOW_HEIGHT );	 // Right-Center
+	cameras[3].Initialize( Vector2( -width, height), Vector2(width*0.99f, height*0.985f ), WINDOW_WIDTH, WINDOW_HEIGHT ); // Left-Top
+	cameras[4].Initialize( Vector2( 0, height), Vector2(width*0.99f, height*0.985f ), WINDOW_WIDTH, WINDOW_HEIGHT );    // Center-Top
+	cameras[5].Initialize( Vector2(width, height), Vector2(width*0.99f, height*0.985f ), WINDOW_WIDTH, WINDOW_HEIGHT );  // Right-Top
+	cameras[6].Initialize( Vector2( -width, -height), Vector2(width*0.99f, height*0.985f ), WINDOW_WIDTH, WINDOW_HEIGHT );// Left-Bottom
+	cameras[7].Initialize( Vector2( 0, -height), Vector2(width*0.99f, height*0.985f ), WINDOW_WIDTH, WINDOW_HEIGHT );	 // Center-Bottom
+	cameras[8].Initialize( Vector2(width, -height), Vector2(width*0.99f, height*0.985f ), WINDOW_WIDTH, WINDOW_HEIGHT ); // Right-Bottom
 
 	
 	int numAsteroids = 0;
@@ -54,7 +58,7 @@ void StandardLevel::Initialize()
 		numAsteroids = 10;
 	}
 
-	list<Asteroid> asteroids;
+	std::vector<Asteroid> asteroids;
 
 	// Set up all the asteroids in the parent
 	// Initialize all of the asteroids 
@@ -72,11 +76,11 @@ void StandardLevel::Initialize()
 		else health = 3;
 
 		// Create the size
-		float sizeScale = (float)health / 5.0f; // value to make calculating other values easier
+		float sizeScale = static_cast<float>(health) / 5.0f; // value to make calculating other values easier
 		sizeScale += Random(-1, 1) / 10.0f; // introduce variation into the scale
 		if( health == 5 ) sizeScale *= 3; // special case massive asteroids
 		float size = sizeScale * (Asteroid::MAX_SIZE - Asteroid::MIN_SIZE) + Asteroid::MIN_SIZE;
-		int mass = sizeScale * (Asteroid::MAX_MASS - Asteroid::MIN_MASS) + Asteroid::MIN_MASS;
+		float mass = sizeScale * (Asteroid::MAX_MASS - Asteroid::MIN_MASS) + Asteroid::MIN_MASS;
 
 		Vector2 vel = Vector2( Random( -10, 10 ), Random( -10, 10 ) ); 
 		vel *= (2-(sizeScale/2)); // make smaller asteroids faster
@@ -84,7 +88,7 @@ void StandardLevel::Initialize()
 		// Pick random model
 		auto models = parent->GetAsteroidModels();
 		Model2D* model = models[ RandomInt( 0, models.size() ) ];
-		asteroids.push_back( Asteroid( pos, size, rot, model, vel, mass, health ) );
+		asteroids.emplace_back(pos, size, rot, model, vel, mass, health);
 	}
 
 	parent->AddAsteroids( asteroids );

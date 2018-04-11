@@ -21,7 +21,7 @@ public:
 	Camera();
 	~Camera();
 
-	void Initialize( const Vector2& center, const Vector2& size, const int windowWidth, const int windowHeight );
+	void Initialize(const Vector2& center, const Vector2& size, float windowWidth, float windowHeight);
 
 	// Takes world position and outputs a point with coords in the client dimensions
 	Vector2 ConvertWorldToScreenPos( const Vector2& worldPos ) const;

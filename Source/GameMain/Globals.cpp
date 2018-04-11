@@ -5,10 +5,10 @@
 #include "STD.h"
 #include "Globals.h"
 
-const int WORLD_HEIGHT = 180;
-const int WORLD_WIDTH = 240;
+const float WORLD_HEIGHT = 180;
+const float WORLD_WIDTH = 240;
 
-const int WINDOW_WIDTH = 800;
-const int WINDOW_HEIGHT = 600;
+const float WINDOW_WIDTH = 800;
+const float WINDOW_HEIGHT = 600;
 
 const int MAX_ASTEROIDS = 80;

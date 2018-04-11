@@ -9,10 +9,10 @@
 #define LEVEL_START_STATE_H
 
 #include "GameState.h"
-#include "..\EventManager\AnimationClock.h"
+#include "../EventManager/AnimationClock.h"
 
-#include "..\Graphics\Font.h"
-#include "..\Graphics\Sprite.h"
+#include "../Graphics/Font.h"
+#include "../Graphics/Sprite.h"
 
 class LevelStartState : public GameState
 {

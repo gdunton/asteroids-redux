@@ -11,7 +11,6 @@
 //
 // Copyright (c) Microsoft Corp. All rights reserved.
 //-----------------------------------------------------------------------------
-#define STRICT
 
 #include "WinWav.h"
 #undef min // use __min instead

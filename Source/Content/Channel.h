@@ -31,9 +31,9 @@ public:
 
 	// submit sound effect to the buffer and start playback
 	void PlayWav( MyWav* myWav );
-	bool PlayingSound();
+	bool PlayingSound() const;
 
-	void VStop();
+	void VStop() override;
 
 	void SetStopped( bool value ) { stopped = value; }
 };

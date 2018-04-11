@@ -12,7 +12,7 @@
 #define METEOR_SHOWER_LEVEL_H
 
 #include "Level.h"
-#include "..\EventManager\AnimationClock.h"
+#include "../EventManager/AnimationClock.h"
 
 class MeteorShowerLevel : public Level
 {

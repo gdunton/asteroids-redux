@@ -9,7 +9,7 @@
 #ifndef MODELMANAGER_H
 #define MODELMANAGER_H
 
-#include "..\Graphics\Model2D.h"
+#include "../Graphics/Model2D.h"
 
 class ModelManager : public Singleton< ModelManager >
 {

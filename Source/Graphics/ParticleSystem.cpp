@@ -29,15 +29,15 @@ void ParticleSystem::Reset()
 void ParticleSystem::AddParticles( std::vector<Particle>& particles )
 {
 	// Index for the objects in "particles"
-	int preAllocated = 0;
+	size_t preAllocated = 0;
 
 	// Attempt to allocate objects into existing space in the array
-	for( int i = 0; i < particleArray.size(); i++ )
+	for(auto& particle : particleArray)
 	{
-		if( !particleArray[i].Alive() )
+		if( !particle.Alive() )
 		{
 			// insert from beginning of newArray
-			particleArray[i] = particles[preAllocated];
+			particle = particles[preAllocated];
 			preAllocated++;
 
 			// Ran out particles to allocate
@@ -51,22 +51,22 @@ void ParticleSystem::AddParticles( std::vector<Particle>& particles )
 
 void ParticleSystem::Update( float dt )
 {
-	for( int i = 0; i < particleArray.size(); i++ )
+	for(auto& particle : particleArray)
 	{
-		if( particleArray[i].Alive() )
+		if(particle.Alive() )
 		{
-			particleArray[i].Update( dt );
+			particle.Update( dt );
 		}
 	}
 }
 
 void ParticleSystem::Render( Camera& camera )
 {
-	for( int i = 0; i < particleArray.size(); i++ )
+	for(auto& particle : particleArray)
 	{
-		if( particleArray[i].Alive() )
+		if(particle.Alive() )
 		{
-			particleArray[i].Render( camera );
+			particle.Render( camera );
 		}
 	}
 }

@@ -7,17 +7,17 @@
 #include "Game.h"
 #include "Globals.h"
 
-#include "..\Content\ModelManager.h"
-#include "..\Content\Level.h"
-#include "..\Content\StandardLevel.h"
-#include "..\Content\MeteorShowerLevel.h"
-#include "..\Content\DebugLevel.h"
-#include "..\Utilities\Functions.h"
-#include "..\Graphics\Particle.h"
+#include "../Content/ModelManager.h"
+#include "../Content/Level.h"
+#include "../Content/StandardLevel.h"
+#include "../Content/MeteorShowerLevel.h"
+#include "../Content/DebugLevel.h"
+#include "../Utilities/Functions.h"
+#include "../Graphics/Particle.h"
 
-#include "..\Graphics\DebugFont.h"
+#include "../Graphics/DebugFont.h"
 
-#include "..\Content\AudioManager.h"
+#include "../Content/AudioManager.h"
 
 GameLogic::GameLogic()
 {
@@ -54,10 +54,10 @@ void GameLogic::Initialize(Game* _game)
 	// Initialize the player
 	player = Player( Vector2( 0, 0 ), Vector2( 2, 3 ), 0,  
 		ModelManager::GetInstance().GetModel("PlayerAlt"), Vector2(0,0), 5, 
-		WORLD_WIDTH, WORLD_HEIGHT);
+		static_cast<int>(WORLD_WIDTH), static_cast<int>(WORLD_HEIGHT));
 
 	// Initialize the quad tree
-	quadtree.Initialize( NULL, MathTypes::Rectangle(Vector2(-(float)WORLD_WIDTH / 2, -(float)WORLD_HEIGHT / 2), 
+	quadtree.Initialize( NULL, MathTypes::Rectangle(Vector2(-WORLD_WIDTH / 2, -WORLD_HEIGHT / 2), 
 		Vector2(WORLD_WIDTH,WORLD_HEIGHT)), 0 );
 
 	worldArea = MathTypes::Rectangle( Vector2( -WORLD_WIDTH - (WORLD_WIDTH / 2), -WORLD_HEIGHT - (WORLD_HEIGHT / 2) ),
@@ -167,7 +167,7 @@ void GameLogic::Update( const float dt )
 		}
 
 		// Remove dead asteroids
-		list<Asteroid>::iterator i = asteroids.begin();
+		std::vector<Asteroid>::iterator i = asteroids.begin();
 		while( i != asteroids.end() )
 		{
 			if( !i->GetAlive() )
@@ -218,15 +218,15 @@ void GameLogic::Render( bool showLives, bool showLevelNum )
 	particleSystem.Render( cameras[0] );
 
 	// Loop each camera in camera array
-	for( int i = 0; i < cameras.size(); ++i )
+	for(auto& camera : cameras)
 	{
-		for( auto begin = asteroids.begin(), end = asteroids.end(); begin != end; ++begin )
+		for(auto& asteroid : asteroids)
 		{
 			// Check that the asteroids is in the camera
-			if( cameras[i].GetScreenRect().Intersects( begin->GetCircle() ) )
+			if(camera.GetScreenRect().Intersects(asteroid.GetCircle() ) )
 			{
 				// Render the object
-				begin->Render( cameras[i] );
+				asteroid.Render(camera);
 			}
 		}
 	}
@@ -234,26 +234,26 @@ void GameLogic::Render( bool showLives, bool showLevelNum )
 	// Render the player in each camera (if appliciple)
 	if( player.GetLives() > 0 )
 	{
-		for( int i = 0; i < cameras.size(); ++i )
+		for(auto& camera : cameras)
 		{
-			if( cameras[i].GetScreenRect().Intersects( player.GetCircle() ) )
+			if(camera.GetScreenRect().Intersects( player.GetCircle() ) )
 			{
-				player.Render( cameras[i] );
+				player.Render(camera);
 			}
 		}
 	}
 
 	// Render all of the player bullets
-	for( int i = 0; i < cameras.size(); ++i )
+	for(auto& camera : cameras)
 	{
 		Bullet* bulletList = player.GetBullets();
 		for( int j = 0; j < MAX_BULLETS; ++j )
 		{
 			if( bulletList[j].GetAlive() )
 			{
-				if( cameras[i].GetScreenRect().Intersects( bulletList[j].GetCircle() ) )
+				if(camera.GetScreenRect().Intersects( bulletList[j].GetCircle() ) )
 				{
-					bulletList[j].Render( cameras[i] );
+					bulletList[j].Render(camera);
 				}
 			}
 		}
@@ -264,7 +264,7 @@ void GameLogic::Render( bool showLives, bool showLevelNum )
 	{
 		for( int i = 0; i < player.GetLives(); i++ )
 		{
-			Vector2 pos(15 + (i*20),18);
+			Vector2 pos(15 + (static_cast<float>(i)*20),18);
 			lifeModel->Render( pos, Vector2(6,6), PI );
 		}
 	}
@@ -292,20 +292,19 @@ void GameLogic::Reset()
 	particleSystem.Reset();
 
 	// Create the first level
-	currentLevel = std::shared_ptr<Level>( new StandardLevel( this, 1 ) );
+	currentLevel = std::static_pointer_cast<Level>(std::make_shared<StandardLevel>(this, 1));
 	currentLevel->Initialize();
 
 	player.StartInvulnerability();
 }
 
-void GameLogic::AddAsteroids( std::list<Asteroid>& n )
+void GameLogic::AddAsteroids(std::vector<Asteroid>& n)
 {
 	// try adding the asteroids one at a time
 	for( int i = 0, size = n.size(); i < size; i++ )
 	{
 		quadtree.AddPhysicsObject( *n.begin() );
-		asteroids.splice( asteroids.end(), n, n.begin() );
-		
+		asteroids.insert( asteroids.end(), n.begin(), n.end() );
 	}
 }
 
@@ -332,7 +331,7 @@ void GameLogic::RemoveAsteroid( int id )
 		}
 	}
 }
-void GameLogic::RemoveAsteroid( list<Asteroid>::iterator i )
+void GameLogic::RemoveAsteroid(std::vector<Asteroid>::iterator i )
 {
 	quadtree.RemovePhysicsObject( i->GetID() );
 	asteroids.erase( i );
@@ -346,14 +345,13 @@ void GameLogic::RemoveAsteroid( const Asteroid& asteroid )
 void GameLogic::AddAsteroidsToQuadTree()
 {
 	// Add all the asteroids to the quadtree
-	for( auto begin = asteroids.begin(), end = asteroids.end();
-		begin != end; ++begin )
+	for(auto& asteroid : asteroids)
 	{
-		quadtree.AddPhysicsObject( *begin );
+		quadtree.AddPhysicsObject(asteroid);
 	}
 }
 
-bool GameLogic::LevelComplete()
+bool GameLogic::LevelComplete() const
 {
 	return currentLevel->Complete();
 }
@@ -370,7 +368,7 @@ void GameLogic::IncrementLevel()
 	int level = currentLevel->GetLevelNumber();
 	currentLevel.reset();
 	// Create a new level with an incremented difficulty
-	currentLevel = std::shared_ptr<Level>( new StandardLevel(this, level + 1) );
+	currentLevel = std::static_pointer_cast<Level>(std::make_shared<StandardLevel>(this, level + 1));
 	currentLevel->Initialize();
 
 	player.StartInvulnerability();

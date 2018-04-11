@@ -10,8 +10,8 @@
 #include "GameLogic.h"
 
 #include "Globals.h"
-#include "..\Utilities\FastDelegate.h"
-#include "..\Input\Keyboard.h"
+#include "../Utilities/FastDelegate.h"
+#include "../Input/Keyboard.h"
 #include "LevelStartState.h"
 #include "MainMenuState.h"
 

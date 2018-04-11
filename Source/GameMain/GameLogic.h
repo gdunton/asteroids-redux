@@ -9,13 +9,13 @@
 #ifndef GAMELOGIC_H
 #define GAMELOGIC_H
 
-#include "..\Actor\Asteroid.h"
-#include "..\Actor\Player.h"
-#include "..\Actor\Bullet.h"
-#include "..\Graphics\Camera.h"
-#include "..\Actor\Quadtree.h"
-#include "..\Graphics\ParticleSystem.h"
-#include "..\Graphics\Font.h"
+#include "../Actor/Asteroid.h"
+#include "../Actor/Player.h"
+#include "../Actor/Bullet.h"
+#include "../Graphics/Camera.h"
+#include "../Actor/Quadtree.h"
+#include "../Graphics/ParticleSystem.h"
+#include "../Graphics/Font.h"
 
 class Game;
 class Level;
@@ -28,7 +28,7 @@ private:
 
 	// Game objects
 	std::vector<Camera> cameras; 
-	std::list<Asteroid> asteroids;
+	std::vector<Asteroid> asteroids;
 
 	std::shared_ptr<Level> currentLevel;
 
@@ -65,7 +65,7 @@ public:
 	void Reset();
 
 	// Level based functions for classes to be able to control level progression
-	bool LevelComplete();
+	bool LevelComplete() const;
 	void IncrementLevel();
 
 	// Set the game into idle mode. Used for main menu
@@ -79,7 +79,7 @@ public:
 	std::vector<Model2D*>& GetAsteroidModels() { return asteroidModels; }
 
 	// Functions to add and remove asteroids from the list. Used for levels
-	void AddAsteroids( std::list<Asteroid>& asteroids );
+	void AddAsteroids(std::vector<Asteroid>& asteroids);
 	void RemoveAllAsteroids();
 	int NumAsteroids();
 
@@ -89,7 +89,7 @@ private:
 	
 	// Functions for removing asteroids by id or index
 	void RemoveAsteroid( int ID );
-	void RemoveAsteroid( list<Asteroid>::iterator i );
+	void RemoveAsteroid( std::vector<Asteroid>::iterator i );
 	void RemoveAsteroid( const Asteroid& asteroid );
 
 	void AddAsteroidsToQuadTree();

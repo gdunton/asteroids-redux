@@ -7,8 +7,8 @@
 #ifndef MENU_ITEM_H
 #define MENU_ITEM_H
 
-#include "..\Graphics\Font.h"
-#include "..\Utilities\FastDelegate.h"
+#include "../Graphics/Font.h"
+#include "../Utilities/FastDelegate.h"
 
 class GameState;
 

@@ -9,9 +9,9 @@
 #define GAME_OVER_STATE_H
 
 #include "GameState.h"
-#include "..\Graphics\Font.h"
-#include "..\Content\Menu.h"
-#include "..\Graphics\Sprite.h"
+#include "../Graphics/Font.h"
+#include "../Content/Menu.h"
+#include "../Graphics/Sprite.h"
 
 class GameOverState : public GameState
 {

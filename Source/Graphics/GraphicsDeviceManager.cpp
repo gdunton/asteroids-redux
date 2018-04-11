@@ -43,8 +43,8 @@ bool GraphicsDeviceManager::Initialize( Window& window, bool windowed )
 {
 	DXGI_SWAP_CHAIN_DESC swapDesc;
 	ZeroMemory(&swapDesc, sizeof(swapDesc));
-	swapDesc.BufferDesc.Width = WINDOW_WIDTH;
-	swapDesc.BufferDesc.Height = WINDOW_HEIGHT;
+	swapDesc.BufferDesc.Width = static_cast<unsigned int>(WINDOW_WIDTH);
+	swapDesc.BufferDesc.Height = static_cast<unsigned int>(WINDOW_HEIGHT);
 	swapDesc.BufferDesc.Scaling = DXGI_MODE_SCALING_CENTERED;
 	swapDesc.BufferDesc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
 	swapDesc.SampleDesc.Count = 1;
@@ -94,7 +94,7 @@ bool GraphicsDeviceManager::Initialize( Window& window, bool windowed )
 	backBuffer->Release();
 
 	CD3D11_TEXTURE2D_DESC depthStencilDesc(DXGI_FORMAT_D24_UNORM_S8_UINT, 
-		WINDOW_WIDTH, WINDOW_HEIGHT, 1, 1, D3D11_BIND_DEPTH_STENCIL);
+		static_cast<unsigned int>(WINDOW_WIDTH), static_cast<unsigned int>(WINDOW_HEIGHT), 1, 1, D3D11_BIND_DEPTH_STENCIL);
 	ID3D11Texture2D* depthStencil;
 	m_pGraphicsDevice->CreateTexture2D(&depthStencilDesc, nullptr, &depthStencil);
 	CD3D11_DEPTH_STENCIL_VIEW_DESC depthStencilViewDesc(D3D11_DSV_DIMENSION_TEXTURE2D);

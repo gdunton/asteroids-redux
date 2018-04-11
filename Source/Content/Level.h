@@ -8,7 +8,7 @@
 #ifndef LEVEL_H
 #define LEVEL_H
 
-#include "..\Utilities\Functions.h"
+#include "../Utilities/Functions.h"
 
 class GameLogic;
 

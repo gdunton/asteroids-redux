@@ -6,10 +6,10 @@
 #include "GamePausedState.h"
 
 #include "GameStateManager.h"
-#include "..\Utilities\FastDelegate.h"
+#include "../Utilities/FastDelegate.h"
 #include "Globals.h"
 
-#include "..\Input\Keyboard.h"
+#include "../Input/Keyboard.h"
 
 #include "MainGameState.h"
 #include "MainMenuState.h"

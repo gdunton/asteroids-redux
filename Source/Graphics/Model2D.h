@@ -27,7 +27,7 @@ public:
 	~Model2D();
 
 	void Render( Camera& camera, const World& world );
-	void Render( Vector2& screenPosition, Vector2& scale, float rotation );
+	void Render(const Vector2& screenPosition, const Vector2& scale, float rotation);
 
 	// Calculates the radius of the model
 	void CalculateModelStats();

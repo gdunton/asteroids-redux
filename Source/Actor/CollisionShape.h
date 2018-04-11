@@ -31,7 +31,7 @@ public:
 	  
 private:
 	 // Get the points transformed by the world data
-	 const std::shared_ptr<std::vector<Vector2>> GetTransformedPoints() const;
+	std::shared_ptr<std::vector<Vector2>> GetTransformedPoints() const;
 
 	 // Return true if the two arrays of points can be seperated.
 	 // Gives back the minimum resolution vector

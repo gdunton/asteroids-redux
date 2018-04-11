@@ -8,9 +8,9 @@
 #define PLAYER_H
 
 #include "PhysicsObject.h"
-#include "..\Graphics\Camera.h"
+#include "../Graphics/Camera.h"
 #include "Bullet.h"
-#include "..\EventManager\AnimationClock.h"
+#include "../EventManager/AnimationClock.h"
 
 class Model2D;
 
@@ -46,7 +46,7 @@ private:
 	AnimationClock invulnerabilityClock;
 	AnimationClock pulseClock;
 	float pulseSeconds;
-	int alpha;
+	float alpha;
 
 	//IStoppable* invulnerabilitySound;
 	IStoppable* thrustSound;
@@ -80,7 +80,7 @@ public:
 	// Life related functions
 	void RemoveLife();
 	void AddLife();
-	bool Alive();
+	bool Alive() const;
 	void KillPlayer();
 
 	// Functions to reset the values on the player

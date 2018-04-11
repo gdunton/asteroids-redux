@@ -10,9 +10,9 @@
 #define CONTROL_SCREEN_STATE_H
 
 #include "GameState.h"
-#include "..\Graphics\Font.h"
-#include "..\Graphics\Sprite.h"
-#include "..\Input\KeyboardState.h"
+#include "../Graphics/Font.h"
+#include "../Graphics/Sprite.h"
+#include "../Input/KeyboardState.h"
 
 class ControlScreenState : public GameState
 {

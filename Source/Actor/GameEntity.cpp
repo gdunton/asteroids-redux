@@ -5,7 +5,7 @@
 #include "STD.h"
 #include "GameEntity.h"
 
-#include "..\GameMain\Globals.h"
+#include "../GameMain/Globals.h"
 
 int GameEntity::lastID = 1;
 

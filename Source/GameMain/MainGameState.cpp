@@ -6,8 +6,8 @@
 #include "GamePausedState.h"
 #include "LevelCompleteState.h"
 
-#include "..\Actor\Player.h"
-#include "..\Input\Keyboard.h"
+#include "../Actor/Player.h"
+#include "../Input/Keyboard.h"
 
 #include "Globals.h"
 

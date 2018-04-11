@@ -4,7 +4,7 @@
 
 #include "STD.h"
 #include "TextureManager.h"
-#include "..\Graphics\GraphicsDeviceManager.h"
+#include "../Graphics/GraphicsDeviceManager.h"
 #include "../GameMain/Globals.h"
 
 template<> TextureManager* Singleton<TextureManager>::instance = NULL;
@@ -48,7 +48,7 @@ Vector2 TextureManager::GetDimensions(const String& name)
 	ZeroMemory(&desc, sizeof(desc));
 	m_textureMap[name].texture->GetDesc(&desc);
 
-	return Vector2(desc.Width, desc.Height);
+	return Vector2(static_cast<float>(desc.Width), static_cast<float>(desc.Height));
 }
 
 void TextureManager::CreateTransparencyRect()
@@ -56,8 +56,8 @@ void TextureManager::CreateTransparencyRect()
 	// Create the texture
 	D3D11_TEXTURE2D_DESC desc;
 
-	desc.Width = WINDOW_WIDTH;
-	desc.Height = WINDOW_HEIGHT;
+	desc.Width = static_cast<unsigned int>(WINDOW_WIDTH);
+	desc.Height = static_cast<unsigned int>(WINDOW_HEIGHT);
 	desc.MipLevels = 1;
 	desc.ArraySize = 1;
 	desc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
@@ -70,7 +70,7 @@ void TextureManager::CreateTransparencyRect()
 
 	ID3D11Texture2D* texture = NULL;
 
-	float* buffer = new float[WINDOW_WIDTH * WINDOW_HEIGHT * 4];
+	float* buffer = new float[static_cast<int>(WINDOW_WIDTH) * static_cast<int>(WINDOW_HEIGHT) * 4];
 
 	for (int y = 0; y < WINDOW_HEIGHT * WINDOW_WIDTH * 4; ++y) 
 	{
@@ -78,8 +78,8 @@ void TextureManager::CreateTransparencyRect()
 	}
 
 	D3D11_SUBRESOURCE_DATA texData;
-	texData.SysMemPitch = WINDOW_WIDTH * sizeof(float) * 4;
-	texData.SysMemSlicePitch = WINDOW_WIDTH * WINDOW_HEIGHT * sizeof(float) * 4;
+	texData.SysMemPitch = static_cast<int>(WINDOW_WIDTH) * sizeof(float) * 4;
+	texData.SysMemSlicePitch = static_cast<int>(WINDOW_WIDTH) * static_cast<int>(WINDOW_HEIGHT) * sizeof(float) * 4;
 	texData.pSysMem = (void*)buffer;
 
 	HRESULT hr = GraphicsDeviceManager::GetInstance().GetDevice()->CreateTexture2D(&desc, &texData, &texture);

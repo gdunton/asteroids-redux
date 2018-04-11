@@ -5,11 +5,11 @@
 #include "STD.h"
 #include "Asteroid.h"
 
-#include "..\Graphics\Camera.h"
-#include "..\Graphics\Model2D.h"
-#include "..\Content\ModelManager.h"
+#include "../Graphics/Camera.h"
+#include "../Graphics/Model2D.h"
+#include "../Content/ModelManager.h"
 
-#include "..\GameMain\Globals.h"
+#include "../GameMain/Globals.h"
 
 // Constant definitions
 const float Asteroid::MAX_SIZE = 6.0f;

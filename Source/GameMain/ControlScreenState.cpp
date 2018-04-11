@@ -9,9 +9,9 @@
 #include "GameLogic.h"
 #include "Globals.h"
 
-#include "..\Input\Keyboard.h"
+#include "../Input/Keyboard.h"
 #include "MainMenuState.h"
-#include "..\Actor\Player.h"
+#include "../Actor/Player.h"
 
 // List of descriptions and their controls
 String const ControlScreenState::controlStrings[] = { 
@@ -107,9 +107,9 @@ void ControlScreenState::Render()
 
 	// Draw all the controls strings
 	// Set the y coord of the first string
-	int sampleHeight = subFont1.GetTextSize( "1" ).y;
+	float sampleHeight = subFont1.GetTextSize( "1" ).y;
 	int iterations = sizeof( controlStrings ) / sizeof( String );
-	textPos.y = (WINDOW_HEIGHT / 2) - (sampleHeight * (iterations / 2 + 4));
+	textPos.y = (WINDOW_HEIGHT / 2) - (sampleHeight * (static_cast<float>(iterations) / 2 + 4));
 	for( int i = 0; i < iterations; ++i )
 	{
 		size = subFont1.GetTextSize( controlStrings[i] );

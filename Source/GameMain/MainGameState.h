@@ -9,7 +9,7 @@
 
 #include "GameState.h"
 
-#include "..\Input\KeyboardState.h"
+#include "../Input/KeyboardState.h"
 
 class MainGameState : public GameState
 {

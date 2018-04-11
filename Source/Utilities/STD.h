@@ -37,7 +37,7 @@ using Vector2 = DirectX::SimpleMath::Vector2;
 // The typedefs for matrices and colors
 typedef DirectX::SimpleMath::Matrix Matrix;
 typedef DirectX::XMFLOAT4 Color;
-inline Color ColorRGBA( int r, int g, int b, int a ) { return DirectX::XMFLOAT4(r, g, b, a); }
+inline Color ColorRGBA( float r, float g, float b, float a ) { return DirectX::XMFLOAT4(r, g, b, a); }
 // Define color constants
 constexpr Color GREEN = Color(255, 0, 255, 255);
 constexpr Color BLACK = Color(0, 0, 0, 255);

@@ -5,9 +5,9 @@
 #include "STD.h"
 #include "MeteorShowerLevel.h"
 
-#include "..\GameMain\GameLogic.h"
-#include "..\GameMain\Globals.h"
-#include "..\Actor\Asteroid.h"
+#include "../GameMain/GameLogic.h"
+#include "../GameMain/Globals.h"
+#include "../Actor/Asteroid.h"
 
 const float MeteorShowerLevel::MAX_TIME_TILL_ASTEROIDS = 3.0f;
 const float MeteorShowerLevel::MIN_TIME_TILL_ASTEROIDS = 1.5f;
@@ -31,11 +31,11 @@ void MeteorShowerLevel::Initialize()
 	cameras.push_back( Camera() );
 	cameras[0].Initialize( Vector2( 0, 0 ), Vector2( WORLD_WIDTH*0.99f, WORLD_HEIGHT*0.985f ), WINDOW_WIDTH, WINDOW_HEIGHT );		 // Center-Center
 
-	int numAsteroids = MIN_ASTEROIDS_PER_COUNTDOWN + Random() * 
+	int numAsteroids = MIN_ASTEROIDS_PER_COUNTDOWN + static_cast<int>(Random()) * 
 		(MAX_ASTEROIDS_PER_COUNTDOWN - MIN_ASTEROIDS_PER_COUNTDOWN) * 4;
 
 	// Create the asteroids
-	list<Asteroid> asteroids;
+	std::vector<Asteroid> asteroids;
 	for( int i = 0; i < numAsteroids; i++ )
 	{
 		Asteroid asteroid;
@@ -67,10 +67,10 @@ void MeteorShowerLevel::Update( float dt )
 	if( asteroidTimer.GetDeltaTime() >= timeTillAsteroids )
 	{
 		// Add some more asteroids
-		int numAsteroids = MIN_ASTEROIDS_PER_COUNTDOWN + Random() * 
+		int numAsteroids = MIN_ASTEROIDS_PER_COUNTDOWN + static_cast<int>(Random()) * 
 			(MAX_ASTEROIDS_PER_COUNTDOWN - MIN_ASTEROIDS_PER_COUNTDOWN);
 
-		list<Asteroid> newAsteroids;
+		std::vector<Asteroid> newAsteroids;
 		for( int i = 0; i < numAsteroids; i++ )
 		{
 			Asteroid asteroid;
@@ -88,9 +88,12 @@ void MeteorShowerLevel::Update( float dt )
 
 void MeteorShowerLevel::CreateAsteroid( Asteroid& asteroid )
 {
+	const float width = static_cast<float>(WINDOW_WIDTH);
+	const float height = static_cast<float>(WINDOW_HEIGHT);
+
 	Vector2 pos = Vector2( 
-				Random( (WORLD_WIDTH/2) + 30 , WORLD_WIDTH + WORLD_WIDTH/2), 
-				Random( -WORLD_HEIGHT/2, WORLD_HEIGHT/2 ) );
+				Random( (width /2) + 30 , width + width /2),
+				Random( -height /2, height /2 ) );
 	float rot = Random( -PI, PI );
 	// Create the health then base the size, mass and velocity on health
 	float random = Random();
@@ -102,14 +105,14 @@ void MeteorShowerLevel::CreateAsteroid( Asteroid& asteroid )
 	else health = 3;
 
 	// Create the size
-	float sizeScale = (float)health / 5.0f; // value to make calculating other values easier
+	float sizeScale = static_cast<float>(health) / 5.0f; // value to make calculating other values easier
 	if( health == 5 ) sizeScale *= 2;
 	float size = sizeScale * (Asteroid::MAX_SIZE - Asteroid::MIN_SIZE) + Asteroid::MIN_SIZE;
-	int mass = sizeScale * (Asteroid::MAX_MASS - Asteroid::MIN_MASS) + Asteroid::MIN_MASS;
+	float mass = sizeScale * (Asteroid::MAX_MASS - Asteroid::MIN_MASS) + Asteroid::MIN_MASS;
 
-	float maxVelY = WORLD_HEIGHT/2 - 20;
-	float minVelY = -WORLD_WIDTH / 2 + 20;
-	Vector2 vel = Vector2( -WORLD_WIDTH/2, minVelY + Random() * (maxVelY - minVelY) );
+	float maxVelY = height/2 - 20;
+	float minVelY = -width/ 2 + 20;
+	Vector2 vel = Vector2( -width/2, minVelY + Random() * (maxVelY - minVelY) );
 	vel -= pos;
 	Normalize( vel );
 	vel *= Random(2, 20);

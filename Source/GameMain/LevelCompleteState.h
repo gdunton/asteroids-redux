@@ -9,7 +9,7 @@
 #define LEVEL_COMPLETE_STATE_H
 
 #include "GameState.h"
-#include "..\EventManager\AnimationClock.h"
+#include "../EventManager/AnimationClock.h"
 
 class LevelCompleteState : public GameState
 {

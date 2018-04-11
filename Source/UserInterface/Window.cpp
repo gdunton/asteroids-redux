@@ -5,7 +5,7 @@
 #include "STD.h"
 #include "Window.h"
 
-#include "..\resource.h"
+#include "../resource.h"
 
 Window::Window()
 {

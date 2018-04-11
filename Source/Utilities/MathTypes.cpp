@@ -6,7 +6,7 @@
 #include "MathTypes.h"
 #include <math.h>
 
-#include "..\Content\ModelManager.h"
+#include "../Content/ModelManager.h"
 
 using MathTypes::Circle;
 using MathTypes::Rectangle;
@@ -67,35 +67,35 @@ float Dot( const Vector2& point1, const Vector2& point2 )
 //-------------------------------------------------------
 // World wrap math functions
 //-------------------------------------------------------
-void WrapVector2( int width, int height, Vector2& pos )
+void WrapVector2(float width, float height, Vector2& pos)
 {
 	// Force the player to wrap around the world
 	// Check that the position doesn't wrap around the screen
 	if( pos.x < (-width / 2) || pos.x > (width / 2) )
 	{
 		pos.x += width / 2;
-		pos.x = NegativeMod( pos.x, width );
+		pos.x = NegativeMod( pos.x, static_cast<int>(width) );
 		pos.x -= width / 2;
 	}
 
 	if( pos.y < (-height / 2) || pos.y > (height / 2))
 	{
 		pos.y += height / 2;
-		pos.y = NegativeMod( pos.y, height );
+		pos.y = NegativeMod( pos.y, static_cast<int>(height) );
 		pos.y -= height / 2;
 	}	
 }
 
-void GetShortestWrappedDistance( const Vector2& p1, const Vector2& p2, 
-	const int worldW, const int worldH, Vector2& out )
+void GetShortestWrappedDistance(const Vector2& p1, const Vector2& p2,
+                                float worldW, float worldH, Vector2& out)
 {
 	// Get the half distances
-	double hWH = worldH / 2;
-	double hWW = worldW / 2;
+	const float hWH = worldH / 2;
+	const float hWW = worldW / 2;
 
 	// Might need to strip off the floating point value?????
-	out.x = fmod((p2.x + hWW - p1.x + worldW) , worldW ) - hWW;
-	out.y = fmod((p2.y + hWH - p1.y + worldH) , worldH ) - hWH;
+	out.x = fmod((p2.x + hWW - p1.x + worldW), worldW) - hWW;
+	out.y = fmod((p2.y + hWH - p1.y + worldH), worldH) - hWH;
 }
 
 //----------------------------------------------------------------------

@@ -8,7 +8,7 @@
 #include "PhysicsObject.h"
 
 #ifdef DEBUG
-#include "..\Graphics\DebugFont.h"
+#include "../Graphics/DebugFont.h"
 #endif
 
 const int Quadtree::MAX_CHILDREN = 5;

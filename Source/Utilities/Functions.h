@@ -6,8 +6,8 @@
 #ifndef FUNCTIONS_H
 #define FUNCTIONS_H
 
-#include "..\Actor\Asteroid.h"
-#include "..\Graphics\Particle.h"
+#include "../Actor/Asteroid.h"
+#include "../Graphics/Particle.h"
 
 // Converts an asteroid into a collection of particles for insertion into
 // a particle system. Simplifies asteroid destruction

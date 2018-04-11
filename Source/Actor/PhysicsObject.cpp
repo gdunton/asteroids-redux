@@ -4,7 +4,7 @@
 
 #include "STD.h"
 #include "PhysicsObject.h"
-#include "..\GameMain\Globals.h"
+#include "../GameMain/Globals.h"
 
 PhysicsObject::PhysicsObject( const Vector2& _pos, const Vector2& _size, 
 	float _rot, Model2D* _model, const Vector2& _velocity, 
@@ -76,7 +76,7 @@ void PhysicsObject::PerformCollisionCalculation( PhysicsObject& object )
 	if( wrapAroundWorld )
 	{
 		GetShortestWrappedDistance( world.pos, object.GetPos(), 
-			WORLD_WIDTH, WORLD_HEIGHT, direction );
+		                            WORLD_WIDTH, WORLD_HEIGHT, direction );
 	}
 	else
 	{

@@ -8,7 +8,7 @@
 #define MYWAV_H
 
 #include <XAudio2.h>
-#include "..\Utilities\WinWav.h"
+#include "../Utilities/WinWav.h"
 
 typedef unsigned char Byte;
 

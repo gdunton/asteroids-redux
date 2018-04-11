@@ -7,8 +7,8 @@
 #ifndef GAME_ENTITY_H
 #define GAME_ENTITY_H
 
-#include "..\Graphics\Model2D.h"
-#include "..\Graphics\Camera.h"
+#include "../Graphics/Model2D.h"
+#include "../Graphics/Camera.h"
 
 class GameEntity
 {

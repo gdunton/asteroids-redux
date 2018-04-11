@@ -11,7 +11,7 @@
 #include "ControlScreenState.h"
 #include "Game.h"
 
-#include "..\Utilities\FastDelegate.h"
+#include "../Utilities/FastDelegate.h"
 #include "Globals.h"
 
 MainMenuState::MainMenuState( GameStateManager* parent ) :

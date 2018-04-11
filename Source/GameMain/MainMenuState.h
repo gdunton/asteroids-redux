@@ -10,10 +10,10 @@
 #define MAIN_MENU_STATE
 
 #include "GameState.h"
-#include "..\Graphics\Font.h"
-#include "..\Content\Menu.h"
+#include "../Graphics/Font.h"
+#include "../Content/Menu.h"
 
-#include "..\Graphics\Sprite.h"
+#include "../Graphics/Sprite.h"
 
 class MainMenuState : public GameState
 {

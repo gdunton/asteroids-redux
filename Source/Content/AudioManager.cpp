@@ -5,60 +5,61 @@
 #include "STD.h"
 #include "AudioManager.h"
 
-template<> AudioManager* Singleton<AudioManager>::instance = NULL;
+template<>
+AudioManager* Singleton<AudioManager>::instance = nullptr;
 const int AudioManager::NUM_CHANNELS = 10;
 
 AudioManager::AudioManager()
 {
-	GetAssetsDir( assetsDir );
+	GetAssetsDir(assetsDir);
 
 	// Create the audio device and mastering voice
-	xAudio2 = 0;
-	masteringVoice = 0;
+	xAudio2 = nullptr;
+	masteringVoice = nullptr;
 
 	unsigned int flags = 0;
 #ifdef DEBUG
 	flags |= XAUDIO2_DEBUG_ENGINE;
 #endif
 
-	HRESULT hr = XAudio2Create( &xAudio2/*, flags*/ );
-	if( hr != S_OK )
+	HRESULT hr = XAudio2Create(&xAudio2/*, flags*/);
+	if(hr != S_OK)
 	{
-		MessageBox( NULL, L"Failed to initialize XAudio2 pointer", L"Initialization Error", MB_OK );
-		if( xAudio2 )
+		MessageBox(nullptr, L"Failed to initialize XAudio2 pointer", L"Initialization Error", MB_OK);
+		if(xAudio2)
 		{
 			xAudio2->Release();
-			xAudio2 = 0;
+			xAudio2 = nullptr;
 		}
 		return;
 	}
-	hr = xAudio2->CreateMasteringVoice( &masteringVoice );
-	if( hr != S_OK )
+	hr = xAudio2->CreateMasteringVoice(&masteringVoice);
+	if(hr != S_OK)
 	{
-		MessageBox( NULL, L"Failed to create master voice", L"Initialization Error", MB_OK );
-		if( masteringVoice )
+		MessageBox(nullptr, L"Failed to create master voice", L"Initialization Error", MB_OK);
+		if(masteringVoice)
 		{
 			masteringVoice->DestroyVoice();
-			masteringVoice = 0;
+			masteringVoice = nullptr;
 		}
 		return;
 	}
 
 	// Reset the master volume
 	float volume = 0;
-	masteringVoice->GetVolume( &volume );
+	masteringVoice->GetVolume(&volume);
 	volume *= 0.2f;
-	masteringVoice->SetVolume( volume );
+	masteringVoice->SetVolume(volume);
 
-	channels.reserve( NUM_CHANNELS );
+	channels.reserve(NUM_CHANNELS);
 }
 
 AudioManager::~AudioManager()
 {
 	// Clear up all the channels
-	for( int i = 0; i < channels.size(); i++ )
+	for(auto& channel : channels)
 	{
-		channels[i].Destroy();
+		channel.Destroy();
 	}
 	channels.clear();
 
@@ -66,11 +67,11 @@ AudioManager::~AudioManager()
 	soundMap.clear();
 
 	// Destroy the mastering voice and the audio device
-	if( masteringVoice )
+	if(masteringVoice)
 	{
 		masteringVoice->DestroyVoice();
 	}
-	if( xAudio2 )
+	if(xAudio2)
 	{
 		CoUninitialize();
 	}
@@ -80,57 +81,59 @@ void AudioManager::LoadAllAssets()
 {
 	GetInstance().InLoadAllAssets();
 }
+
 void AudioManager::InLoadAllAssets()
 {
 	// Ensure that xAudio has been created
-	if( xAudio2 == 0 || masteringVoice == 0 )
+	if(xAudio2 == nullptr || masteringVoice == nullptr)
 	{
 		return;
 	}
 
 	// Load each asset from the default directory
-	LoadWavFile( "explode1.wav", "Bang1" );
-	LoadWavFile( "explode2.wav", "Bang2" );
-	LoadWavFile( "explode3.wav", "Bang3" );
-	LoadWavFile( "life.wav", "NewLife", true );
-	LoadWavFile( "fire.wav", "Fire" );
-	LoadWavFile( "thrust.wav", "Thrust", true );
-	LoadWavFile( "sfire.wav", "FireAlt" );
-	LoadWavFile( "thump.wav", "Thump" );
+	LoadWavFile("explode1.wav", "Bang1");
+	LoadWavFile("explode2.wav", "Bang2");
+	LoadWavFile("explode3.wav", "Bang3");
+	LoadWavFile("life.wav", "NewLife", true);
+	LoadWavFile("fire.wav", "Fire");
+	LoadWavFile("thrust.wav", "Thrust", true);
+	LoadWavFile("sfire.wav", "FireAlt");
+	LoadWavFile("thump.wav", "Thump");
 
 	// Create all the channels
 	WAVEFORMATEX* sampleFormat = soundMap["Thrust"]->GetWavFormat();
-	for( int i = 0; i < NUM_CHANNELS; i++ )
+	for(int i = 0; i < NUM_CHANNELS; i++)
 	{
 		// Push the channel into the channel buffer
-		channels.push_back( Channel() );
-		channels.back().Init( xAudio2, sampleFormat );
+		channels.emplace_back();
+		channels.back().Init(xAudio2, sampleFormat);
 	}
 }
 
-IStoppable* AudioManager::PlaySoundByName( String soundName )
+IStoppable* AudioManager::PlaySoundByName(String soundName)
 {
-	return GetInstance().InPlaySoundByName( soundName );
+	return GetInstance().InPlaySoundByName(soundName);
 }
-IStoppable* AudioManager::InPlaySoundByName( String soundName )
+
+IStoppable* AudioManager::InPlaySoundByName(String soundName)
 {
 	// Ensure that xAudio has been created
-	if( xAudio2 == 0 || masteringVoice == 0 )
+	if(xAudio2 == nullptr || masteringVoice == nullptr)
 	{
-		return NULL;
+		return nullptr;
 	}
 
 	// Search for a free channel. 
 	// Loop an iterator until either then end of the array has been reached (return null)
 	// or a clear channel has been found
 	int i = 0;
-	for( auto beg = channels.begin(), end = channels.end(); ; ++beg, i++ ) // remember to increment i each time
+	for(auto beg = channels.begin(), end = channels.end(); ; ++beg, i++) // remember to increment i each time
 	{
-		if( beg == end )
+		if(beg == end)
 		{
-			return NULL;
+			return nullptr;
 		}
-		if( !beg->PlayingSound() )
+		if(!beg->PlayingSound())
 		{
 			break;
 		}
@@ -139,8 +142,8 @@ IStoppable* AudioManager::InPlaySoundByName( String soundName )
 	ASSERT( channels[i].PlayingSound() == false );
 
 	// play the wav through the channel and pass back the channel as IStoppable
-	channels[i].PlayWav( soundMap[soundName].get() );
-
+	channels[i].PlayWav(soundMap[soundName].get());
+	
 	return &channels[i];
 }
 
@@ -148,36 +151,37 @@ void AudioManager::StopAllSound()
 {
 	GetInstance().InStopAllSound();
 }
+
 void AudioManager::InStopAllSound()
 {
-	for( int i = 0; i < channels.size(); i++ )
+	for(auto& channel : channels)
 	{
-		if( channels[i].PlayingSound() )
+		if(channel.PlayingSound())
 		{
-			channels[i].VStop();
+			channel.VStop();
 		}
 	}
 }
 
-void AudioManager::LoadWavFile( String filename, String assetName, bool soundLoops )
+void AudioManager::LoadWavFile(String filename, String assetName, bool soundLoops)
 {
 	// Remove the file from the map if already loaded
-	auto iterator = soundMap.find( assetName );
-	if( iterator != soundMap.end() )
+	auto iterator = soundMap.find(assetName);
+	if(iterator != soundMap.end())
 	{
-		soundMap.erase( iterator );
+		soundMap.erase(iterator);
 	}
 
 	// Load the file
 	MyWav* newWave = new MyWav();
-	if( newWave->LoadFile( assetsDir + filename, GetInstance().xAudio2, soundLoops ) )
+	if(newWave->LoadFile(assetsDir + filename, GetInstance().xAudio2, soundLoops))
 	{
 		// Loaded the file
-		soundMap[ assetName ] = std::shared_ptr<MyWav>(newWave);
+		soundMap[assetName] = std::shared_ptr<MyWav>(newWave);
 	}
 	else
 	{
 		delete newWave;
-		newWave = 0;
+		newWave = nullptr;
 	}
 }

@@ -6,16 +6,16 @@
 #include "Game.h"
 
 // State managers. All singletons
-#include "..\Input\Keyboard.h"
-#include "..\Graphics\GraphicsDeviceManager.h"
-#include "..\Content\ModelManager.h"
-#include "..\Content\TextureManager.h"
-#include "..\Content\AudioManager.h"
+#include "../Input/Keyboard.h"
+#include "../Graphics/GraphicsDeviceManager.h"
+#include "../Content/ModelManager.h"
+#include "../Content/TextureManager.h"
+#include "../Content/AudioManager.h"
 
 #include "Globals.h"
 
 #include "MainMenuState.h"
-#include "..\Graphics\DebugFont.h"
+#include "../Graphics/DebugFont.h"
 #include "MainGameState.h"
 
 
@@ -101,7 +101,7 @@ void Game::VRender()
 	
 	// Draw the frames per second on screen
 #ifdef DEBUG
-	//font.DrawString( fpsString, Vector2( 0, 0 ) );
+	font.DrawString( fpsString, Vector2( 0, 0 ) );
 #endif
 
 	GraphicsDeviceManager::GetInstance().EndScene();

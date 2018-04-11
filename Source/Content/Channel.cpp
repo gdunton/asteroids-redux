@@ -9,48 +9,48 @@
 
 Channel::Channel()
 {
-	sourceVoice = 0;
+	sourceVoice = nullptr;
 	stopped = true;
 }
 
 Channel::~Channel()
 {
-	if( sourceVoice )
+	if(sourceVoice)
 	{
 		ASSERTMSG( false, "Shouldn't be here. Remember to destroy Channel" );
 	}
 }
 
-void Channel::Init( IXAudio2* xAudio2, WAVEFORMATEX* format )
+void Channel::Init(IXAudio2* xAudio2, WAVEFORMATEX* format)
 {
-	if( sourceVoice )
+	if(sourceVoice)
 	{
 		// source voice has already been initialized
 		sourceVoice->DestroyVoice();
-		sourceVoice = 0;
+		sourceVoice = nullptr;
 	}
-	callbacks.Init( this );
+	callbacks.Init(this);
 
 	// Initialize the voice with the callbacks
-	xAudio2->CreateSourceVoice( &sourceVoice, format, 0,
-		XAUDIO2_DEFAULT_FREQ_RATIO, &callbacks, 0, 0 );
+	xAudio2->CreateSourceVoice(&sourceVoice, format, 0,
+	                           XAUDIO2_DEFAULT_FREQ_RATIO, &callbacks, nullptr, nullptr);
 }
 
 void Channel::Destroy()
 {
 	sourceVoice->DestroyVoice();
-	sourceVoice = 0;
+	sourceVoice = nullptr;
 }
 
-bool Channel::PlayingSound()
+bool Channel::PlayingSound() const
 {
 	return !stopped;
 }
 
-void Channel::PlayWav( MyWav* wav )
+void Channel::PlayWav(MyWav* wav)
 {
-	sourceVoice->SubmitSourceBuffer( wav->GetBuffer() );
-	sourceVoice->Start( 0 );
+	sourceVoice->SubmitSourceBuffer(wav->GetBuffer());
+	sourceVoice->Start(0);
 	stopped = false;
 }
 

@@ -7,12 +7,12 @@
 #define GLOBALS_H
 
 // Dimensions of the game world
-extern const int WORLD_HEIGHT;
-extern const int WORLD_WIDTH;
+extern const float WORLD_HEIGHT;
+extern const float WORLD_WIDTH;
 
 // Window client dimensions
-extern const int WINDOW_WIDTH;
-extern const int WINDOW_HEIGHT;
+extern const float WINDOW_WIDTH;
+extern const float WINDOW_HEIGHT;
 
 extern const int MAX_ASTEROIDS;
 

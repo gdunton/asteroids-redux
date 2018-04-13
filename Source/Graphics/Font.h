@@ -17,10 +17,10 @@ public:
 	explicit Font(Color color = WHITE);
 
 	// Renders text to screen. Uses screen position NOT world pos
-	void DrawString(const String& str, const Vector2& position) const;
+	void DrawString(const std::string& str, const Vector2& position) const;
 
 	// Returns the size of the text when rendered
-	Vector2 GetTextSize(const String& str) const;
+	Vector2 GetTextSize(const std::string& str) const;
 
 private:
 	std::unique_ptr<DirectX::SpriteFont> font;

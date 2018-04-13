@@ -11,11 +11,11 @@ Font::Font(Color color) :
 	color(color)
 {
 	// Create the font description
-	String assetsDir;
+	std::string assetsDir;
 	GetAssetsDir(assetsDir);
 	assetsDir += "arial.spritefont";
 
-	WString wStr;
+	std::wstring wStr;
 	StringToWString(assetsDir, wStr);
 
 	font = std::make_unique<DirectX::SpriteFont>(GraphicsDeviceManager::GetInstance().GetDevice(), wStr.c_str());
@@ -24,21 +24,21 @@ Font::Font(Color color) :
 	this->color = color;
 }
 
-void Font::DrawString(const String& str, const Vector2& position) const
+void Font::DrawString(const std::string& str, const Vector2& position) const
 {
 	// Actually draw the text to screen
 	GraphicsDeviceManager::GetInstance().GetSpriteBatch()->Begin();
 
-	WString wStr;
+	std::wstring wStr;
 	StringToWString(str, wStr);
 	font->DrawString(GraphicsDeviceManager::GetInstance().GetSpriteBatch(), wStr.c_str(), position);
 
 	GraphicsDeviceManager::GetInstance().GetSpriteBatch()->End();
 }
 
-Vector2 Font::GetTextSize(const String& str) const
+Vector2 Font::GetTextSize(const std::string& str) const
 {
-	WString wStr;
+	std::wstring wStr;
 	StringToWString(str, wStr);
 	DirectX::XMVECTOR result = font->MeasureString(wStr.c_str());
 

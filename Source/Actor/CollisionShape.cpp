@@ -39,7 +39,7 @@ bool CollisionShape::CheckCollision(CollisionShape& s2, Vector2& outResolution) 
 	else {
 		wrappedDistance = s2.world.pos - world.pos;
 	}
-	float wrapped = Length(wrappedDistance);
+	float wrapped = wrappedDistance.Length();
 	float distance = distanceBetween(s2.world.pos, world.pos);
 	if(abs(wrapped - distance) > 0.1f) // allow for some difference
 	{

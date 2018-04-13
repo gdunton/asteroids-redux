@@ -6,7 +6,7 @@
 #include "MenuItem.h"
 #include <utility>
 
-MenuItem::MenuItem(std::function<void()> selectAction, Vector2 pos, String text, Color color) : 
+MenuItem::MenuItem(std::function<void()> selectAction, Vector2 pos, std::string text, Color color) : 
 	centerPos(pos), 
 	text(std::move(text)), 
 	selectAction(std::move(selectAction))

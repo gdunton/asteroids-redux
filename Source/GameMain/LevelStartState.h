@@ -33,9 +33,9 @@ private:
 
 	// Variables to show text and position
 	Vector2 textPosition;
-	String onScreenText;
+	std::string onScreenText;
 	Vector2 countDownPos;
-	String countDownText;
+	std::string countDownText;
 
 	const static float INTRO_TIME;
 };

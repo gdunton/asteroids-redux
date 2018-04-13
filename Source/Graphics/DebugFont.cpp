@@ -8,7 +8,7 @@
 
 template<> DebugFont* Singleton<DebugFont>::instance = nullptr;
 
-void DebugFont::DrawString( String text, Vector2 position )
+void DebugFont::DrawString(std::string text, Vector2 position )
 {
 	DebugFont::GetInstance().font.DrawString( text, position );
 }

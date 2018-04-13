@@ -102,11 +102,11 @@ bool GraphicsDeviceManager::Initialize( Window& window, bool windowed )
 	depthStencil->Release();
 
 	// Sprite font stuff
-	String assetsDir;
+	std::string assetsDir;
 	GetAssetsDir(assetsDir);
 	assetsDir += "arial.spritefont";
 
-	WString wStr;
+	std::wstring wStr;
 	StringToWString(assetsDir, wStr);
 
 	font = std::make_unique<DirectX::SpriteFont>(m_pGraphicsDevice, wStr.c_str());

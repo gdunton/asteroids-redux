@@ -23,8 +23,8 @@ Window::~Window()
 {
 }
 
-bool Window::Initialize( HINSTANCE hInstance, int clientWidth, int clientHeight, 
-						String _windowTitle, IGame* _parent )
+bool Window::Initialize( HINSTANCE hInstance, int clientWidth, int clientHeight,
+                         std::string _windowTitle, IGame* _parent )
 {
 	clientWidth = clientWidth;
 	clientHeight = clientHeight;
@@ -56,7 +56,7 @@ bool Window::Initialize( HINSTANCE hInstance, int clientWidth, int clientHeight,
 	windowHeight = wr.bottom - wr.top;
 
 	// Get the window title in correct format
-	WString windowTitle;
+	std::wstring windowTitle;
 	StringToWString( _windowTitle, windowTitle );
 
 	// Create window

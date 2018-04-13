@@ -32,12 +32,12 @@ MyWav& MyWav::operator=( const MyWav& wav )
 	return *this;
 }
 
-bool MyWav::LoadFile( String filename, IXAudio2* xAudio2, bool loopSound )
+bool MyWav::LoadFile(std::string filename, IXAudio2* xAudio2, bool loopSound )
 {
 	looping = loopSound;
 
 	// convert string to wstring
-	WString wString;
+	std::wstring wString;
 	StringToWString( filename, wString );
 
 	wav.Open( &wString[0], nullptr, WAVEFILE_READ );

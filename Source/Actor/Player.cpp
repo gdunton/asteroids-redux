@@ -167,7 +167,7 @@ Bullet* Player::GetBullets() {
 
 // Override the default
 MathTypes::Circle Player::GetCircle() const {
-	return MathTypes::Circle(world.pos, model->GetModelRadius() * Length(world.scale));
+	return MathTypes::Circle(world.pos, model->GetModelRadius() * world.scale.Length());
 }
 
 void Player::RemoveLife() {

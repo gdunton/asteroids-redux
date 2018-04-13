@@ -12,7 +12,7 @@ Sprite::Sprite()
 	m_pTex = nullptr;
 }
 
-void Sprite::Initialize( const String& textureName )
+void Sprite::Initialize(const std::string& textureName)
 {
 	// Get the texture from the texture manager. If a null
 	// value is returned then stop the program.

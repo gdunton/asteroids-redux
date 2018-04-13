@@ -24,7 +24,7 @@ protected:
 
 private:
 	// Collection of all wav sound assets
-	std::map< String, std::shared_ptr<MyWav> > soundMap;
+	std::map< std::string, std::shared_ptr<MyWav> > soundMap;
 
 	// List of all the channels
 	std::vector< Channel > channels;
@@ -32,7 +32,7 @@ private:
 	IXAudio2* xAudio2;
 	IXAudio2MasteringVoice* masteringVoice;
 
-	String assetsDir;
+	std::string assetsDir;
 	static const int NUM_CHANNELS;
 
 public:
@@ -43,17 +43,17 @@ public:
 
 	// Attaches sound to channel. Returns IStoppable allowing the sound to
 	// be stored and stopped by the caller
-	static IStoppable* PlaySoundByName( String soundName );
+	static IStoppable* PlaySoundByName(std::string soundName);
 
 	// Stops all channels
 	static void StopAllSound();
 
 private:
-	void LoadWavFile( String filename, String assetName, bool soundLoops = false );
+	void LoadWavFile(std::string filename, std::string assetName, bool soundLoops = false );
 
 	// Internal functions with simpler access to member variables
 	void InLoadAllAssets();
-	IStoppable* InPlaySoundByName( String soundName );
+	IStoppable* InPlaySoundByName(std::string soundName);
 	void InStopAllSound();
 };
 

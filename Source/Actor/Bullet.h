@@ -11,18 +11,9 @@
 
 class Bullet : public PhysicsObject
 {
-private:
-	// Lifetime starts at 0 and works up in seconds to MAX_LIFETIME
-	float lifetime;
-
-	static const int DAMAGE;
-	static const float MAX_LIFETIME;
-	
-
 public:
 	Bullet();
-	Bullet( const Vector2& _pos, const Vector2& _size, float _rot,
-		Model2D* _model, const Vector2& velocity );
+	Bullet( const Vector2& pos, const Vector2& size, float rot, Model2D* model, const Vector2& velocity );
 
 	// Move the bullet 
 	void Update( float dt );
@@ -38,6 +29,13 @@ public:
 	MathTypes::Circle GetCircle() const;
 
 	static const float FIRING_SPEED;
+
+private:
+	// Lifetime starts at 0 and works up in seconds to MAX_LIFETIME
+	float lifetime;
+
+	static const int DAMAGE;
+	static const float MAX_LIFETIME;
 };
 
 #endif

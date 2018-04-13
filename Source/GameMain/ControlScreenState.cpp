@@ -14,10 +14,10 @@
 #include "../Actor/Player.h"
 
 // List of descriptions and their controls
-String const ControlScreenState::controlStrings[] = { 
-	"Change Direction: Left/Right", 
-	"Move Forward: Up", 
-	"Fire: Space", 
+std::string const ControlScreenState::controlStrings[] = {
+	"Change Direction: Left/Right",
+	"Move Forward: Up",
+	"Fire: Space",
 	"Pause: Esc"
 };
 
@@ -98,7 +98,7 @@ void ControlScreenState::Render()
 	// Draw all the controls strings
 	// Set the y coord of the first string
 	float sampleHeight = subFont1.GetTextSize( "1" ).y;
-	int iterations = sizeof( controlStrings ) / sizeof( String );
+	int iterations = sizeof( controlStrings ) / sizeof(std::string);
 	textPos.y = (WINDOW_HEIGHT / 2) - (sampleHeight * (static_cast<float>(iterations) / 2 + 4));
 	for( int i = 0; i < iterations; ++i )
 	{

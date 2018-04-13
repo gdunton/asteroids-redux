@@ -158,7 +158,7 @@ bool Quadtree::ComputeIndividual( PhysicsObject& ob )
 // the quad. if not send it to the parent quad
 void Quadtree::CheckObjects()
 {
-	list<PhysicsObjectRef>::iterator i = physObjs.begin();
+	std::list<PhysicsObjectRef>::iterator i = physObjs.begin();
 	while( i != physObjs.end() )
 	{
 		bool nothingChanged = true;
@@ -277,7 +277,7 @@ bool Quadtree::SplitQuad()
 
 	// Attempt to insert each of the physics objects into the children
 	//for( auto begin = physObjs.begin(); begin != physObjs.end(); ++begin )
-	list<PhysicsObjectRef>::iterator i = physObjs.begin();
+	std::list<PhysicsObjectRef>::iterator i = physObjs.begin();
 	while( i != physObjs.end() )
 	{
 		bool insertionHappend = false;

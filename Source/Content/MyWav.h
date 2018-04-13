@@ -33,7 +33,7 @@ public:
 
 	// Loads the wav file via a filename. "loopSound" flags whether the sound is
 	// made for continious play
-	bool LoadFile( String filename, IXAudio2* xAudio2, bool loopSound = false );
+	bool LoadFile(std::string filename, IXAudio2* xAudio2, bool loopSound = false );
 
 	XAUDIO2_BUFFER* GetBuffer() { return &buffer; }
 	WAVEFORMATEX* GetWavFormat();

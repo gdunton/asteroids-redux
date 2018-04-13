@@ -30,14 +30,14 @@ private:
 
 	// Windows messages to listen for with callbacks for when 
 	// message is revieved
-	list< EventListener > events;
+	std::list< EventListener > events;
 
 public:
 	Window();
 	~Window();
 
-	bool Initialize( HINSTANCE hInstance, int clientWidth, int clientHeight, 
-		String windowTitle, IGame* _parent );
+	bool Initialize( HINSTANCE hInstance, int clientWidth, int clientHeight,
+	                 std::string windowTitle, IGame* _parent );
 	int Run();
 	void Close();
 

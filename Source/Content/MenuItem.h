@@ -15,7 +15,7 @@ class GameState;
 class MenuItem
 {
 public:
-	MenuItem(std::function<void()> selectAction, Vector2 pos, String text, Color color);
+	MenuItem(std::function<void()> selectAction, Vector2 pos, std::string text, Color color);
 
 	// Calls the delegate
 	void Select() const;
@@ -27,7 +27,7 @@ public:
 
 private:
 	Vector2 centerPos;
-	String text;
+	std::string text;
 	Font font;
 
 	// Function called when the item has select called in it

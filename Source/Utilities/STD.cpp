@@ -5,16 +5,16 @@
 #include "STD.h"
 
 // Find the path to the assets directory
-void GetAssetsDir( String& outString )
+void GetAssetsDir(std::string& outString)
 {
-	static String s_assetPath = "";
+	static std::string s_assetPath = "";
 
 	if( s_assetPath == "" )
 	{
 		WCHAR dir[MAX_PATH];
 		GetCurrentDirectory( MAX_PATH, dir );
 
-		WString assetPath = dir;
+		std::wstring assetPath = dir;
 		WStringToString( assetPath, s_assetPath );
 
 		unsigned found = s_assetPath.find_last_of( "/\\" );
@@ -26,31 +26,31 @@ void GetAssetsDir( String& outString )
 }
 
 // Converts strings from wide form to standard format and vice-versa
-void StringToWString( const String& str, WString& outWString )
+void StringToWString(const std::string& str, std::wstring& outWString)
 {
 	outWString = StringToWString(str);
 }
 
-WString StringToWString(const String& str)
+std::wstring StringToWString(const std::string& str)
 {
 	const int slength = static_cast<int>(str.length()) + 1;
 	const int length = MultiByteToWideChar(CP_ACP, 0, str.c_str(), slength, nullptr, 0);
 
-	auto outWString = WString(length, L'\0');
+	auto outWString = std::wstring(length, L'\0');
 	MultiByteToWideChar(CP_ACP, 0, str.c_str(), slength, &outWString[0], length);
 	return outWString;
 }
 
-void WStringToString( const WString& wStr, String& outString )
+void WStringToString(const std::wstring& wStr, std::string& outString)
 {
 	outString = WStringToString(wStr);
 }
 
-String WStringToString(const WString& wStr)
+std::string WStringToString(const std::wstring& wStr)
 {
 	const int slength = static_cast<int>(wStr.length()) + 1;
 	const int length = WideCharToMultiByte(CP_ACP, 0, wStr.c_str(), slength, nullptr, 0, nullptr, nullptr);
-	auto outString = String(length, '\0');
+	auto outString = std::string(length, '\0');
 	WideCharToMultiByte(CP_ACP, 0, wStr.c_str(), slength, &outString[0], length, nullptr, nullptr);
 	return outString;
 }

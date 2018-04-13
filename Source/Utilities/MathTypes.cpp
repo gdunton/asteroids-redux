@@ -4,17 +4,13 @@
 
 #include "STD.h"
 #include "MathTypes.h"
-#include <math.h>
 
 #include "../Content/ModelManager.h"
-
-using MathTypes::Circle;
-using MathTypes::Rectangle;
 
 //----------------------------------------------------------------------
 // Vector function definitions
 //----------------------------------------------------------------------
-Vector2 RotatePoint( const Vector2& vec, float angle )
+Vector2 RotatePoint(const Vector2& vec, float angle)
 {
 	// Rotate the vec around the origin by the angle
 	angle = -angle;
@@ -29,37 +25,31 @@ Vector2 RotatePoint( const Vector2& vec, float angle )
 	return final;
 }
 
-float distanceBetween( const Vector2& point1, const Vector2& point2 )
+float distanceBetween(const Vector2& point1, const Vector2& point2)
 {
 	Vector2 from = point1 - point2;
 	return from.Length();
 }
 
-float distanceSquared( const Vector2& p1, const Vector2& p2 )
+float distanceSquared(const Vector2& point1, const Vector2& point2)
 {
-	float dx = p2.x - p1.x;
-	float dy = p2.y - p1.y;
+	float dx = point2.x - point1.x;
+	float dy = point2.y - point1.y;
 
-	return dx*dx + dy*dy;
+	return dx * dx + dy * dy;
 }
 
-float Length( const Vector2& vector )
-{
-	return vector.Length();
-}
-
-float LengthSquared( const Vector2& vector )
+float LengthSquared(const Vector2& vector)
 {
 	return (vector.x * vector.x) + (vector.y * vector.y);
 }
 
-void Normalize( Vector2& vec )
+void Normalize(Vector2& vec)
 {
-	float length = vec.Length();
-	vec /= length;
+	vec /= vec.Length();
 }
 
-float Dot( const Vector2& point1, const Vector2& point2 )
+float Dot(const Vector2& point1, const Vector2& point2)
 {
 	return point1.Dot(point2);
 }
@@ -71,19 +61,19 @@ void WrapVector2(float width, float height, Vector2& pos)
 {
 	// Force the player to wrap around the world
 	// Check that the position doesn't wrap around the screen
-	if( pos.x < (-width / 2) || pos.x > (width / 2) )
+	if(pos.x < (-width / 2) || pos.x > (width / 2))
 	{
 		pos.x += width / 2;
-		pos.x = NegativeMod( pos.x, static_cast<int>(width) );
+		pos.x = NegativeMod(pos.x, static_cast<int>(width));
 		pos.x -= width / 2;
 	}
 
-	if( pos.y < (-height / 2) || pos.y > (height / 2))
+	if(pos.y < (-height / 2) || pos.y > (height / 2))
 	{
 		pos.y += height / 2;
-		pos.y = NegativeMod( pos.y, static_cast<int>(height) );
+		pos.y = NegativeMod(pos.y, static_cast<int>(height));
 		pos.y -= height / 2;
-	}	
+	}
 }
 
 void GetShortestWrappedDistance(const Vector2& p1, const Vector2& p2,
@@ -101,53 +91,52 @@ void GetShortestWrappedDistance(const Vector2& p1, const Vector2& p2,
 //----------------------------------------------------------------------
 // Shape functions
 //----------------------------------------------------------------------
-
-bool MathTypes::Rectangle::Intersects( const Circle& circle ) const
+namespace MathTypes
 {
-	// Check that objects are seperable
-	if( position.x > (circle.position.x + circle.radius) ||
-		(position.x + size.x) < (circle.position.x - circle.radius) ||
-		position.y > (circle.position.y + circle.radius) ||
-		(position.y + size.y) < (circle.position.y - circle.radius) )
+	bool Rectangle::Intersects(const Circle& circle) const
 	{
-		return false;
-	}
-	return true;
-}
-
-bool MathTypes::Rectangle::Contains( const Circle& circle ) const
-{
-	// is circle within a rectangle shrunk by the radius of the circle
-	Vector2 pos = circle.position - position;
-	if( (pos.x - circle.radius) >= 0 && (pos.x + circle.radius) <= size.x &&
-		(pos.y - circle.radius) >= 0 && (pos.y + circle.radius) <= size.y )
-	{
+		// Check that objects are seperable
+		if (position.x > (circle.position.x + circle.radius) ||
+			(position.x + size.x) < (circle.position.x - circle.radius) ||
+			position.y > (circle.position.y + circle.radius) ||
+			(position.y + size.y) < (circle.position.y - circle.radius))
+		{
+			return false;
+		}
 		return true;
 	}
-	else
+
+	bool Rectangle::Contains(const Circle& circle) const
 	{
+		// is circle within a rectangle shrunk by the radius of the circle
+		Vector2 pos = circle.position - position;
+		if ((pos.x - circle.radius) >= 0 && (pos.x + circle.radius) <= size.x &&
+			(pos.y - circle.radius) >= 0 && (pos.y + circle.radius) <= size.y)
+		{
+			return true;
+		}
 		return false;
 	}
-}
 
-void MathTypes::Rectangle::Draw( Camera& camera )
-{
-	World world;
-	world.pos = position + static_cast<Vector2>(size / 2);
-	world.rot = 0;
-	world.scale = size / 2.0f;
-	ModelManager::GetModel("Quad")->Render(camera, world);
-}
-
-bool MathTypes::Circle::Intersects( const MathTypes::Rectangle& rect ) const
-{
-	// if rectangle and circle are seperable
-	if( position.x > (rect.position.x + rect.size.x) ||
-		(position.x + radius) < (rect.position.x - rect.size.x) ||
-		position.y > (rect.position.y + rect.size.y) ||
-		(position.y + radius) < (rect.position.y - rect.size.y) )
+	void Rectangle::Draw(Camera& camera)
 	{
-		return false;
+		World world;
+		world.pos = position + static_cast<Vector2>(size / 2);
+		world.rot = 0;
+		world.scale = size / 2.0f;
+		ModelManager::GetModel("Quad")->Render(camera, world);
 	}
-	return true;
+	;
+	bool Circle::Intersects(const Rectangle& rect) const
+	{
+		// if rectangle and circle are seperable
+		if (position.x > (rect.position.x + rect.size.x) ||
+			(position.x + radius) < (rect.position.x - rect.size.x) ||
+			position.y > (rect.position.y + rect.size.y) ||
+			(position.y + radius) < (rect.position.y - rect.size.y))
+		{
+			return false;
+		}
+		return true;
+	}
 }

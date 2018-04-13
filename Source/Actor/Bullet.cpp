@@ -15,20 +15,19 @@ Bullet::Bullet()
 	lifetime = MAX_LIFETIME;
 }
 
-Bullet::Bullet( const Vector2& _pos, const Vector2& _size, float _rot,
-	Model2D* _model, const Vector2& _velocity )
-	: PhysicsObject( _pos, _size, _rot, _model, _velocity, 10 )
+Bullet::Bullet(const Vector2& pos, const Vector2& size, float rot, Model2D* model, const Vector2& velocity) : 
+	PhysicsObject(pos, size, rot, model, velocity, 10)
 {
 	lifetime = 0.0f;
 }
 
 // Move the bullet 
-void Bullet::Update( float dt )
+void Bullet::Update(float dt)
 {
 	world.pos += velocity * dt;
 
 	// Check the positio against the world size and wrap around if
-    // necessary
+	// necessary
 	WrapPosition();
 
 	// Incriment the lifetime
@@ -48,7 +47,7 @@ bool Bullet::GetAlive() const
 }
 
 // Override the default from PhysicsObject
-MathTypes::Circle Bullet::GetCircle() const 
+MathTypes::Circle Bullet::GetCircle() const
 {
-	return MathTypes::Circle( world.pos, Length( world.scale ) * model->GetModelRadius() );
+	return MathTypes::Circle(world.pos, world.scale.Length() * model->GetModelRadius());
 }

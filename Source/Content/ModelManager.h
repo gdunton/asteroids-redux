@@ -17,17 +17,17 @@ public:
 	friend Singleton< ModelManager >;
 
 private:
-	std::map< String, Model2D > m_modelMap;
+	std::map< std::string, Model2D > m_modelMap;
 
 public:
-	static Model2D* GetModel( const String& modelName );
+	static Model2D* GetModel(const std::string& modelName);
 
 protected:
 	ModelManager();
 	~ModelManager();
 
 private:
-	Model2D* InGetModel( const String& modelName );
+	Model2D* InGetModel(const std::string& modelName);
 
 	void LoadModelFiles();
 	

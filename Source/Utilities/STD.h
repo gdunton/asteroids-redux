@@ -21,23 +21,18 @@
 #include <map>
 #include <vector>
 #include <string>
-typedef std::wstring WString;
-typedef std::string String;
-using std::list;
 #include <cmath>
 
 // DirectX headers
 #include <d3d11.h>
 #include <SimpleMath.h>
 
-// The used vector with some operators
 using Vector2 = DirectX::SimpleMath::Vector2;
+using Matrix = DirectX::SimpleMath::Matrix;
+using Color = DirectX::XMFLOAT4;
 
+inline Color ColorRGBA(float r, float g, float b, float a) { return DirectX::XMFLOAT4(r, g, b, a); }
 
-// The typedefs for matrices and colors
-typedef DirectX::SimpleMath::Matrix Matrix;
-typedef DirectX::XMFLOAT4 Color;
-inline Color ColorRGBA( float r, float g, float b, float a ) { return DirectX::XMFLOAT4(r, g, b, a); }
 // Define color constants
 constexpr Color GREEN = Color(255, 0, 255, 255);
 constexpr Color BLACK = Color(0, 0, 0, 255);
@@ -53,20 +48,21 @@ constexpr Color BLUE = Color(0, 0, 255, 255);
 
 // Random functions
 float Random();
-float Random( const float min, const float max );
-int RandomInt( const int min, const int max );
+float Random(float min, float max);
+int RandomInt(int min, int max);
 
 // Constants
 const float PI = 3.14159265358979323f;
 
 // Function to convert values to strings
 #include <sstream>
-inline void to_String( const double value, const int precision, String& outString )
+
+inline void to_String(const double value, const int precision, std::string& outString)
 {
 	std::ostringstream out;
-	out.precision( precision );
+	out.precision(precision);
 	out << value;
-	outString = String( out.str() );
+	outString = std::string(out.str());
 }
 
 // Enum for setting the difficulty
@@ -80,12 +76,12 @@ enum Difficulty
 
 
 // function to get the assets dir
-void GetAssetsDir( String& outString );
+void GetAssetsDir(std::string& outString);
 
 // String converter -- MAX LENGTH IS FILE LENGTH
-void StringToWString( const String& str, WString& outWString );
-WString StringToWString(const String& str);
-void WStringToString( const WString& wStr, String& outString );
-String WStringToString( const WString& wStr );
+void StringToWString(const std::string& str, std::wstring& outWString);
+std::wstring StringToWString(const std::string& str);
+void WStringToString(const std::wstring& wStr, std::string& outString);
+std::string WStringToString(const std::wstring& wStr);
 
 #endif

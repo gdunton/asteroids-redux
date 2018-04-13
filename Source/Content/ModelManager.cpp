@@ -21,12 +21,12 @@ ModelManager::~ModelManager()
 {
 }
 
-Model2D* ModelManager::GetModel( const String& modelName )
+Model2D* ModelManager::GetModel(const std::string& modelName)
 {
 	return ModelManager::GetInstance().InGetModel(modelName);
 }
 
-Model2D* ModelManager::InGetModel( const String& modelName )
+Model2D* ModelManager::InGetModel(const std::string& modelName)
 {
 	return &m_modelMap[modelName];
 }

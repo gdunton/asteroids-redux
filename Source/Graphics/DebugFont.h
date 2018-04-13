@@ -20,7 +20,7 @@ protected:
 public:
 	// Single function to draw text onto screen. Uses screen position
 	// NOT world
-	static void DrawString( String text, Vector2 position );
+	static void DrawString(std::string text, Vector2 position );
 };
 
 #endif

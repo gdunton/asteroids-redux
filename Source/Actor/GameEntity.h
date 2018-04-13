@@ -12,26 +12,18 @@
 
 class GameEntity
 {
-protected:
-
-	static int lastID;
-	int id;
-
-	World world;
-
-	Model2D* model;
-
-	bool wrapAroundWorld;
-
 public:
 	// Constructors
-	GameEntity() : world( Vector2(0,0), Vector2(1,1), 0 ), model(nullptr), id(0) { }
+	GameEntity() = default;
+
 	GameEntity( const Vector2& _pos, const Vector2& _size, const float _rot,
 		Model2D* _model ) :
 		world(_pos, _size, _rot ), model( _model ), wrapAroundWorld( true )
 	{
 		id = ++lastID;
 	}
+
+	virtual ~GameEntity() = default;
 
 	// Overrideable rendering
 	virtual void Render( Camera& camera ) const;
@@ -51,6 +43,14 @@ public:
 
 protected:
 	void ResetID() { id = ++lastID; }
+
+	static int lastID;
+	int id = 0;
+
+	World world;
+
+	Model2D* model = nullptr;
+	bool wrapAroundWorld = true;
 };
 
 #endif

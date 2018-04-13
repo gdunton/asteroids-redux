@@ -15,8 +15,8 @@ public:
 	friend Singleton<TextureManager>;
 
 public:
-	Texture* GetTexture( const String& name );
-	Vector2 GetDimensions( const String& name );
+	Texture* GetTexture(const std::string& name);
+	Vector2 GetDimensions(const std::string& name);
 
 protected:
 	TextureManager();
@@ -31,8 +31,8 @@ private:
 		ID3D11Texture2D* texture;
 	};
 
-	std::map<String, ResourcePair> m_textureMap;
-	String m_assetsDir;
+	std::map<std::string, ResourcePair> m_textureMap;
+	std::string m_assetsDir;
 };
 
 

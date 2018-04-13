@@ -260,7 +260,7 @@ void GameLogic::Render( bool showLives, bool showLevelNum )
 	// Draw the level number to the screen
 	if( showLevelNum )
 	{
-		String levelStr;
+		std::string levelStr;
 		to_String( currentLevel->GetLevelNumber(), 1, levelStr );
 		Vector2 size = font.GetTextSize( "Level: " + levelStr );
 		Vector2 pos( (WINDOW_WIDTH/2) - (size.x/2), 7 );

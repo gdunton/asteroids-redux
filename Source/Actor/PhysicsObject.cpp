@@ -142,5 +142,5 @@ void PhysicsObject::AdvancedMoveApart( PhysicsObject& ob, Vector2& res )
 MathTypes::Circle PhysicsObject::GetCircle() const
 {
 	// remember that the circle should be scaled from the model size by the world
-	return MathTypes::Circle( world.pos, model->GetModelRadius() * Length( world.scale ) );
+	return MathTypes::Circle( world.pos, model->GetModelRadius() * world.scale.Length() );
 }

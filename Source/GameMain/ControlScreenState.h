@@ -32,7 +32,7 @@ private:
 	Font subFont1;
 
 	// Strings containing descriptions and corrisponding controls
-	static String const controlStrings[];
+	static std::string const controlStrings[];
 
 	Sprite background;
 

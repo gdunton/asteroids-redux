@@ -42,7 +42,7 @@ private:
 	
 	Window m_window;
 
-	String fpsString;
+	std::string fpsString;
 	Font font;
 
 	// The central rules of the game and the state manager

@@ -36,13 +36,13 @@ TextureManager::~TextureManager()
 	}
 }
 
-Texture* TextureManager::GetTexture( const String& name )
+Texture* TextureManager::GetTexture(const std::string& name)
 {
 	// Find the texture in the map 
 	return m_textureMap[name].view;
 }
 
-Vector2 TextureManager::GetDimensions(const String& name) 
+Vector2 TextureManager::GetDimensions(const std::string& name) 
 {
 	D3D11_TEXTURE2D_DESC desc;
 	ZeroMemory(&desc, sizeof(desc));

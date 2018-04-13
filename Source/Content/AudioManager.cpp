@@ -110,12 +110,12 @@ void AudioManager::InLoadAllAssets()
 	}
 }
 
-IStoppable* AudioManager::PlaySoundByName(String soundName)
+IStoppable* AudioManager::PlaySoundByName(std::string soundName)
 {
 	return GetInstance().InPlaySoundByName(soundName);
 }
 
-IStoppable* AudioManager::InPlaySoundByName(String soundName)
+IStoppable* AudioManager::InPlaySoundByName(std::string soundName)
 {
 	// Ensure that xAudio has been created
 	if(xAudio2 == nullptr || masteringVoice == nullptr)
@@ -163,7 +163,7 @@ void AudioManager::InStopAllSound()
 	}
 }
 
-void AudioManager::LoadWavFile(String filename, String assetName, bool soundLoops)
+void AudioManager::LoadWavFile(std::string filename, std::string assetName, bool soundLoops)
 {
 	// Remove the file from the map if already loaded
 	auto iterator = soundMap.find(assetName);

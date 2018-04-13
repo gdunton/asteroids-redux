@@ -34,7 +34,6 @@
     <ClCompile Include="Content\StandardLevel.cpp" />
     <ClCompile Include="Graphics\ParticleSystem.cpp" />
     <ClCompile Include="Graphics\Particle.cpp" />
-    <ClCompile Include="Utilities\Functions.cpp" />
     <ClCompile Include="Content\MeteorShowerLevel.cpp" />
     <ClCompile Include="Actor\Quadtree.cpp" />
     <ClCompile Include="Content\AudioManager.cpp" />
@@ -49,6 +48,7 @@
     <ClCompile Include="Content\Menu.cpp" />
     <ClCompile Include="Content\MenuItem.cpp" />
     <ClCompile Include="Graphics\GraphicsDeviceManager.cpp" />
+    <ClCompile Include="Utilities\Functions.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Utilities\STD.h" />
@@ -79,7 +79,6 @@
     <ClInclude Include="GameMain\GameState.h" />
     <ClInclude Include="GameMain\MainGameState.h" />
     <ClInclude Include="GameMain\GameOverState.h" />
-    <ClInclude Include="Utilities\FastDelegate.h" />
     <ClInclude Include="GameMain\MainMenuState.h" />
     <ClInclude Include="GameMain\GamePausedState.h" />
     <ClInclude Include="Graphics\Sprite.h" />

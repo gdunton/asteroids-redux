@@ -6,20 +6,11 @@
 #include "DebugFont.h"
 #ifdef DEBUG
 
-template<> DebugFont* Singleton<DebugFont>::instance = 0;
-
-DebugFont::DebugFont()
-{
-	font.Initialize(20, false, WHITE);
-}
+template<> DebugFont* Singleton<DebugFont>::instance = nullptr;
 
 void DebugFont::DrawString( String text, Vector2 position )
 {
 	DebugFont::GetInstance().font.DrawString( text, position );
 }
 
-DebugFont::~DebugFont()
-{
-	font.Destroy();
-}
 #endif

@@ -19,19 +19,11 @@
 
 #include "../Content/AudioManager.h"
 
-GameLogic::GameLogic()
+GameLogic::GameLogic() : 
+	game(nullptr)
 {
 	paused = false;
-
-	lifeModel = NULL;
-}
-
-GameLogic::~GameLogic()
-{
-	// Release the game reference just in case. DO NOT DELETE
-	game = NULL;
-
-	font.Destroy();
+	lifeModel = nullptr;
 }
 
 void GameLogic::Initialize(Game* _game)
@@ -57,13 +49,11 @@ void GameLogic::Initialize(Game* _game)
 		static_cast<int>(WORLD_WIDTH), static_cast<int>(WORLD_HEIGHT));
 
 	// Initialize the quad tree
-	quadtree.Initialize( NULL, MathTypes::Rectangle(Vector2(-WORLD_WIDTH / 2, -WORLD_HEIGHT / 2), 
+	quadtree.Initialize(nullptr, MathTypes::Rectangle(Vector2(-WORLD_WIDTH / 2, -WORLD_HEIGHT / 2), 
 		Vector2(WORLD_WIDTH,WORLD_HEIGHT)), 0 );
 
 	worldArea = MathTypes::Rectangle( Vector2( -WORLD_WIDTH - (WORLD_WIDTH / 2), -WORLD_HEIGHT - (WORLD_HEIGHT / 2) ),
 		Vector2( WORLD_WIDTH * 3, WORLD_HEIGHT * 3 ) );
-
-	font.Initialize( 20, false, WHITE);
 }
 
 // Resets the game and starts a level for the background of the main menu
@@ -78,7 +68,7 @@ void GameLogic::StartIdleMode()
 
 	int difficulty = 0;
 	currentLevel.reset();
-	currentLevel = std::shared_ptr<Level>( new MeteorShowerLevel(this, difficulty + 1) );
+	currentLevel = std::make_shared<MeteorShowerLevel>(this, difficulty + 1);
 	currentLevel->Initialize();
 }
 
@@ -92,7 +82,7 @@ void GameLogic::StartPlayerOnlyLevel()
 
 	player.ResetWorld();
 	currentLevel.reset();
-	currentLevel = std::shared_ptr<Level>( new DebugLevel( this, 0 ) );
+	currentLevel = std::make_shared<DebugLevel>(this, 0);
 	currentLevel->Initialize();
 }
 
@@ -127,8 +117,6 @@ void GameLogic::Update( const float dt )
 				{
 					if( bulletArray[j].CheckCollision(*begin, Vector2(0,0)) )
 					{
-						
-
 						// Remove the bullet from the array
 						bulletArray[j].KillBullet();
 						// Make the asteroid smaller or kill it

@@ -6,7 +6,7 @@
 #include "GameStateManager.h"
 
 GameStateManager::GameStateManager( ) :
-	gameLogic( NULL )
+	gameLogic(nullptr )
 {
 }
 

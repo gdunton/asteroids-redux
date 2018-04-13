@@ -16,6 +16,15 @@
 
 class ControlScreenState : public GameState
 {
+public:
+	explicit ControlScreenState(GameStateManager* parent);
+
+	void Enter() override;
+	void Update(float dt) override;
+	void Exit() override;
+
+	void Render() override;
+
 private:
 	// State title font
 	Font titleFont;
@@ -28,16 +37,6 @@ private:
 	Sprite background;
 
 	KeyboardState prevKbState;
-
-public:
-	ControlScreenState( GameStateManager* parent );
-	~ControlScreenState();
-
-	void Enter();
-	void Update( float dt );
-	void Exit();
-
-	void Render();
 };
 
 #endif

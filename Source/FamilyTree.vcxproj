@@ -55,8 +55,8 @@
     <ClCompile Include="Input\Keyboard.cpp" />
     <ClCompile Include="Input\KeyboardState.cpp" />
     <ClCompile Include="UserInterface\Window.cpp" />
-    <ClCompile Include="Utilities\MathTypes.cpp" />
     <ClCompile Include="Utilities\Functions.cpp" />
+    <ClCompile Include="Utilities\MathTypes.cpp" />
     <ClCompile Include="Utilities\WinWav.cpp" />
     <ClCompile Include="Utilities\STD.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -114,7 +114,6 @@
     <ClInclude Include="Input\KeyboardState.h" />
     <ClInclude Include="UserInterface\Window.h" />
     <ClInclude Include="UserInterface\WindowsEventListener.h" />
-    <ClInclude Include="Utilities\FastDelegate.h" />
     <ClInclude Include="Utilities\Functions.h" />
     <ClInclude Include="Utilities\MathTypes.h" />
     <ClInclude Include="Utilities\STD.h" />
@@ -186,7 +185,7 @@
       <PrecompiledHeaderFile>STD.h</PrecompiledHeaderFile>
       <PreprocessorDefinitions>_DEBUG;DEBUG;WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <EnablePREfast>false</EnablePREfast>
-      <TreatWarningAsError>true</TreatWarningAsError>
+      <TreatWarningAsError>false</TreatWarningAsError>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>

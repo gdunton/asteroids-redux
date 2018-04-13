@@ -9,8 +9,8 @@
 
 Window::Window()
 {
-	gameParent = NULL;
-	windowHandle = NULL;
+	gameParent = nullptr;
+	windowHandle = nullptr;
 
 	windowWidth = 0;
 	windowHeight = 0;
@@ -41,10 +41,10 @@ bool Window::Initialize( HINSTANCE hInstance, int clientWidth, int clientHeight,
 	wc.hInstance = hInstance;
 	wc.hIcon = LoadIcon( hInstance, MAKEINTRESOURCE( IDI_ICON1 ) );
 	wc.hIconSm = wc.hIcon;
-	wc.hCursor = LoadCursor( 0, IDC_ARROW );
+	wc.hCursor = LoadCursor( nullptr, IDC_ARROW );
 	wc.hbrBackground = (HBRUSH)GetStockObject( WHITE_BRUSH );
 	wc.lpszClassName = L"GuyWindow";
-	wc.lpszMenuName = 0;
+	wc.lpszMenuName = nullptr;
 
 	HRESULT hr = RegisterClassEx( &wc );
 	ASSERT( hr != E_FAIL );
@@ -64,7 +64,7 @@ bool Window::Initialize( HINSTANCE hInstance, int clientWidth, int clientHeight,
 		(WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | WS_MAXIMIZEBOX),
 		CW_USEDEFAULT, CW_USEDEFAULT, 
 		windowWidth, windowHeight, 
-		0, 0, hInstance, this);
+		nullptr, nullptr, hInstance, this);
 
 	ASSERT( windowHandle );
 
@@ -77,12 +77,12 @@ bool Window::Initialize( HINSTANCE hInstance, int clientWidth, int clientHeight,
 
 int Window::Run()
 {
-	MSG msg = {0};
+	MSG msg = {nullptr};
 
 	// Message cycle
 	while( msg.message != WM_QUIT )
 	{
-		if( PeekMessage( &msg, 0, 0, 0, PM_REMOVE ) )
+		if( PeekMessage( &msg, nullptr, 0, 0, PM_REMOVE ) )
 		{
 			TranslateMessage( &msg );
 			DispatchMessage( &msg );
@@ -148,7 +148,7 @@ LRESULT Window::WndProc( UINT message, WPARAM wParam, LPARAM lParam )
 
 LRESULT CALLBACK Window::CallbackWndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam )
 {
-	static Window* app = NULL;
+	static Window* app = nullptr;
 
 	if( message == WM_CREATE )
 	{

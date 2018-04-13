@@ -16,6 +16,16 @@
 
 class LevelStartState : public GameState
 {
+public:
+	LevelStartState( GameStateManager* parent );
+
+	// Virtual functions from GameState
+	void Enter() override;
+	void Update( float dt ) override;
+	void Exit() override;
+
+	void Render() override;
+
 private:
 	AnimationClock clock;
 	Sprite background;
@@ -28,16 +38,6 @@ private:
 	String countDownText;
 
 	const static float INTRO_TIME;
-
-public:
-	LevelStartState( GameStateManager* parent );
-
-	// Virtual functions from GameState
-	void Enter();
-	void Update( float dt );
-	void Exit();
-
-	void Render();
 };
 
 #endif

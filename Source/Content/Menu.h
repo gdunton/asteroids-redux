@@ -17,31 +17,29 @@ class GameState;
 class Menu
 {
 private:
-	GameState* parentState;
+	GameState* parentState = nullptr;
 
 	Font font;
 
 	std::shared_ptr<std::vector<MenuItem>> menuItems;
 	// The index of currently selected menuItem
-	int currentItemIndex;
+	int currentItemIndex = 0;
 
 	// The model for the pointer that indicates the selected item 
 	// and the y offset from center
-	Model2D* pointerModel;
-	int pointerOffset;
+	Model2D* pointerModel = nullptr;
+	int pointerOffset = 0;
 
 	KeyboardState prevKbState;	
 
 public:
-	Menu();
 	Menu(GameState* parent, std::shared_ptr<std::vector<MenuItem>> items, int pointerOffset);
-	~Menu();
 
 	// Called each frame to check input
 	void Update();
 
 	// Called each frame to draw to screen
-	void Render();
+	void Render() const;
 };
 
 #endif

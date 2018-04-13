@@ -4,33 +4,28 @@
 
 #include "STD.h"
 #include "MenuItem.h"
+#include <utility>
 
-MenuItem::MenuItem()
+MenuItem::MenuItem(std::function<void()> selectAction, Vector2 pos, String text, Color color) : 
+	centerPos(pos), 
+	text(std::move(text)), 
+	selectAction(std::move(selectAction))
 {
-	text = "";
-	centerPos = Vector2(0,0);
 }
 
-MenuItem::MenuItem( GameState* parent, MenuSelectDelegate _selectAction, Vector2 pos,
-				   String _text, int height, String fontName, Color color) : 
-		selectAction( _selectAction ), centerPos( pos ), text( _text )
-{
-	font.Initialize( height, false, color);
-}
-
-MenuItem::~MenuItem()
-{
-	font.Destroy();
-}
-
-void MenuItem::Select()
+void MenuItem::Select() const
 {
 	selectAction();
 }
 
-void MenuItem::Render()
+void MenuItem::Render() const
 {
-	Vector2 size = font.GetTextSize( text );
+	Vector2 size = font.GetTextSize(text);
 	Vector2 position = centerPos - static_cast<Vector2>(size / 2);
 	font.DrawString(text, position);
+}
+
+Vector2 MenuItem::GetPosition() const
+{
+	return centerPos;
 }

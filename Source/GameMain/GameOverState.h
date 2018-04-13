@@ -15,26 +15,27 @@
 
 class GameOverState : public GameState
 {
-private:
-	Font font;
-	Menu menu;
-
-	Sprite background;
-
 public:
-	GameOverState( GameStateManager* _parent );
-	~GameOverState();
+	explicit GameOverState(GameStateManager* parent);
 
 	// Virtuals from GameState
-	void Enter();
-	void Update( float dt );
-	void Exit();
+	void Enter() override;
+	void Update(float dt) override;
+	void Exit() override;
 
-	void Render();
+	void Render() override;
 
 	// Delegate functions called by the menu
 	void SelectMainMenu();
 	void SelectRestartGame();
+
+private:
+	std::shared_ptr<std::vector<MenuItem>> MakeMenuItems();
+
+	Font font;
+	Menu menu;
+
+	Sprite background;
 };
 
 #endif

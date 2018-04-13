@@ -7,7 +7,7 @@
 #include "../Graphics/GraphicsDeviceManager.h"
 #include "../GameMain/Globals.h"
 
-template<> TextureManager* Singleton<TextureManager>::instance = NULL;
+template<> TextureManager* Singleton<TextureManager>::instance = nullptr;
 
 TextureManager::TextureManager()
 {
@@ -68,7 +68,7 @@ void TextureManager::CreateTransparencyRect()
 	desc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 	desc.MiscFlags = 0;
 
-	ID3D11Texture2D* texture = NULL;
+	ID3D11Texture2D* texture = nullptr;
 
 	float* buffer = new float[static_cast<int>(WINDOW_WIDTH) * static_cast<int>(WINDOW_HEIGHT) * 4];
 
@@ -87,7 +87,7 @@ void TextureManager::CreateTransparencyRect()
 
 	delete[] buffer;
 
-	ID3D11ShaderResourceView* resourceView = NULL;
+	ID3D11ShaderResourceView* resourceView = nullptr;
 	D3D11_SHADER_RESOURCE_VIEW_DESC viewDesc;
 	viewDesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
 	viewDesc.ViewDimension = D3D10_SRV_DIMENSION_TEXTURE2D;

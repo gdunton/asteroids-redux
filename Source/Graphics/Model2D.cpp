@@ -22,7 +22,7 @@ void Model2D::Render( Camera& camera, const World& world )
 void Model2D::Render(const Vector2& screenPos, const Vector2& scale, float rot)
 {
 	// Object already in screen pos so no need for a camera
-	line.Render( NULL, points, World( screenPos, scale, rot ) );
+	line.Render(nullptr, points, World( screenPos, scale, rot ) );
 }
 
 void Model2D::CalculateModelStats()

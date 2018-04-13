@@ -16,7 +16,6 @@ const float LevelStartState::INTRO_TIME = 3.0f;
 LevelStartState::LevelStartState( GameStateManager* _parent )
 	: GameState( _parent )
 {
-	font.Initialize( 20, false, WHITE);
 	background.Initialize( "transparent" );
 
 	// Set the initial text
@@ -48,12 +47,12 @@ void LevelStartState::Update( float dt )
 	if( delta >= INTRO_TIME )
 	{
 		// Begin the level
-		parent->SetState( std::shared_ptr<MainGameState>( new MainGameState( parent ) ) );
+		parent->SetState(std::make_shared<MainGameState>(parent));
 	}
 	else
 	{
 		// Set the onscreen text
-		to_String( (int)(INTRO_TIME - delta + 1), 1, countDownText );
+		to_String( static_cast<int>(INTRO_TIME - delta + 1), 1, countDownText );
 	}
 }
 

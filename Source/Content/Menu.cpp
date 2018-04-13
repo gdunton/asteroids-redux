@@ -4,25 +4,16 @@
 
 #include "STD.h"
 #include "Menu.h"
+#include <utility>
 
 #include "../GameMain/GameState.h"
 #include "../Input/Keyboard.h"
 #include "../Graphics/Model2D.h"
 #include "../Content/ModelManager.h"
 
-Menu::Menu()
-{
-	parentState = NULL;
-	pointerModel = NULL;
-	pointerOffset = 0;
-	currentItemIndex = 0;
-}
-
 Menu::Menu(GameState* parent, std::shared_ptr<std::vector<MenuItem>> items, int _pointerOffset) :
-	parentState( parent ), menuItems( items ), pointerOffset( _pointerOffset )
+	parentState( parent ), font(std::move(WHITE)), menuItems( items ), pointerOffset( _pointerOffset )
 {
-	font.Initialize( 20, false, WHITE);
-
 	// Calculate current Item Index by finding the menu item with the smallest Y position
 	float y = 10000;
 
@@ -40,11 +31,6 @@ Menu::Menu(GameState* parent, std::shared_ptr<std::vector<MenuItem>> items, int 
 	pointerModel = ModelManager::GetModel( "Circle" );
 
 	Keyboard::GetInstance().GetKeyboardState( prevKbState );
-}
-
-Menu::~Menu()
-{
-	font.Destroy();
 }
 
 void Menu::Update()
@@ -76,7 +62,7 @@ void Menu::Update()
 	prevKbState = kbState;
 }
 
-void Menu::Render()
+void Menu::Render() const
 {
 	// draw the pointer to symbolize the selected menu item
 	Vector2 pointerPos1 = (*menuItems)[currentItemIndex].GetPosition();

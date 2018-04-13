@@ -20,14 +20,9 @@
 
 
 Game::Game() : 
-	FRAMES_PER_SECOND( 60 ), WINDOWED( true )
+	font(GREEN)
 {
 	m_desiredTimePerFrame = 1.0 / FRAMES_PER_SECOND;
-}
-
-Game::~Game()
-{
-	font.Destroy();
 }
 
 void Game::Initialize( const HINSTANCE hInstance )
@@ -52,7 +47,7 @@ void Game::Initialize( const HINSTANCE hInstance )
 	bool result =  GraphicsDeviceManager::GetInstance().Initialize( m_window, true );
 	if( !result )
 	{
-		MessageBox( NULL, L"Failed to create graphics device", L"Initialization Error", MB_OK );
+		MessageBox(nullptr, L"Failed to create graphics device", L"Initialization Error", MB_OK );
 	}
 
 	TextureManager::Create();
@@ -68,14 +63,11 @@ void Game::Initialize( const HINSTANCE hInstance )
 	AudioManager::Create();
 	AudioManager::LoadAllAssets();
 
-	// Create the main font
-	font.Initialize( 22, false, GREEN);
-
 	// Initialize the game logic
 	m_gameLogic.Initialize(this);
 
 	gameStateManager = GameStateManager( &m_gameLogic );
-	gameStateManager.SetInitialState( std::shared_ptr<MainMenuState>( new MainMenuState( &gameStateManager ) ) );
+	gameStateManager.SetInitialState(std::make_shared<MainMenuState>(&gameStateManager));
 
 	Line::SetLine(GraphicsDeviceManager::GetInstance().GetBatch());
 	Sprite::SetSpriteBatch(GraphicsDeviceManager::GetInstance().GetSpriteBatch());
@@ -87,7 +79,7 @@ void Game::InternalUpdate( const double deltaTime )
 	
 	// Update the main state then let the state manager check for any 
 	// state changes and resolve them
-	gameStateManager.GetCurrentState().Update( (float)deltaTime );
+	gameStateManager.GetCurrentState().Update( static_cast<float>(deltaTime) );
 	gameStateManager.ResolveIncomingState();
 }
 
@@ -170,3 +162,4 @@ int Game::GetClientHeight()
 {
 	return m_window.GetClientHeight();
 }
+

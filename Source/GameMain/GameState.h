@@ -17,8 +17,13 @@ protected:
 	GameStateManager* parent;
 
 public:
-	GameState() { parent = 0; }
+	GameState() { parent = nullptr; }
 	GameState( GameStateManager* _parent ) : parent(_parent) { } 
+
+	virtual ~GameState() = default;
+
+	GameState(GameState&& other) noexcept = default;
+	GameState& operator=(GameState&& other) noexcept = default;
 
 	// Called after the old state has been removed
 	virtual void Enter() = 0;

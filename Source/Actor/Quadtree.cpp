@@ -18,7 +18,7 @@ Quadtree::Quadtree()
 {
 	children = std::vector<Quadtree>();
 	children.reserve(4);
-	parent = NULL;
+	parent = nullptr;
 
 	physObjs = std::list<PhysicsObjectRef>();
 

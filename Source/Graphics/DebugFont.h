@@ -14,8 +14,6 @@ class DebugFont : public Singleton<DebugFont>
 public:
 	friend Singleton<DebugFont>;
 protected:
-	DebugFont();
-
 	// The font used
 	Font font;
 
@@ -23,7 +21,6 @@ public:
 	// Single function to draw text onto screen. Uses screen position
 	// NOT world
 	static void DrawString( String text, Vector2 position );
-	~DebugFont();
 };
 
 #endif

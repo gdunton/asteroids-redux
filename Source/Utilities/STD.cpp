@@ -26,29 +26,39 @@ void GetAssetsDir( String& outString )
 }
 
 // Converts strings from wide form to standard format and vice-versa
-void StringToWString( const String& string, WString& outWString )
+void StringToWString( const String& str, WString& outWString )
 {
-	int len;
-	int slength = (int)string.length() + 1;
-	len = MultiByteToWideChar( CP_ACP, 0, string.c_str(), slength, 0, 0 );
-
-	outWString = WString(len, L'\0');
-	MultiByteToWideChar( CP_ACP, 0, string.c_str(), slength, &outWString[0], len );
+	outWString = StringToWString(str);
 }
 
-void WStringToString( const WString& wstring, String& outString )
+WString StringToWString(const String& str)
 {
-	int len;
-	int slength = (int)wstring.length() + 1;
-	len = WideCharToMultiByte( CP_ACP, 0, wstring.c_str(), slength, 0, 0, 0, 0 );
-	outString = String(len, '\0');
-	WideCharToMultiByte( CP_ACP, 0, wstring.c_str(), slength, &outString[0], len, 0, 0 );
+	const int slength = static_cast<int>(str.length()) + 1;
+	const int length = MultiByteToWideChar(CP_ACP, 0, str.c_str(), slength, nullptr, 0);
+
+	auto outWString = WString(length, L'\0');
+	MultiByteToWideChar(CP_ACP, 0, str.c_str(), slength, &outWString[0], length);
+	return outWString;
+}
+
+void WStringToString( const WString& wStr, String& outString )
+{
+	outString = WStringToString(wStr);
+}
+
+String WStringToString(const WString& wStr)
+{
+	const int slength = static_cast<int>(wStr.length()) + 1;
+	const int length = WideCharToMultiByte(CP_ACP, 0, wStr.c_str(), slength, nullptr, 0, nullptr, nullptr);
+	auto outString = String(length, '\0');
+	WideCharToMultiByte(CP_ACP, 0, wStr.c_str(), slength, &outString[0], length, nullptr, nullptr);
+	return outString;
 }
 
 // Definitions of the random functions
 float Random()
 {
-	return (rand() / (float)RAND_MAX);
+	return rand() / static_cast<float>(RAND_MAX);
 }
 
 float Random( const float min, const float max )
@@ -58,5 +68,5 @@ float Random( const float min, const float max )
 
 int RandomInt( const int min, const int max )
 {
-	return (int)(Random() * (max - min)) + min;
+	return static_cast<int>(Random() * (max - min)) + min;
 }

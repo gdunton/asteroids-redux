@@ -21,7 +21,7 @@ void SetKeyStateUnpressed( WPARAM wParam, LPARAM lParam )
 	keyboard.SetKeyState( wParam, unpressed );
 }
 
-template<> Keyboard* Singleton<Keyboard>::instance = 0;
+template<> Keyboard* Singleton<Keyboard>::instance = nullptr;
 
 Keyboard::Keyboard()
 {

@@ -7,7 +7,7 @@
 
 MyWav::MyWav()
 {
-	wavData = 0;
+	wavData = nullptr;
 	looping = false;
 }
 
@@ -16,7 +16,7 @@ MyWav::~MyWav()
 	if( wavData )
 	{
 		delete[] wavData;
-		wavData = 0;
+		wavData = nullptr;
 	}
 }
 
@@ -40,7 +40,7 @@ bool MyWav::LoadFile( String filename, IXAudio2* xAudio2, bool loopSound )
 	WString wString;
 	StringToWString( filename, wString );
 
-	wav.Open( &wString[0], 0, WAVEFILE_READ );
+	wav.Open( &wString[0], nullptr, WAVEFILE_READ );
 
 	// Get the format and size of the buffer
 	WAVEFORMATEX* format = wav.GetFormat();
@@ -55,7 +55,7 @@ bool MyWav::LoadFile( String filename, IXAudio2* xAudio2, bool loopSound )
 	// Sbumit the wav sample data using a buffer
 	buffer.LoopBegin = 0;
 	buffer.LoopLength = 0;
-	buffer.pContext = 0;
+	buffer.pContext = nullptr;
 	buffer.PlayBegin = 0;
 	buffer.PlayLength = 0;
 

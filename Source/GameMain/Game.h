@@ -20,33 +20,26 @@ class Game : public IGame
 {
 public:
 	Game();
-	~Game();
 
 	void Initialize( const HINSTANCE hInstance );
 	int Run();
 
-	void VUpdate();
-	void VRender();
+	void VUpdate() override;
+	void VRender() override;
 
 	// Called from the event handler. Destroys all the assets and singletons
-	void VClose();
+	void VClose() override;
 	// Posts the quit message to the event handler
 	void Quit();
 
 	int GetClientWidth();
 	int GetClientHeight();
 
-	int GetWorldWidth();
-	int GetWorldHeight();
-
 private:
 
 	// Update called when the required time has past to result in desired fps
-	void InternalUpdate( const double deltaTime);
+	void InternalUpdate(double deltaTime);
 	
-
-private:
-
 	Window m_window;
 
 	String fpsString;
@@ -57,11 +50,11 @@ private:
 	GameStateManager gameStateManager;
 
 	Timer m_timer;
-	__int64 lastFrame;
-	double m_desiredTimePerFrame;
+	__int64 lastFrame = 0;
+	double m_desiredTimePerFrame = 0.0;
 
-	const int FRAMES_PER_SECOND;
-	const bool WINDOWED;
+	const int FRAMES_PER_SECOND = 60;
+	const bool WINDOWED = true;
 };
 
 #endif

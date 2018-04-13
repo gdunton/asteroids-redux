@@ -7,22 +7,8 @@
 #include "GraphicsDeviceManager.h"
 #include <SpriteFont.h>
 
-Font::Font()
-{
-	font = NULL;
-	color = BLACK;
-}
-
-Font::~Font()
-{
-	if( font )
-	{
- 		//font->OnLostDevice();
-		font = NULL;
-	}
-}
-
-void Font::Initialize(int height, bool italic, Color _color)
+Font::Font(Color color) :
+	color(color)
 {
 	// Create the font description
 	String assetsDir;
@@ -32,21 +18,17 @@ void Font::Initialize(int height, bool italic, Color _color)
 	WString wStr;
 	StringToWString(assetsDir, wStr);
 
-	font = new DirectX::SpriteFont(GraphicsDeviceManager::GetInstance().GetDevice(), wStr.c_str());
+	font = std::make_unique<DirectX::SpriteFont>(GraphicsDeviceManager::GetInstance().GetDevice(), wStr.c_str());
 
 	// Store the color 
-	color = _color;
+	this->color = color;
 }
 
-void Font::Destroy()
-{
-}
-
-void Font::DrawString( String str, Vector2 position )
+void Font::DrawString(const String& str, const Vector2& position) const
 {
 	// Actually draw the text to screen
 	GraphicsDeviceManager::GetInstance().GetSpriteBatch()->Begin();
-	
+
 	WString wStr;
 	StringToWString(str, wStr);
 	font->DrawString(GraphicsDeviceManager::GetInstance().GetSpriteBatch(), wStr.c_str(), position);
@@ -54,7 +36,7 @@ void Font::DrawString( String str, Vector2 position )
 	GraphicsDeviceManager::GetInstance().GetSpriteBatch()->End();
 }
 
-Vector2 Font::GetTextSize( String str )
+Vector2 Font::GetTextSize(const String& str) const
 {
 	WString wStr;
 	StringToWString(str, wStr);

@@ -17,28 +17,30 @@
 
 class MainMenuState : public GameState
 {
+public:
+	MainMenuState( GameStateManager* parent );
+
+	// Virtual functions from GameState
+	void Enter() override;
+	void Update( float dt ) override;
+	void Exit() override;
+
+	void Render() override;
+
+	// Delegate functions
+	void SelectStartGame();
+	void SelectControls();
+	void SelectExit() const;
+
 private:
+
+	std::shared_ptr<std::vector<MenuItem>> MakeMenuItems();
+
 	Font titleFont;
 	Font subFont1;
 	Menu menu;
 
 	Sprite background;
-	
-public:
-	MainMenuState( GameStateManager* parent );
-	~MainMenuState();
-
-	// Virtual functions from GameState
-	void Enter();
-	void Update( float dt );
-	void Exit();
-
-	void Render();
-
-	// Delegate functions
-	void SelectStartGame();
-	void SelectControls();
-	void SelectExit();
 };
 
 #endif

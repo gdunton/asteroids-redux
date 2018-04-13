@@ -20,28 +20,29 @@ class GameStateManager;
 
 class GamePausedState : public GameState
 {
+public:
+	GamePausedState(GameStateManager* parent);
+
+	// Virtuals from GameState
+	void Enter() override;
+	void Update(float dt) override;
+	void Exit() override;
+
+	void Render() override;
+
+	// Delegate functions for the menu
+	void SelectContinueGame() const;
+	void SelectMainMenu() const;
+
 private:
+	std::shared_ptr<std::vector<MenuItem>> MakeMenuItems();
+
 	Font font;
 	Menu menu;
 
 	KeyboardState prevKbState;
 
 	Sprite background;
-	
-public:
-	GamePausedState( GameStateManager* parent );
-	~GamePausedState();
-
-	// Virtuals from GameState
-	void Enter();
-	void Update( float dt );
-	void Exit();
-
-	void Render();
-
-	// Delegate functions for the menu
-	void SelectContinueGame();
-	void SelectMainMenu();
 };
 
 #endif

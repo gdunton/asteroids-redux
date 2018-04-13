@@ -18,7 +18,7 @@ private:
 	Channel* parent;
 
 public:
-	WaveCallback() : parent( 0 ) {}
+	WaveCallback() : parent( nullptr ) {}
 	~WaveCallback(){}
 
 	void Init( Channel* _parent )

@@ -7,37 +7,31 @@
 #ifndef MENU_ITEM_H
 #define MENU_ITEM_H
 
+#include <functional>
 #include "../Graphics/Font.h"
-#include "../Utilities/FastDelegate.h"
 
 class GameState;
 
-typedef fastdelegate::FastDelegate0<> MenuSelectDelegate;
-
 class MenuItem
 {
+public:
+	MenuItem(std::function<void()> selectAction, Vector2 pos, String text, Color color);
+
+	// Calls the delegate
+	void Select() const;
+
+	// Draw the string to screen
+	void Render() const;
+
+	Vector2 GetPosition() const;
+
 private:
 	Vector2 centerPos;
 	String text;
 	Font font;
 
 	// Function called when the item has select called in it
-	MenuSelectDelegate selectAction;
-
-public:
-
-	MenuItem();
-	MenuItem( GameState* parent, MenuSelectDelegate _selectAction, 
-		Vector2 strinCenterPos, String _text, int height, String fontName, Color color);
-	~MenuItem();
-
-	// Calls the delegate
-	void Select();
-
-	// Draw the string to screen
-	void Render();
-
-	Vector2 GetPosition() { return centerPos; }
+	std::function<void()> selectAction;
 };
 
 #endif

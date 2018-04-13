@@ -25,7 +25,7 @@ protected:
 
 public:
 	// Constructors
-	GameEntity() : world( Vector2(0,0), Vector2(1,1), 0 ), model(NULL), id(0) { }
+	GameEntity() : world( Vector2(0,0), Vector2(1,1), 0 ), model(nullptr), id(0) { }
 	GameEntity( const Vector2& _pos, const Vector2& _size, const float _rot,
 		Model2D* _model ) :
 		world(_pos, _size, _rot ), model( _model ), wrapAroundWorld( true )

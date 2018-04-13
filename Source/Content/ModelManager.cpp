@@ -5,7 +5,7 @@
 #include "STD.h"
 #include "ModelManager.h"
 
-template<> ModelManager* Singleton<ModelManager>::instance = NULL;
+template<> ModelManager* Singleton<ModelManager>::instance = nullptr;
 
 //#define INVERT_MODEL_Y
 #ifdef INVERT_MODEL_Y

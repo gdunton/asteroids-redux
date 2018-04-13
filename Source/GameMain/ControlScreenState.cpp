@@ -21,21 +21,11 @@ String const ControlScreenState::controlStrings[] = {
 	"Pause: Esc"
 };
 
-ControlScreenState::ControlScreenState( GameStateManager* _parent )
-	: GameState( _parent )
+ControlScreenState::ControlScreenState( GameStateManager* parent )
+	: GameState( parent )
 {
-	titleFont.Initialize( 40, false, WHITE);
-	subFont1.Initialize( 20, false, ColorRGBA( 255, 255, 255, 255 ));
-
 	background.Initialize( "transparent" );
-
 	Keyboard::GetInstance().GetKeyboardState( prevKbState );
-}
-
-ControlScreenState::~ControlScreenState()
-{
-	titleFont.Destroy();
-	subFont1.Destroy();
 }
 
 void ControlScreenState::Enter() 
@@ -55,7 +45,7 @@ void ControlScreenState::Update( float dt )
 	if( (kbState.GetKeyState( VK_ESCAPE ) == pressed && prevKbState.GetKeyState( VK_ESCAPE ) == unpressed) ||
 		(kbState.GetKeyState( VK_RETURN ) == pressed && prevKbState.GetKeyState( VK_RETURN ) == unpressed) )
 	{
-		parent->SetState( std::shared_ptr<GameState>( new MainMenuState( parent ) ) );
+		parent->SetState(std::make_shared<MainMenuState>(parent));
 	}
 
 	// Check the input for the game

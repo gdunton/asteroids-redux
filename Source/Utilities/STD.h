@@ -83,7 +83,9 @@ enum Difficulty
 void GetAssetsDir( String& outString );
 
 // String converter -- MAX LENGTH IS FILE LENGTH
-void StringToWString( const String& string, WString& outWString );
-void WStringToString( const WString& wstring, String& outString );
+void StringToWString( const String& str, WString& outWString );
+WString StringToWString(const String& str);
+void WStringToString( const WString& wStr, String& outString );
+String WStringToString( const WString& wStr );
 
 #endif

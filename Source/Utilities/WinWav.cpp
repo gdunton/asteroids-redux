@@ -37,9 +37,9 @@
 //-----------------------------------------------------------------------------
 WinWav::WinWav()
 {
-    m_pwfx = NULL;
-    m_hmmio = NULL;
-    m_pResourceBuffer = NULL;
+    m_pwfx = nullptr;
+    m_hmmio = nullptr;
+    m_pResourceBuffer = nullptr;
     m_dwSize = 0;
     m_bIsReadingFromMemory = FALSE;
 }
@@ -71,13 +71,13 @@ HRESULT WinWav::Open( LPWSTR strFileName, WAVEFORMATEX* pwfx, DWORD dwFlags )
 
     if( m_dwFlags == WAVEFILE_READ )
     {
-        if( strFileName == NULL )
+        if( strFileName == nullptr )
             return E_INVALIDARG;
         SAFE_DELETE_ARRAY( m_pwfx );
 
-        m_hmmio = mmioOpen( strFileName, NULL, MMIO_ALLOCBUF | MMIO_READ );
+        m_hmmio = mmioOpen( strFileName, nullptr, MMIO_ALLOCBUF | MMIO_READ );
 
-        if( NULL == m_hmmio )
+        if(nullptr == m_hmmio )
         {
             HRSRC hResInfo;
             HGLOBAL hResData;
@@ -85,23 +85,23 @@ HRESULT WinWav::Open( LPWSTR strFileName, WAVEFORMATEX* pwfx, DWORD dwFlags )
             VOID* pvRes;
 
             // Loading it as a file failed, so try it as a resource
-            if( NULL == ( hResInfo = FindResource( NULL, strFileName, L"WAVE" ) ) )
+            if(nullptr == ( hResInfo = FindResource(nullptr, strFileName, L"WAVE" ) ) )
             {
-                if( NULL == ( hResInfo = FindResource( NULL, strFileName, L"WAV" ) ) )
+                if(nullptr == ( hResInfo = FindResource(nullptr, strFileName, L"WAV" ) ) )
                     return E_FAIL;
             }
 
-            if( NULL == ( hResData = LoadResource( GetModuleHandle( NULL ), hResInfo ) ) )
+            if(nullptr == ( hResData = LoadResource( GetModuleHandle(nullptr ), hResInfo ) ) )
                 return E_FAIL;
 
-            if( 0 == ( dwSize = SizeofResource( GetModuleHandle( NULL ), hResInfo ) ) )
+            if( 0 == ( dwSize = SizeofResource( GetModuleHandle(nullptr ), hResInfo ) ) )
                 return E_FAIL;
 
-            if( NULL == ( pvRes = LockResource( hResData ) ) )
+            if(nullptr == ( pvRes = LockResource( hResData ) ) )
                 return E_FAIL;
 
             m_pResourceBuffer = new CHAR[ dwSize ];
-            if( m_pResourceBuffer == NULL )
+            if( m_pResourceBuffer == nullptr )
                 return E_OUTOFMEMORY;
             memcpy( m_pResourceBuffer, pvRes, dwSize );
 
@@ -111,7 +111,7 @@ HRESULT WinWav::Open( LPWSTR strFileName, WAVEFORMATEX* pwfx, DWORD dwFlags )
             mmioInfo.cchBuffer = dwSize;
             mmioInfo.pchBuffer = ( CHAR* )m_pResourceBuffer;
 
-            m_hmmio = mmioOpen( NULL, &mmioInfo, MMIO_ALLOCBUF | MMIO_READ );
+            m_hmmio = mmioOpen(nullptr, &mmioInfo, MMIO_ALLOCBUF | MMIO_READ );
         }
 
         if( FAILED( hr = ReadMMIO() ) )
@@ -129,10 +129,10 @@ HRESULT WinWav::Open( LPWSTR strFileName, WAVEFORMATEX* pwfx, DWORD dwFlags )
     }
     else
     {
-        m_hmmio = mmioOpen( strFileName, NULL, MMIO_ALLOCBUF |
+        m_hmmio = mmioOpen( strFileName, nullptr, MMIO_ALLOCBUF |
                             MMIO_READWRITE |
                             MMIO_CREATE );
-        if( NULL == m_hmmio )
+        if(nullptr == m_hmmio )
             return E_FAIL;
 
         if( FAILED( hr = WriteMMIO( pwfx ) ) )
@@ -182,9 +182,9 @@ HRESULT WinWav::ReadMMIO()
 
     memset( &ckIn, 0, sizeof(ckIn) );
 
-    m_pwfx = NULL;
+    m_pwfx = nullptr;
 
-    if( ( 0 != mmioDescend( m_hmmio, &m_ckRiff, NULL, 0 ) ) )
+    if( ( 0 != mmioDescend( m_hmmio, &m_ckRiff, nullptr, 0 ) ) )
         return E_FAIL;
 
     // Check to make sure this is a valid wave file
@@ -212,7 +212,7 @@ HRESULT WinWav::ReadMMIO()
     if( pcmWaveFormat.wf.wFormatTag == WAVE_FORMAT_PCM )
     {
         m_pwfx = ( WAVEFORMATEX* )new CHAR[ sizeof( WAVEFORMATEX ) ];
-        if( NULL == m_pwfx )
+        if(nullptr == m_pwfx )
             return E_FAIL;
 
         // Copy the bytes from the pcm structure to the waveformatex structure
@@ -227,7 +227,7 @@ HRESULT WinWav::ReadMMIO()
             return E_FAIL;
 
         m_pwfx = ( WAVEFORMATEX* )new CHAR[ sizeof( WAVEFORMATEX ) + cbExtraBytes ];
-        if( NULL == m_pwfx )
+        if(nullptr == m_pwfx )
             return E_FAIL;
 
         // Copy the bytes from the pcm structure to the waveformatex structure
@@ -277,7 +277,7 @@ HRESULT WinWav::ResetFile()
     }
     else
     {
-        if( m_hmmio == NULL )
+        if( m_hmmio == nullptr )
             return CO_E_NOTINITIALIZED;
 
         if( m_dwFlags == WAVEFILE_READ )
@@ -322,9 +322,9 @@ HRESULT WinWav::Read( BYTE* pBuffer, DWORD dwSizeToRead, DWORD* pdwSizeRead )
 {
     if( m_bIsReadingFromMemory )
     {
-        if( m_pbDataCur == NULL )
+        if( m_pbDataCur == nullptr )
             return CO_E_NOTINITIALIZED;
-        if( pdwSizeRead != NULL )
+        if( pdwSizeRead != nullptr )
             *pdwSizeRead = 0;
 
         if( ( BYTE* )( m_pbDataCur + dwSizeToRead ) >
@@ -339,7 +339,7 @@ HRESULT WinWav::Read( BYTE* pBuffer, DWORD dwSizeToRead, DWORD* pdwSizeRead )
 #pragma warning( default: 22104 )
 #pragma warning( default: 4616 )
 
-        if( pdwSizeRead != NULL )
+        if( pdwSizeRead != nullptr )
             *pdwSizeRead = dwSizeToRead;
 
         return S_OK;
@@ -348,9 +348,9 @@ HRESULT WinWav::Read( BYTE* pBuffer, DWORD dwSizeToRead, DWORD* pdwSizeRead )
     {
         MMIOINFO mmioinfoIn; // current status of m_hmmio
 
-        if( m_hmmio == NULL )
+        if( m_hmmio == nullptr )
             return CO_E_NOTINITIALIZED;
-        if( pBuffer == NULL || pdwSizeRead == NULL )
+        if( pBuffer == nullptr || pdwSizeRead == nullptr )
             return E_INVALIDARG;
 
         *pdwSizeRead = 0;
@@ -399,10 +399,10 @@ HRESULT WinWav::Close()
 {
     if( m_dwFlags == WAVEFILE_READ )
     {
-        if ( m_hmmio != NULL )
+        if ( m_hmmio != nullptr )
         {
             mmioClose( m_hmmio, 0 );
-            m_hmmio = NULL;
+            m_hmmio = nullptr;
         }
         SAFE_DELETE_ARRAY( m_pResourceBuffer );
     }
@@ -410,7 +410,7 @@ HRESULT WinWav::Close()
     {
         m_mmioinfoOut.dwFlags |= MMIO_DIRTY;
 
-        if( m_hmmio == NULL )
+        if( m_hmmio == nullptr )
             return CO_E_NOTINITIALIZED;
 
         if( 0 != mmioSetInfo( m_hmmio, &m_mmioinfoOut, 0 ) )
@@ -427,7 +427,7 @@ HRESULT WinWav::Close()
 
         mmioSeek( m_hmmio, 0, SEEK_SET );
 
-        if( 0 != ( INT )mmioDescend( m_hmmio, &m_ckRiff, NULL, 0 ) )
+        if( 0 != ( INT )mmioDescend( m_hmmio, &m_ckRiff, nullptr, 0 ) )
             return E_FAIL;
 
         m_ck.ckid = mmioFOURCC( 'f', 'a', 'c', 't' );
@@ -445,7 +445,7 @@ HRESULT WinWav::Close()
             return E_FAIL;
 
         mmioClose( m_hmmio, 0 );
-        m_hmmio = NULL;
+        m_hmmio = nullptr;
     }
 
     return S_OK;
@@ -535,9 +535,9 @@ HRESULT WinWav::Write( UINT nSizeToWrite, BYTE* pbSrcData, UINT* pnSizeWrote )
 
     if( m_bIsReadingFromMemory )
         return E_NOTIMPL;
-    if( m_hmmio == NULL )
+    if( m_hmmio == nullptr )
         return CO_E_NOTINITIALIZED;
-    if( pnSizeWrote == NULL || pbSrcData == NULL )
+    if( pnSizeWrote == nullptr || pbSrcData == nullptr )
         return E_INVALIDARG;
 
     *pnSizeWrote = 0;

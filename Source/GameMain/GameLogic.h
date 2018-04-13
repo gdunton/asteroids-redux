@@ -54,7 +54,6 @@ private:
 
 public:
 	GameLogic();
-	~GameLogic();
 
 	void Initialize(Game* _game);
 

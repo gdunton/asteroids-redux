@@ -9,7 +9,7 @@ DirectX::SpriteBatch* Sprite::spriteBatch = nullptr;
 
 Sprite::Sprite()
 {
-	m_pTex = NULL;
+	m_pTex = nullptr;
 }
 
 void Sprite::Initialize( const String& textureName )

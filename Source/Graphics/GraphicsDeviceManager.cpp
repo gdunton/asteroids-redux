@@ -10,33 +10,33 @@
 #include "../GameMain/Globals.h"
 #include <DirectXColors.h>
 
-template<> GraphicsDeviceManager* Singleton<GraphicsDeviceManager>::instance = 0;
+template<> GraphicsDeviceManager* Singleton<GraphicsDeviceManager>::instance = nullptr;
 
 GraphicsDeviceManager::GraphicsDeviceManager()
 {
-	m_pGraphicsDevice = NULL; 
-	m_pDeviceContext = NULL;
-	m_pSwapChain = NULL;
-	m_pInputLayout = NULL;
-	m_pRenderTargetView = NULL;
-	m_pDepthStencilView = NULL;
+	m_pGraphicsDevice = nullptr; 
+	m_pDeviceContext = nullptr;
+	m_pSwapChain = nullptr;
+	m_pInputLayout = nullptr;
+	m_pRenderTargetView = nullptr;
+	m_pDepthStencilView = nullptr;
 	sceneStarted = false;
 }
 
 GraphicsDeviceManager::~GraphicsDeviceManager()
 {
 	if( m_pGraphicsDevice ) m_pGraphicsDevice->Release();
-	m_pGraphicsDevice = NULL;
+	m_pGraphicsDevice = nullptr;
 	if (m_pDeviceContext) m_pDeviceContext->Release();
-	m_pDeviceContext = NULL;
+	m_pDeviceContext = nullptr;
 	if (m_pSwapChain) m_pSwapChain->Release();
-	m_pSwapChain = NULL;
+	m_pSwapChain = nullptr;
 	if (m_pInputLayout) m_pInputLayout->Release();
-	m_pInputLayout = NULL;
+	m_pInputLayout = nullptr;
 	if (m_pRenderTargetView) m_pRenderTargetView->Release();
-	m_pRenderTargetView = NULL;
+	m_pRenderTargetView = nullptr;
 	if (m_pDepthStencilView) m_pDepthStencilView->Release();
-	m_pDepthStencilView = NULL;
+	m_pDepthStencilView = nullptr;
 }
 
 bool GraphicsDeviceManager::Initialize( Window& window, bool windowed )

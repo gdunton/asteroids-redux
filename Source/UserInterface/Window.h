@@ -10,51 +10,48 @@
 #ifndef WINDOW_H
 #define WINDOW_H
 
-#include "WindowsEventListener.h"
+#include "../Input/Keyboard.h"
+
+class Game;
 
 class Window
 {
-private:
-
-	// Reference to the parent game
-	IGame* gameParent;
-	HWND windowHandle;
-
-	// Window sized
-	int windowWidth;
-	int windowHeight;
-
-	// Client area size
-	int clientWidth;
-	int clientHeight;
-
-	// Windows messages to listen for with callbacks for when 
-	// message is revieved
-	std::list< EventListener > events;
-
 public:
-	Window();
-	~Window();
 
-	bool Initialize( HINSTANCE hInstance, int clientWidth, int clientHeight,
-	                 std::string windowTitle, IGame* _parent );
+	Window(HINSTANCE hInstance, int clientWidth, int clientHeight,
+	       const std::string& windowTitle, Game* _parent);
 	int Run();
 	void Close();
 
-	void AddEventListener( const EventListener& _listener );
+	KeyboardState GetKeyboardState() const;
 
 	// Accessors
 	HWND GetWindowHandle() { return windowHandle; }
 
-	int GetClientWidth() { return clientWidth; }
-	int GetClientHeight() { return clientHeight; }
+	int GetClientWidth() const { return clientWidth; }
+	int GetClientHeight() const { return clientHeight; }
 
 private:
 	// Windows' own procedure function
-	LRESULT WndProc( UINT message, WPARAM wParam, LPARAM lParam );
+	LRESULT WndProc(UINT message, WPARAM wParam, LPARAM lParam);
 
 	// Static function passes on messages to internal procedure
-	static LRESULT CALLBACK CallbackWndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam );
+	static LRESULT CALLBACK CallbackWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
+
+
+	// Reference to the parent game
+	Game* gameParent = nullptr;
+	HWND windowHandle = nullptr;
+
+	// Window sized
+	int windowWidth = 0;
+	int windowHeight = 0;
+
+	// Client area size
+	int clientWidth = 0;
+	int clientHeight = 0;
+
+	Keyboard keyboard;
 };
 
 #endif

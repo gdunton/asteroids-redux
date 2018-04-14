@@ -7,7 +7,9 @@
 #include "GraphicsDeviceManager.h"
 #include <SpriteFont.h>
 
-Font::Font(Color color) :
+DirectX::SpriteBatch* Font::spriteBatch = nullptr;
+
+Font::Font(GraphicsDeviceManager& graphicsManager, Color color) :
 	color(color)
 {
 	// Create the font description
@@ -18,22 +20,24 @@ Font::Font(Color color) :
 	std::wstring wStr;
 	StringToWString(assetsDir, wStr);
 
-	font = std::make_unique<DirectX::SpriteFont>(GraphicsDeviceManager::GetInstance().GetDevice(), wStr.c_str());
+	font = std::make_unique<DirectX::SpriteFont>(graphicsManager.GetDevice(), wStr.c_str());
 
 	// Store the color 
 	this->color = color;
+
+	spriteBatch = graphicsManager.GetSpriteBatch();
 }
 
 void Font::DrawString(const std::string& str, const Vector2& position) const
 {
 	// Actually draw the text to screen
-	GraphicsDeviceManager::GetInstance().GetSpriteBatch()->Begin();
+	spriteBatch->Begin();
 
 	std::wstring wStr;
 	StringToWString(str, wStr);
-	font->DrawString(GraphicsDeviceManager::GetInstance().GetSpriteBatch(), wStr.c_str(), position);
+	font->DrawString(spriteBatch, wStr.c_str(), position);
 
-	GraphicsDeviceManager::GetInstance().GetSpriteBatch()->End();
+	spriteBatch->End();
 }
 
 Vector2 Font::GetTextSize(const std::string& str) const

@@ -15,46 +15,24 @@
 #include "Globals.h"
 
 #include "MainMenuState.h"
-#include "../Graphics/DebugFont.h"
 #include "MainGameState.h"
 
 
-Game::Game() : 
-	font(GREEN)
+Game::Game(HINSTANCE hInstance) :
+	m_window(hInstance, 800, 600, "Asteroids Redux", this),
+	graphicsDeviceManager(m_window, true),
+	textureManager(graphicsDeviceManager),
+	font(graphicsDeviceManager, GREEN),
+	m_gameLogic(graphicsDeviceManager)
 {
 	m_desiredTimePerFrame = 1.0 / FRAMES_PER_SECOND;
 }
 
-void Game::Initialize( const HINSTANCE hInstance )
+void Game::Initialize()
 {
-	// Create the window
-	bool success = m_window.Initialize( hInstance, 800, 600, "Asteroids Redux", this );
-	ASSERT( success );
-
-	// Initialize the keyboard input
-	Keyboard::Create();
-
-	// register messages and callbacks required for input
-	m_window.AddEventListener( EventListener( WM_KEYDOWN, SetKeyStatePressed ) );
-	m_window.AddEventListener( EventListener( WM_KEYUP, SetKeyStateUnpressed ) );
-
 	// Start the gameTimer
 	m_timer.Start();
 	lastFrame = m_timer.GetHighResTimer();
-
-	// Initialize the graphics device
-	GraphicsDeviceManager::Create();
-	bool result =  GraphicsDeviceManager::GetInstance().Initialize( m_window, true );
-	if( !result )
-	{
-		MessageBox(nullptr, L"Failed to create graphics device", L"Initialization Error", MB_OK );
-	}
-
-	TextureManager::Create();
-
-#ifdef DEBUG
-	DebugFont::Create();
-#endif
 
 	// Initialize the model manager
 	ModelManager::Create();
@@ -66,11 +44,11 @@ void Game::Initialize( const HINSTANCE hInstance )
 	// Initialize the game logic
 	m_gameLogic.Initialize(this);
 
-	gameStateManager = GameStateManager( &m_gameLogic );
-	gameStateManager.SetInitialState(std::make_shared<MainMenuState>(&gameStateManager));
+	gameStateManager = GameStateManager(&graphicsDeviceManager, &m_gameLogic );
+	gameStateManager.SetInitialState(std::make_shared<MainMenuState>(graphicsDeviceManager, &gameStateManager));
 
-	Line::SetLine(GraphicsDeviceManager::GetInstance().GetBatch());
-	Sprite::SetSpriteBatch(GraphicsDeviceManager::GetInstance().GetSpriteBatch());
+	Line::SetLine(graphicsDeviceManager.GetBatch());
+	Sprite::SetSpriteBatch(graphicsDeviceManager.GetSpriteBatch());
 }
 
 void Game::InternalUpdate( const double deltaTime )
@@ -79,14 +57,14 @@ void Game::InternalUpdate( const double deltaTime )
 	
 	// Update the main state then let the state manager check for any 
 	// state changes and resolve them
-	gameStateManager.GetCurrentState().Update( static_cast<float>(deltaTime) );
+	gameStateManager.GetCurrentState().Update( static_cast<float>(deltaTime), m_window.GetKeyboardState());
 	gameStateManager.ResolveIncomingState();
 }
 
-void Game::VRender()
+void Game::Render()
 {
 	// Begin the rendering
-	GraphicsDeviceManager::GetInstance().BeginScene( Color( 0, 0, 0, 0 ) );
+	graphicsDeviceManager.BeginScene( Color( 0, 0, 0, 0 ) );
 
 	// Start doing the line rendering
 	 gameStateManager.GetCurrentState().Render();
@@ -96,21 +74,14 @@ void Game::VRender()
 	font.DrawString( fpsString, Vector2( 0, 0 ) );
 #endif
 
-	GraphicsDeviceManager::GetInstance().EndScene();
+	graphicsDeviceManager.EndScene();
 }
 
 // Called from the event handler. Destroys all the assets and singletons
-void Game::VClose()
+void Game::Close()
 {
-	// Close all the singletons in reverse order to creation
-#ifdef DEBUG
-	DebugFont::Destroy();
-#endif
-	TextureManager::Destroy();
 	ModelManager::Destroy();
 	AudioManager::Destroy();
-	GraphicsDeviceManager::Destroy();
-	Keyboard::Destroy();
 
 	// Close the window
 	m_window.Close();
@@ -121,7 +92,7 @@ int Game::Run()
 	return m_window.Run();
 }
 
-void Game::VUpdate()
+void Game::Update()
 {
 	// Get the current time in seconds
 	double currTime = m_timer.GetCurrTimeSecs();
@@ -141,7 +112,7 @@ void Game::VUpdate()
 		m_timer.TickFPSCounter();
 
 		InternalUpdate(dt);
-		VRender();
+		Render();
 		lastFrame = begin;
 	}
 

@@ -30,13 +30,13 @@ private:
 	Model2D* pointerModel = nullptr;
 	int pointerOffset = 0;
 
-	KeyboardState prevKbState;	
+	KeyboardState prevKbState;
 
 public:
-	Menu(GameState* parent, std::shared_ptr<std::vector<MenuItem>> items, int pointerOffset);
+	Menu(GraphicsDeviceManager& graphics, GameState* parent, std::shared_ptr<std::vector<MenuItem>> items, int pointerOffset);
 
 	// Called each frame to check input
-	void Update();
+	void Update(const KeyboardState& keyboardState);
 
 	// Called each frame to draw to screen
 	void Render() const;

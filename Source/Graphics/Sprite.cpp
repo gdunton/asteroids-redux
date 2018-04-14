@@ -12,14 +12,14 @@ Sprite::Sprite()
 	m_pTex = nullptr;
 }
 
-void Sprite::Initialize(const std::string& textureName)
+void Sprite::Initialize(TextureManager& textureManager, const std::string& textureName)
 {
 	// Get the texture from the texture manager. If a null
 	// value is returned then stop the program.
-	m_pTex = TextureManager::GetInstance().GetTexture(textureName);
+	m_pTex = textureManager.GetTexture(textureName);
 	ASSERT( m_pTex != NULL );
 
-	spriteSize = TextureManager::GetInstance().GetDimensions(textureName);
+	spriteSize = textureManager.GetDimensions(textureName);
 }
 
 void Sprite::Draw( const Vector2& _pos, const Vector2& _size, const float alpha )

@@ -40,7 +40,6 @@
     <ClCompile Include="Content\Menu.cpp" />
     <ClCompile Include="Content\MenuItem.cpp" />
     <ClCompile Include="Graphics\Camera.cpp" />
-    <ClCompile Include="Graphics\DebugFont.cpp" />
     <ClCompile Include="Graphics\Font.cpp" />
     <ClCompile Include="Graphics\Model2D.cpp" />
     <ClCompile Include="Content\ModelManager.cpp" />
@@ -96,7 +95,6 @@
     <ClInclude Include="Content\Menu.h" />
     <ClInclude Include="Content\MenuItem.h" />
     <ClInclude Include="Graphics\Camera.h" />
-    <ClInclude Include="Graphics\DebugFont.h" />
     <ClInclude Include="Graphics\Font.h" />
     <ClInclude Include="Graphics\Model2D.h" />
     <ClInclude Include="Content\ModelManager.h" />
@@ -113,7 +111,6 @@
     <ClInclude Include="Input\Keyboard.h" />
     <ClInclude Include="Input\KeyboardState.h" />
     <ClInclude Include="UserInterface\Window.h" />
-    <ClInclude Include="UserInterface\WindowsEventListener.h" />
     <ClInclude Include="Utilities\Functions.h" />
     <ClInclude Include="Utilities\MathTypes.h" />
     <ClInclude Include="Utilities\STD.h" />

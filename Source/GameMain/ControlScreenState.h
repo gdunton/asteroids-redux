@@ -17,10 +17,10 @@
 class ControlScreenState : public GameState
 {
 public:
-	explicit ControlScreenState(GameStateManager* parent);
+	explicit ControlScreenState(GraphicsDeviceManager& graphics, GameStateManager* parent);
 
 	void Enter() override;
-	void Update(float dt) override;
+	void Update(float dt, const KeyboardState& keyboardState) override;
 	void Exit() override;
 
 	void Render() override;

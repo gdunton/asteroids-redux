@@ -15,20 +15,22 @@
 #include "GameStateManager.h"
 
 #include "../Graphics/Font.h"
+#include "../Graphics/GraphicsDeviceManager.h"
+#include "../Content/TextureManager.h"
 
-class Game : public IGame
+class Game
 {
 public:
-	Game();
+	explicit Game(HINSTANCE hInstance);
 
-	void Initialize( const HINSTANCE hInstance );
+	void Initialize();
 	int Run();
 
-	void VUpdate() override;
-	void VRender() override;
+	void Update();
+	void Render();
 
 	// Called from the event handler. Destroys all the assets and singletons
-	void VClose() override;
+	void Close();
 	// Posts the quit message to the event handler
 	void Quit();
 
@@ -41,6 +43,8 @@ private:
 	void InternalUpdate(double deltaTime);
 	
 	Window m_window;
+	GraphicsDeviceManager graphicsDeviceManager;
+	TextureManager textureManager;
 
 	std::string fpsString;
 	Font font;
@@ -54,7 +58,6 @@ private:
 	double m_desiredTimePerFrame = 0.0;
 
 	const int FRAMES_PER_SECOND = 60;
-	const bool WINDOWED = true;
 };
 
 #endif

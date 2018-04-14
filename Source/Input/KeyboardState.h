@@ -8,25 +8,23 @@
 #ifndef KEYBOARDSTATE_H
 #define KEYBOARDSTATE_H
 
-class Keyboard;
+#include <array>
 
 // Keycodes are the codes used by windows i.e. "A" or VK_ESCAPE
-typedef unsigned int KeyCode;
-enum KeyState { unpressed = 0, pressed = 1 };
+using KeyCode = unsigned int;
+
+enum class KeyState { unpressed = 0, pressed = 1 };
 
 class KeyboardState
 {
 public:
-	friend class Keyboard;
-
 	KeyboardState();
+	explicit KeyboardState(const std::array<KeyState, 256>& keyList);
 
-	KeyState GetKeyState( KeyCode key );
-
-	KeyboardState& operator=( const KeyboardState& source );
+	KeyState GetKeyState(KeyCode key) const;
 
 private:
-	KeyState keyList[256];
+	std::array<KeyState, 256> keyList;
 };
 
 #endif

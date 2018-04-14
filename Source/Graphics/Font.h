@@ -11,10 +11,12 @@
 #include <memory>
 #include <SpriteFont.h>
 
+class GraphicsDeviceManager;
+
 class Font
 {
 public:
-	explicit Font(Color color = WHITE);
+	explicit Font(GraphicsDeviceManager& graphicsManager, Color color = WHITE);
 
 	// Renders text to screen. Uses screen position NOT world pos
 	void DrawString(const std::string& str, const Vector2& position) const;
@@ -25,6 +27,8 @@ public:
 private:
 	std::unique_ptr<DirectX::SpriteFont> font;
 	Color color;
+
+	static DirectX::SpriteBatch* spriteBatch;
 };
 
 #endif

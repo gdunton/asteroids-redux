@@ -10,8 +10,9 @@ GameStateManager::GameStateManager( ) :
 {
 }
 
-GameStateManager::GameStateManager( GameLogic* logic ) :
-	gameLogic( logic )
+GameStateManager::GameStateManager(GraphicsDeviceManager* graphics, GameLogic* logic ) :
+	gameLogic( logic ),
+	graphics(graphics)
 {
 }
 

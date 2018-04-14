@@ -11,6 +11,9 @@
 #include <Windows.h>
 #define WIN32_LEAN_AND_MEAN
 
+#include <wrl.h>
+using Microsoft::WRL::ComPtr;
+
 #ifdef DEBUG
 //#define PHYSICS_DEBUG_INFO
 #endif

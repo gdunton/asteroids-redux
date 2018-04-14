@@ -8,28 +8,29 @@
 #include "GameStateManager.h"
 #include "GameLogic.h"
 #include "MainGameState.h"
+#include "../Graphics/GraphicsDeviceManager.h"
 
 #include "Globals.h"
 
 const float LevelStartState::INTRO_TIME = 3.0f;
 
-LevelStartState::LevelStartState( GameStateManager* _parent )
-	: GameState( _parent )
+LevelStartState::LevelStartState(GraphicsDeviceManager& graphics, GameStateManager* _parent) : 
+	GameState(_parent),
+	font(graphics)
 {
-	background.Initialize( "transparent" );
+	background.Initialize(graphics.GetTextureManager(), "transparent");
 
 	// Set the initial text
 	onScreenText = "Level Starts In";
 	countDownText = "3";
 
 	// calculate the position of the text on screen
-	Vector2 size = font.GetTextSize( onScreenText );
-	textPosition = Vector2( (WINDOW_WIDTH / 2) - (size.x / 2), 
-		(WINDOW_HEIGHT / 2) - (size.y / 2) - 50 );
-	size = font.GetTextSize( countDownText );
-	countDownPos = Vector2( (WINDOW_WIDTH / 2) - (size.x / 2), 
-		(WINDOW_HEIGHT / 2) - (size.y / 2) - 20 );
-
+	Vector2 size = font.GetTextSize(onScreenText);
+	textPosition = Vector2((WINDOW_WIDTH / 2) - (size.x / 2),
+	                       (WINDOW_HEIGHT / 2) - (size.y / 2) - 50);
+	size = font.GetTextSize(countDownText);
+	countDownPos = Vector2((WINDOW_WIDTH / 2) - (size.x / 2),
+	                       (WINDOW_HEIGHT / 2) - (size.y / 2) - 20);
 }
 
 void LevelStartState::Enter()
@@ -38,36 +39,35 @@ void LevelStartState::Enter()
 	clock.Start();
 }
 
-void LevelStartState::Update( float dt )
+void LevelStartState::Update(float dt, const KeyboardState& keyboardState)
 {
-	clock.Tick( dt );
+	clock.Tick(dt);
 
 	// Check the time until the level starts
 	float delta = clock.GetDeltaTime();
-	if( delta >= INTRO_TIME )
+	if(delta >= INTRO_TIME)
 	{
 		// Begin the level
-		parent->SetState(std::make_shared<MainGameState>(parent));
+		parent->SetState<MainGameState>();
 	}
 	else
 	{
 		// Set the onscreen text
-		to_String( static_cast<int>(INTRO_TIME - delta + 1), 1, countDownText );
+		to_String(static_cast<int>(INTRO_TIME - delta + 1), 1, countDownText);
 	}
 }
 
 void LevelStartState::Exit()
-{
-}
+{}
 
 void LevelStartState::Render()
 {
 	parent->GetGameLogic().Render();
 
 	// Darken the level using the transparent sprite
-	background.Draw( Vector2(0, 0), Vector2(WINDOW_WIDTH, WINDOW_HEIGHT), 0.6f );
+	background.Draw(Vector2(0, 0), Vector2(WINDOW_WIDTH, WINDOW_HEIGHT), 0.6f);
 
 	// Draw the text onto the window
-	font.DrawString( onScreenText, textPosition );
-	font.DrawString( countDownText, countDownPos );
+	font.DrawString(onScreenText, textPosition);
+	font.DrawString(countDownText, countDownPos);
 }

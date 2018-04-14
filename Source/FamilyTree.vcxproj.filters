@@ -22,7 +22,6 @@
     <ClCompile Include="Graphics\Font.cpp" />
     <ClCompile Include="Actor\CollisionShape.cpp" />
     <ClCompile Include="GameMain\Globals.cpp" />
-    <ClCompile Include="Graphics\DebugFont.cpp" />
     <ClCompile Include="GameMain\GameStateManager.cpp" />
     <ClCompile Include="GameMain\MainGameState.cpp" />
     <ClCompile Include="GameMain\GameOverState.cpp" />
@@ -55,7 +54,6 @@
     <ClInclude Include="UserInterface\Window.h" />
     <ClInclude Include="Utilities\templates.h" />
     <ClInclude Include="Debugging\Error.h" />
-    <ClInclude Include="UserInterface\WindowsEventListener.h" />
     <ClInclude Include="Input\Keyboard.h" />
     <ClInclude Include="Input\KeyboardState.h" />
     <ClInclude Include="GameMain\Game.h" />
@@ -74,7 +72,6 @@
     <ClInclude Include="Graphics\Font.h" />
     <ClInclude Include="Actor\CollisionShape.h" />
     <ClInclude Include="GameMain\Globals.h" />
-    <ClInclude Include="Graphics\DebugFont.h" />
     <ClInclude Include="GameMain\GameStateManager.h" />
     <ClInclude Include="GameMain\GameState.h" />
     <ClInclude Include="GameMain\MainGameState.h" />

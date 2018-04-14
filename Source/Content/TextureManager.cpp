@@ -7,42 +7,26 @@
 #include "../Graphics/GraphicsDeviceManager.h"
 #include "../GameMain/Globals.h"
 
-template<> TextureManager* Singleton<TextureManager>::instance = nullptr;
-
-TextureManager::TextureManager()
+TextureManager::TextureManager(GraphicsDeviceManager& graphicsManager)
 {
 	// Get the asset path
-	GetAssetsDir( m_assetsDir );
+	GetAssetsDir(m_assetsDir);
 
-	CreateTransparencyRect();
-}
-
-TextureManager::~TextureManager()
-{
-	for( auto begin = m_textureMap.begin(), end = m_textureMap.end(); begin != end;
-		++begin )
-	{
-		if (begin->second.texture != nullptr)
-		{
-			begin->second.texture->Release();
-			begin->second.texture = nullptr;
-		}
-
-		if (begin->second.view != nullptr)
-		{
-			begin->second.view->Release();
-			begin->second.view = nullptr;
-		}
-	}
+	CreateTransparencyRect(graphicsManager);
 }
 
 Texture* TextureManager::GetTexture(const std::string& name)
 {
 	// Find the texture in the map 
-	return m_textureMap[name].view;
+	const auto iter = m_textureMap.find(name);
+	if(iter != m_textureMap.end())
+	{
+		return iter->second.view.Get();
+	}
+	return nullptr;
 }
 
-Vector2 TextureManager::GetDimensions(const std::string& name) 
+Vector2 TextureManager::GetDimensions(const std::string& name)
 {
 	D3D11_TEXTURE2D_DESC desc;
 	ZeroMemory(&desc, sizeof(desc));
@@ -51,7 +35,7 @@ Vector2 TextureManager::GetDimensions(const std::string& name)
 	return Vector2(static_cast<float>(desc.Width), static_cast<float>(desc.Height));
 }
 
-void TextureManager::CreateTransparencyRect()
+void TextureManager::CreateTransparencyRect(GraphicsDeviceManager& graphicsManager)
 {
 	// Create the texture
 	D3D11_TEXTURE2D_DESC desc;
@@ -72,7 +56,7 @@ void TextureManager::CreateTransparencyRect()
 
 	float* buffer = new float[static_cast<int>(WINDOW_WIDTH) * static_cast<int>(WINDOW_HEIGHT) * 4];
 
-	for (int y = 0; y < WINDOW_HEIGHT * WINDOW_WIDTH * 4; ++y) 
+	for(int y = 0; y < WINDOW_HEIGHT * WINDOW_WIDTH * 4; ++y)
 	{
 		buffer[y] = 1.0f;
 	}
@@ -80,9 +64,9 @@ void TextureManager::CreateTransparencyRect()
 	D3D11_SUBRESOURCE_DATA texData;
 	texData.SysMemPitch = static_cast<int>(WINDOW_WIDTH) * sizeof(float) * 4;
 	texData.SysMemSlicePitch = static_cast<int>(WINDOW_WIDTH) * static_cast<int>(WINDOW_HEIGHT) * sizeof(float) * 4;
-	texData.pSysMem = (void*)buffer;
+	texData.pSysMem = static_cast<void*>(buffer);
 
-	HRESULT hr = GraphicsDeviceManager::GetInstance().GetDevice()->CreateTexture2D(&desc, &texData, &texture);
+	HRESULT hr = graphicsManager.GetDevice()->CreateTexture2D(&desc, &texData, &texture);
 	ASSERT(hr == S_OK);
 
 	delete[] buffer;
@@ -94,7 +78,7 @@ void TextureManager::CreateTransparencyRect()
 	viewDesc.Texture2D.MipLevels = 1;
 	viewDesc.Texture2D.MostDetailedMip = 0;
 
-	hr = GraphicsDeviceManager::GetInstance().GetDevice()->CreateShaderResourceView(texture, &viewDesc, &resourceView);
+	hr = graphicsManager.GetDevice()->CreateShaderResourceView(texture, &viewDesc, &resourceView);
 	ASSERT(hr == S_OK);
 
 	ResourcePair p;

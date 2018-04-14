@@ -5,29 +5,14 @@
 #include "STD.h"
 #include "Window.h"
 
+#include "../GameMain/Game.h"
 #include "../resource.h"
 
-Window::Window()
+Window::Window( HINSTANCE hInstance, int clientWidth, int clientHeight,
+                         const std::string& _windowTitle, Game* _parent )
 {
-	gameParent = nullptr;
-	windowHandle = nullptr;
-
-	windowWidth = 0;
-	windowHeight = 0;
-
-	clientWidth = 0;
-	clientHeight = 0;
-}
-
-Window::~Window()
-{
-}
-
-bool Window::Initialize( HINSTANCE hInstance, int clientWidth, int clientHeight,
-                         std::string _windowTitle, IGame* _parent )
-{
-	clientWidth = clientWidth;
-	clientHeight = clientHeight;
+	this->clientWidth = clientWidth;
+	this->clientHeight = clientHeight;
 	gameParent = _parent;
 
 	// Fill out class description
@@ -56,8 +41,7 @@ bool Window::Initialize( HINSTANCE hInstance, int clientWidth, int clientHeight,
 	windowHeight = wr.bottom - wr.top;
 
 	// Get the window title in correct format
-	std::wstring windowTitle;
-	StringToWString( _windowTitle, windowTitle );
+	std::wstring windowTitle = StringToWString( _windowTitle);
 
 	// Create window
 	windowHandle = CreateWindow( L"GuyWindow", windowTitle.c_str(), 
@@ -71,8 +55,6 @@ bool Window::Initialize( HINSTANCE hInstance, int clientWidth, int clientHeight,
 	// Show window
 	ShowWindow( windowHandle, SW_SHOW );
 	UpdateWindow( windowHandle );
-
-	return true;
 }
 
 int Window::Run()
@@ -91,12 +73,12 @@ int Window::Run()
 		{
 			if( gameParent )
 			{
-				gameParent->VUpdate();
+				gameParent->Update();
 			}
 		}
 	}
 
-	return (int)msg.wParam;
+	return static_cast<int>(msg.wParam);
 }
 
 void Window::Close()
@@ -104,9 +86,9 @@ void Window::Close()
 	DestroyWindow( windowHandle );
 }
 
-void Window::AddEventListener( const EventListener& _listener )
+KeyboardState Window::GetKeyboardState() const
 {
-	events.push_front( _listener );
+	return keyboard.GetKeyboardState();
 }
 
 LRESULT Window::WndProc( UINT message, WPARAM wParam, LPARAM lParam )
@@ -121,7 +103,7 @@ LRESULT Window::WndProc( UINT message, WPARAM wParam, LPARAM lParam )
 		if( gameParent )
 		{
 			// Recieve the close message and then the game must call the close on the window
-			gameParent->VClose();
+			gameParent->Close();
 		}
 		else
 		{
@@ -130,17 +112,16 @@ LRESULT Window::WndProc( UINT message, WPARAM wParam, LPARAM lParam )
 		}
 		return 0;
 
+	case WM_KEYDOWN:
+		keyboard.SetKeyState(wParam, KeyState::pressed);
+		break;
+
+	case WM_KEYUP:
+		keyboard.SetKeyState(wParam, KeyState::unpressed);
+		break;
+
 	default:
 		break;
-	}
-
-	for( auto iter = events.begin(), end = events.end(); iter != end; ++iter )
-	{
-		if( message == iter->message )
-		{
-			iter->function( wParam, lParam );
-			return 0;
-		}
 	}
 
 	return DefWindowProc( windowHandle, message, wParam, lParam );

@@ -10,36 +10,8 @@
 #include "../GameMain/Globals.h"
 #include <DirectXColors.h>
 
-template<> GraphicsDeviceManager* Singleton<GraphicsDeviceManager>::instance = nullptr;
 
-GraphicsDeviceManager::GraphicsDeviceManager()
-{
-	m_pGraphicsDevice = nullptr; 
-	m_pDeviceContext = nullptr;
-	m_pSwapChain = nullptr;
-	m_pInputLayout = nullptr;
-	m_pRenderTargetView = nullptr;
-	m_pDepthStencilView = nullptr;
-	sceneStarted = false;
-}
-
-GraphicsDeviceManager::~GraphicsDeviceManager()
-{
-	if( m_pGraphicsDevice ) m_pGraphicsDevice->Release();
-	m_pGraphicsDevice = nullptr;
-	if (m_pDeviceContext) m_pDeviceContext->Release();
-	m_pDeviceContext = nullptr;
-	if (m_pSwapChain) m_pSwapChain->Release();
-	m_pSwapChain = nullptr;
-	if (m_pInputLayout) m_pInputLayout->Release();
-	m_pInputLayout = nullptr;
-	if (m_pRenderTargetView) m_pRenderTargetView->Release();
-	m_pRenderTargetView = nullptr;
-	if (m_pDepthStencilView) m_pDepthStencilView->Release();
-	m_pDepthStencilView = nullptr;
-}
-
-bool GraphicsDeviceManager::Initialize( Window& window, bool windowed )
+GraphicsDeviceManager::GraphicsDeviceManager(Window& window, bool windowed)
 {
 	DXGI_SWAP_CHAIN_DESC swapDesc;
 	ZeroMemory(&swapDesc, sizeof(swapDesc));
@@ -67,13 +39,12 @@ bool GraphicsDeviceManager::Initialize( Window& window, bool windowed )
 		nullptr,
 		&m_pDeviceContext);
 
-	if (hr != S_OK) return false;
 	ASSERT( m_pGraphicsDevice != NULL );
 
-	spriteBatch = std::make_unique<DirectX::SpriteBatch>(m_pDeviceContext);
+	spriteBatch = std::make_unique<DirectX::SpriteBatch>(m_pDeviceContext.Get());
 
-	primitiveBatch = std::make_unique<DirectX::PrimitiveBatch<DirectX::VertexPositionColor>>(m_pDeviceContext);
-	basicEffect = std::make_unique<DirectX::BasicEffect>(m_pGraphicsDevice);
+	primitiveBatch = std::make_unique<DirectX::PrimitiveBatch<DirectX::VertexPositionColor>>(m_pDeviceContext.Get());
+	basicEffect = std::make_unique<DirectX::BasicEffect>(m_pGraphicsDevice.Get());
 	basicEffect->SetProjection(DirectX::XMMatrixOrthographicOffCenterRH(0,
 		WINDOW_WIDTH, WINDOW_HEIGHT, 0, 0, 1));
 	basicEffect->SetVertexColorEnabled(true);
@@ -109,29 +80,30 @@ bool GraphicsDeviceManager::Initialize( Window& window, bool windowed )
 	std::wstring wStr;
 	StringToWString(assetsDir, wStr);
 
-	font = std::make_unique<DirectX::SpriteFont>(m_pGraphicsDevice, wStr.c_str());
+	font = std::make_unique<DirectX::SpriteFont>(m_pGraphicsDevice.Get(), wStr.c_str());
 
-	return true;
+	textureManager = std::make_unique<TextureManager>(*this);
 }
+
 
 void GraphicsDeviceManager::BeginScene( const Color& backColor )
 {
 	ASSERT( m_pGraphicsDevice );
 
-	m_pDeviceContext->ClearRenderTargetView(m_pRenderTargetView, DirectX::Colors::Black);
-	m_pDeviceContext->ClearDepthStencilView(m_pDepthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
-	m_pDeviceContext->OMSetRenderTargets(1, &m_pRenderTargetView, m_pDepthStencilView);
+	m_pDeviceContext->ClearRenderTargetView(m_pRenderTargetView.Get(), DirectX::Colors::Black);
+	m_pDeviceContext->ClearDepthStencilView(m_pDepthStencilView.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
+	m_pDeviceContext->OMSetRenderTargets(1, m_pRenderTargetView.GetAddressOf(), m_pDepthStencilView.Get());
 
-	CD3D11_VIEWPORT viewport(0.0f, 0.0f, static_cast<float>(WINDOW_WIDTH), static_cast<float>(WINDOW_HEIGHT));
+	CD3D11_VIEWPORT viewport(0.0f, 0.0f, WINDOW_WIDTH, WINDOW_HEIGHT);
 	m_pDeviceContext->RSSetViewports(1, &viewport);
 
-	DirectX::CommonStates states(m_pGraphicsDevice);
+	DirectX::CommonStates states(m_pGraphicsDevice.Get());
 	m_pDeviceContext->OMSetBlendState(states.Opaque(), nullptr, 0xFFFFFFFF);
 	m_pDeviceContext->OMSetDepthStencilState(states.DepthNone(), 0);
 	m_pDeviceContext->RSSetState(states.CullNone());
 
-	basicEffect->Apply(m_pDeviceContext);
-	m_pDeviceContext->IASetInputLayout(m_pInputLayout);
+	basicEffect->Apply(m_pDeviceContext.Get());
+	m_pDeviceContext->IASetInputLayout(m_pInputLayout.Get());
 
 	sceneStarted = true;
 }
@@ -148,4 +120,9 @@ void GraphicsDeviceManager::EndScene()
 DirectX::SpriteBatch* GraphicsDeviceManager::GetSpriteBatch() 
 {
 	return spriteBatch.get();
+}
+
+TextureManager& GraphicsDeviceManager::GetTextureManager()
+{
+	return *textureManager;
 }

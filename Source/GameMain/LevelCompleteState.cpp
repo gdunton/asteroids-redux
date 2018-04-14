@@ -11,7 +11,7 @@
 
 const float LevelCompleteState::EXIT_TIME = 1.0f;
 
-LevelCompleteState::LevelCompleteState( GameStateManager* _parent )
+LevelCompleteState::LevelCompleteState(GraphicsDeviceManager&, GameStateManager* _parent )
 	: GameState( _parent )
 {
 }
@@ -22,7 +22,7 @@ void LevelCompleteState::Enter()
 	clock.Start();
 }
 
-void LevelCompleteState::Update( float dt )
+void LevelCompleteState::Update(float dt, const KeyboardState& keyboardState)
 {
 	// update the clock and the game
 	clock.Tick( dt );
@@ -31,7 +31,7 @@ void LevelCompleteState::Update( float dt )
 	if( clock.GetDeltaTime() >= EXIT_TIME )
 	{
 		// Move onto the next state
-		parent->SetState( std::shared_ptr< LevelStartState >( new LevelStartState( parent ) ) );
+		parent->SetState<LevelStartState>();
 	}
 }
 

@@ -8,8 +8,9 @@
 
 #ifndef SPRITE_H
 #define SPRITE_H
-#include "../Content/TextureManager.h"
+
 #include <SpriteBatch.h>
+#include "../Content/TextureManager.h"
 
 class Sprite
 {
@@ -23,7 +24,7 @@ private:
 public:
 	Sprite();
 
-	void Initialize(const std::string& textureName);
+	void Initialize(TextureManager& textureManager, const std::string& textureName);
 	void Draw( const Vector2& _position, const Vector2& _size, const float alpha );
 
 	static void SetSpriteBatch(DirectX::SpriteBatch* sb);

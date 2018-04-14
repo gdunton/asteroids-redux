@@ -15,15 +15,15 @@
 	#include <time.h>
 #endif
 
-int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow )
+int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPSTR /*lpCmdLine*/, int /*nCmdShow*/ )
 {
 #ifdef TIME_BASED_RANDOM
     // seed the randon number funtion using the start time
 	srand( time(NULL) );
 #endif
 
-	Game game;
-	game.Initialize( hInstance );
+	Game game(hInstance);
+	game.Initialize();
 
 	return game.Run();
 }

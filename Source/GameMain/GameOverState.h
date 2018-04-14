@@ -16,11 +16,11 @@
 class GameOverState : public GameState
 {
 public:
-	explicit GameOverState(GameStateManager* parent);
+	explicit GameOverState(GraphicsDeviceManager& graphics, GameStateManager* parent);
 
 	// Virtuals from GameState
 	void Enter() override;
-	void Update(float dt) override;
+	void Update(float dt, const KeyboardState& keyboardState) override;
 	void Exit() override;
 
 	void Render() override;
@@ -30,7 +30,7 @@ public:
 	void SelectRestartGame();
 
 private:
-	std::shared_ptr<std::vector<MenuItem>> MakeMenuItems();
+	std::shared_ptr<std::vector<MenuItem>> MakeMenuItems(GraphicsDeviceManager& graphics);
 
 	Font font;
 	Menu menu;

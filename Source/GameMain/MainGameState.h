@@ -11,18 +11,20 @@
 
 #include "../Input/KeyboardState.h"
 
+class GraphicsDeviceManager;
+
 class MainGameState : public GameState
 {
 private:
 	KeyboardState prevKbState;
 
 public:
-	MainGameState( GameStateManager* _parent );
-	MainGameState();
+	MainGameState(GraphicsDeviceManager&, GameStateManager* _parent );
+	MainGameState() = default;
 
 	// Virtual functions from GameState
 	void Enter();
-	void Update( float dt );
+	void Update(float dt, const KeyboardState& keyboardState);
 	void Exit();
 
 	void Render();

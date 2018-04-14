@@ -5,6 +5,7 @@
 #include "STD.h"
 #include "GameOverState.h"
 
+#include "../Graphics/GraphicsDeviceManager.h"
 #include "MainGameState.h"
 #include "GameStateManager.h"
 #include "GameLogic.h"
@@ -14,20 +15,21 @@
 #include "LevelStartState.h"
 #include "MainMenuState.h"
 
-GameOverState::GameOverState(GameStateManager* parent) :
+GameOverState::GameOverState(GraphicsDeviceManager& graphics, GameStateManager* parent) :
 	GameState(parent),
-	menu(this, MakeMenuItems(), 100)
+	font(graphics),
+	menu(graphics, this, MakeMenuItems(graphics), 100)
 {
-	background.Initialize("transparent");
+	background.Initialize(graphics.GetTextureManager(), "transparent");
 }
 
 void GameOverState::Enter()
 {}
 
-void GameOverState::Update(float dt)
+void GameOverState::Update(float dt, const KeyboardState& keyboardState)
 {
 	parent->GetGameLogic().Update(dt);
-	menu.Update();
+	menu.Update(keyboardState);
 }
 
 void GameOverState::Exit()
@@ -52,26 +54,28 @@ void GameOverState::Render()
 
 void GameOverState::SelectMainMenu()
 {
-	parent->SetState(std::make_shared<MainMenuState>(parent));
+	parent->SetState<MainMenuState>();
 }
 
 void GameOverState::SelectRestartGame()
 {
 	parent->GetGameLogic().Reset();
 	// change state to the main game state
-	parent->SetState(std::make_shared<LevelStartState>(parent));
+	parent->SetState<LevelStartState>();
 }
 
-std::shared_ptr<std::vector<MenuItem>> GameOverState::MakeMenuItems()
+std::shared_ptr<std::vector<MenuItem>> GameOverState::MakeMenuItems(GraphicsDeviceManager& graphics)
 {
 	auto menuItems = std::make_shared<std::vector<MenuItem>>();
 
 	menuItems->push_back(MenuItem(
+		graphics,
 		[this]() { SelectRestartGame(); },
 		Vector2(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2),
 		"Restart",
 		WHITE));
 	menuItems->push_back(MenuItem(
+		graphics,
 		[this]() { SelectMainMenu(); },
 		Vector2(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 + 40),
 		"Main Menu",

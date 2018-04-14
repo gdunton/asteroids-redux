@@ -5,6 +5,7 @@
 #include "STD.h"
 #include "MainMenuState.h"
 
+#include "../Graphics/GraphicsDeviceManager.h"
 #include "GameStateManager.h"
 #include "GameLogic.h"
 #include "LevelStartState.h"
@@ -13,11 +14,13 @@
 
 #include "Globals.h"
 
-MainMenuState::MainMenuState(GameStateManager* parent) :
+MainMenuState::MainMenuState(GraphicsDeviceManager& graphics, GameStateManager* parent) :
 	GameState(parent),
-	menu(this, MakeMenuItems(), 100)
+	titleFont(graphics),
+	subFont1(graphics),
+	menu(graphics, this, MakeMenuItems(graphics), 100)
 {
-	background.Initialize("transparent");
+	background.Initialize(graphics.GetTextureManager(), "transparent");
 }
 
 void MainMenuState::Enter()
@@ -26,9 +29,9 @@ void MainMenuState::Enter()
 	parent->GetGameLogic().StartIdleMode();
 }
 
-void MainMenuState::Update(float dt)
+void MainMenuState::Update(float dt, const KeyboardState& keyboardState)
 {
-	menu.Update();
+	menu.Update(keyboardState);
 	parent->GetGameLogic().Update(dt);
 }
 
@@ -60,13 +63,13 @@ void MainMenuState::SelectStartGame()
 	// asteroid spawn errors
 	parent->GetGameLogic().Reset();
 	parent->GetGameLogic().Update(0.016f);
-	parent->SetState(std::make_shared<LevelStartState>(parent));
+	parent->SetState<LevelStartState>();
 }
 
 void MainMenuState::SelectControls()
 {
 	// Show the control for the game
-	parent->SetState(std::make_shared<ControlScreenState>(parent));
+	parent->SetState<ControlScreenState>();
 }
 
 void MainMenuState::SelectExit() const
@@ -74,22 +77,25 @@ void MainMenuState::SelectExit() const
 	parent->GetGameLogic().GetParent().Quit();
 }
 
-std::shared_ptr<std::vector<MenuItem>> MainMenuState::MakeMenuItems()
+std::shared_ptr<std::vector<MenuItem>> MainMenuState::MakeMenuItems(GraphicsDeviceManager& graphics)
 {
 	auto newItems = std::make_shared<std::vector<MenuItem>>();
 
 	// Add the menu items
 	newItems->push_back(MenuItem(
+		graphics,
 		[this]() { SelectExit(); },
 		Vector2(WINDOW_WIDTH / 2, (WINDOW_HEIGHT / 2) + 30),
 		"Exit Game",
 		WHITE));
 	newItems->push_back(MenuItem(
+		graphics,
 		[this]() { SelectControls(); },
 		Vector2(WINDOW_WIDTH / 2, (WINDOW_HEIGHT / 2)),
 		"Controls",
 		WHITE));
 	newItems->push_back(MenuItem(
+		graphics,
 		[this]() { SelectStartGame(); },
 		Vector2(WINDOW_WIDTH / 2, (WINDOW_HEIGHT / 2) - 30),
 		"Start Game",

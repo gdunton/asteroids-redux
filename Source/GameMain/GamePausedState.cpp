@@ -9,39 +9,36 @@
 #include "Globals.h"
 
 #include "../Input/Keyboard.h"
-
+#include "../Graphics/GraphicsDeviceManager.h"
 #include "MainGameState.h"
 #include "MainMenuState.h"
 #include "GameLogic.h"
 
 
-GamePausedState::GamePausedState(GameStateManager* parent) :
+GamePausedState::GamePausedState(GraphicsDeviceManager& graphics, GameStateManager* parent) :
 	GameState(parent),
-	menu(this, MakeMenuItems(), 100)
+	font(graphics),
+	menu(graphics, this, MakeMenuItems(graphics), 100)
 {
-	Keyboard::GetInstance().GetKeyboardState(prevKbState);
-	background.Initialize("transparent");
+	background.Initialize(graphics.GetTextureManager(), "transparent");
 }
 
 void GamePausedState::Enter()
 {}
 
-void GamePausedState::Update(float dt)
+void GamePausedState::Update(float dt, const KeyboardState& keyboardState)
 {
 	// Menu handles navigation
-	menu.Update();
+	menu.Update(keyboardState);
 
 	// Handle escape input to return to game
-	KeyboardState kbState;
-	Keyboard::GetInstance().GetKeyboardState(kbState);
-
-	if(kbState.GetKeyState(VK_ESCAPE) == pressed &&
-		prevKbState.GetKeyState(VK_ESCAPE) == unpressed)
+	if(prevKbState.GetKeyState(VK_ESCAPE) == KeyState::pressed &&
+		keyboardState.GetKeyState(VK_ESCAPE) == KeyState::unpressed)
 	{
 		SelectContinueGame();
 	}
 
-	prevKbState = kbState;
+	prevKbState = keyboardState;
 }
 
 void GamePausedState::Exit()
@@ -66,24 +63,26 @@ void GamePausedState::Render()
 
 void GamePausedState::SelectContinueGame() const
 {
-	parent->SetState(std::make_shared<MainGameState>(parent));
+	parent->SetState<MainGameState>();
 }
 
 void GamePausedState::SelectMainMenu() const
 {
-	parent->SetState(std::make_shared<MainMenuState>(parent));
+	parent->SetState<MainMenuState>();
 }
 
-std::shared_ptr<std::vector<MenuItem>> GamePausedState::MakeMenuItems()
+std::shared_ptr<std::vector<MenuItem>> GamePausedState::MakeMenuItems(GraphicsDeviceManager& graphics)
 {
 	auto items = std::make_shared<std::vector<MenuItem>>();
 
 	items->push_back(MenuItem(
+		graphics,
 		[this]() { SelectMainMenu(); },
 		Vector2(WINDOW_WIDTH / 2, (WINDOW_HEIGHT / 2) + 30),
 		"Main Menu",
 		WHITE));
 	items->push_back(MenuItem(
+		graphics,
 		[this]() { SelectContinueGame(); },
 		Vector2(WINDOW_WIDTH / 2, (WINDOW_HEIGHT / 2)),
 		"Return",

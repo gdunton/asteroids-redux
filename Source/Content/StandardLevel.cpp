@@ -58,7 +58,7 @@ void StandardLevel::Initialize()
 		numAsteroids = 10;
 	}
 
-	std::vector<Asteroid> asteroids;
+	std::list<Asteroid> asteroids;
 
 	// Set up all the asteroids in the parent
 	// Initialize all of the asteroids 

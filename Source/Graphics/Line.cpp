@@ -40,7 +40,7 @@ void Line::Render( Camera* camera, const std::vector<Vector2>& points, const Wor
 	});
 
 	// Draw all points
-	GraphicsDeviceManager::GetInstance().GetBatch()->Begin();
+	m_pLine->Begin();
 	m_pLine->Draw(D3D_PRIMITIVE_TOPOLOGY_LINESTRIP, &outPoints[0], outPoints.size());
-	GraphicsDeviceManager::GetInstance().GetBatch()->End();
+	m_pLine->End();
 }

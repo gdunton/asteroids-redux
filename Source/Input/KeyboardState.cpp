@@ -5,25 +5,17 @@
 #include "STD.h"
 #include "KeyboardState.h"
 
-KeyboardState::KeyboardState()
+KeyboardState::KeyboardState() :
+	keyList()
 {
-	for( unsigned short i = 0; i < 256; ++i )
-	{
-		keyList[i] = unpressed;
-	}
+	keyList.fill(KeyState::unpressed);
 }
 
-KeyState KeyboardState::GetKeyState( KeyCode key )
-{
-	return keyList[key];
-}
+KeyboardState::KeyboardState(const std::array<KeyState, 256>& keyList) :
+	keyList(keyList)
+{}
 
-KeyboardState& KeyboardState::operator=( const KeyboardState& source )
+KeyState KeyboardState::GetKeyState(KeyCode key) const
 {
-	for( unsigned short i = 0; i < 256; ++i )
-	{
-		keyList[i] = source.keyList[i];
-	}
-
-	return *this;
+	return keyList.at(key);
 }

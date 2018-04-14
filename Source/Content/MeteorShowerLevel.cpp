@@ -35,7 +35,7 @@ void MeteorShowerLevel::Initialize()
 		(MAX_ASTEROIDS_PER_COUNTDOWN - MIN_ASTEROIDS_PER_COUNTDOWN) * 4;
 
 	// Create the asteroids
-	std::vector<Asteroid> asteroids;
+	std::list<Asteroid> asteroids;
 	for( int i = 0; i < numAsteroids; i++ )
 	{
 		Asteroid asteroid;
@@ -70,7 +70,7 @@ void MeteorShowerLevel::Update( float dt )
 		int numAsteroids = MIN_ASTEROIDS_PER_COUNTDOWN + static_cast<int>(Random()) * 
 			(MAX_ASTEROIDS_PER_COUNTDOWN - MIN_ASTEROIDS_PER_COUNTDOWN);
 
-		std::vector<Asteroid> newAsteroids;
+		std::list<Asteroid> newAsteroids;
 		for( int i = 0; i < numAsteroids; i++ )
 		{
 			Asteroid asteroid;
@@ -88,12 +88,10 @@ void MeteorShowerLevel::Update( float dt )
 
 void MeteorShowerLevel::CreateAsteroid( Asteroid& asteroid )
 {
-	const float width = static_cast<float>(WINDOW_WIDTH);
-	const float height = static_cast<float>(WINDOW_HEIGHT);
 
 	Vector2 pos = Vector2( 
-				Random( (width /2) + 30 , width + width /2),
-				Random( -height /2, height /2 ) );
+				Random( (WORLD_WIDTH/2) + 30 , WORLD_WIDTH + WORLD_WIDTH /2),
+				Random( -WORLD_HEIGHT/2, WORLD_HEIGHT/2 ) );
 	float rot = Random( -PI, PI );
 	// Create the health then base the size, mass and velocity on health
 	float random = Random();
@@ -110,9 +108,9 @@ void MeteorShowerLevel::CreateAsteroid( Asteroid& asteroid )
 	float size = sizeScale * (Asteroid::MAX_SIZE - Asteroid::MIN_SIZE) + Asteroid::MIN_SIZE;
 	float mass = sizeScale * (Asteroid::MAX_MASS - Asteroid::MIN_MASS) + Asteroid::MIN_MASS;
 
-	float maxVelY = height/2 - 20;
-	float minVelY = -width/ 2 + 20;
-	Vector2 vel = Vector2( -width/2, minVelY + Random() * (maxVelY - minVelY) );
+	float maxVelY = WORLD_HEIGHT /2 - 20;
+	float minVelY = -WORLD_WIDTH / 2 + 20;
+	Vector2 vel = Vector2( -WORLD_WIDTH / 2, minVelY + Random() * (maxVelY - minVelY) );
 	vel -= pos;
 	Normalize( vel );
 	vel *= Random(2, 20);

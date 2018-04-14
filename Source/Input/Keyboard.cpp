@@ -5,31 +5,10 @@
 #include "STD.h"
 #include "Keyboard.h"
 
-// Callback functions to communicate key messages from the window
-// to the keyboard singleton
-void SetKeyStatePressed( WPARAM wParam, LPARAM lParam )
+Keyboard::Keyboard() :
+	keys()
 {
-	Keyboard& keyboard = Keyboard::GetInstance();
-
-	keyboard.SetKeyState( wParam, pressed );
-}
-
-void SetKeyStateUnpressed( WPARAM wParam, LPARAM lParam )
-{
-	Keyboard& keyboard = Keyboard::GetInstance();
-
-	keyboard.SetKeyState( wParam, unpressed );
-}
-
-template<> Keyboard* Singleton<Keyboard>::instance = nullptr;
-
-Keyboard::Keyboard()
-{
-	// Initialize all keys
-	for( unsigned short i = 0; i < 256; ++i )
-	{
-		keys[i] = unpressed;
-	}
+	keys.fill(KeyState::unpressed);
 }
 
 KeyState Keyboard::GetKeyState( KeyCode key )
@@ -43,10 +22,7 @@ void Keyboard::SetKeyState( KeyCode key, KeyState state )
 }
 
 // Outputs the state of the entire keyboard
-void Keyboard::GetKeyboardState( KeyboardState& outState )
+KeyboardState Keyboard::GetKeyboardState() const
 {
-	for( unsigned short i = 0; i < 256; ++i )
-	{
-		outState.keyList[i] = keys[i];
-	}
+	return KeyboardState(keys);
 }

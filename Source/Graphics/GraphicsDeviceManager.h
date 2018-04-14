@@ -15,37 +15,14 @@
 #include <Effects.h>
 #include <SpriteBatch.h>
 #include <SpriteFont.h>
+#include "../Content/TextureManager.h"
 
-class GraphicsDeviceManager : public Singleton<GraphicsDeviceManager>
+class GraphicsDeviceManager
 {
 public:
-	// Allow the singleton access to the private constructor
-	friend Singleton<GraphicsDeviceManager>;
-private:
-	GraphicsDeviceManager();
-	~GraphicsDeviceManager();
+	GraphicsDeviceManager(Window& window, bool windowed);
 
-	// DirectX pointers
-	ID3D11Device* m_pGraphicsDevice;
-	ID3D11DeviceContext* m_pDeviceContext;
-	IDXGISwapChain* m_pSwapChain;
-	ID3D11RenderTargetView* m_pRenderTargetView;
-	ID3D11DepthStencilView* m_pDepthStencilView;
-
-	std::unique_ptr<DirectX::SpriteBatch> spriteBatch;
-	std::unique_ptr<DirectX::PrimitiveBatch<DirectX::VertexPositionColor>> primitiveBatch;
-	std::unique_ptr<DirectX::BasicEffect> basicEffect;
-	std::unique_ptr<DirectX::SpriteFont> font;
-
-	ID3D11InputLayout* m_pInputLayout;
-
-	bool sceneStarted;
-
-public:
-
-	bool Initialize( Window& window, const bool windowed );
-
-	ID3D11Device* GetDevice() { return m_pGraphicsDevice; }
+	ID3D11Device* GetDevice() { return m_pGraphicsDevice.Get(); }
 	DirectX::PrimitiveBatch<DirectX::VertexPositionColor>* GetBatch() { return primitiveBatch.get(); }
 
 	// Gets the graphics device ready for rendering
@@ -54,6 +31,27 @@ public:
 	// Stops the graphics device rendering
 	void EndScene();
 	DirectX::SpriteBatch* GetSpriteBatch();
+
+	TextureManager& GetTextureManager();
+
+private:
+	// DirectX pointers
+	ComPtr<ID3D11Device> m_pGraphicsDevice;
+	ComPtr<ID3D11DeviceContext> m_pDeviceContext;
+	ComPtr<IDXGISwapChain> m_pSwapChain;
+	ComPtr<ID3D11RenderTargetView> m_pRenderTargetView;
+	ComPtr<ID3D11DepthStencilView> m_pDepthStencilView;
+
+	std::unique_ptr<DirectX::SpriteBatch> spriteBatch;
+	std::unique_ptr<DirectX::PrimitiveBatch<DirectX::VertexPositionColor>> primitiveBatch;
+	std::unique_ptr<DirectX::BasicEffect> basicEffect;
+	std::unique_ptr<DirectX::SpriteFont> font;
+
+	ComPtr<ID3D11InputLayout> m_pInputLayout;
+
+	std::unique_ptr<TextureManager> textureManager;
+
+	bool sceneStarted = false;
 };
 
 

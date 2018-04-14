@@ -17,11 +17,11 @@
 class LevelStartState : public GameState
 {
 public:
-	LevelStartState( GameStateManager* parent );
+	LevelStartState(GraphicsDeviceManager& graphics, GameStateManager* parent);
 
 	// Virtual functions from GameState
 	void Enter() override;
-	void Update( float dt ) override;
+	void Update(float dt, const KeyboardState& keyboardState) override;
 	void Exit() override;
 
 	void Render() override;

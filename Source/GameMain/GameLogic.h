@@ -20,15 +20,15 @@
 class Game;
 class Level;
 
-class GameLogic 
+class GameLogic
 {
 private:
 	// Pointer to the parent game
 	Game* game;
 
 	// Game objects
-	std::vector<Camera> cameras; 
-	std::vector<Asteroid> asteroids;
+	std::vector<Camera> cameras;
+	std::list<Asteroid> asteroids;
 
 	std::shared_ptr<Level> currentLevel;
 
@@ -53,12 +53,12 @@ private:
 	Font font;
 
 public:
-	GameLogic();
+	GameLogic(GraphicsDeviceManager& graphics);
 
 	void Initialize(Game* _game);
 
-	void Update( const float dt );
-	void Render( bool showLives = true, bool showLevelNum = true );
+	void Update(float dt);
+	void Render(bool showLives = true, bool showLevelNum = true);
 
 	// Sets all ojects to starting values
 	void Reset();
@@ -73,23 +73,23 @@ public:
 	void StartPlayerOnlyLevel();
 
 	Player& GetPlayer() { return player; }
-	Game& GetParent() { return *game; } 
+	Game& GetParent() { return *game; }
 
 	std::vector<Model2D*>& GetAsteroidModels() { return asteroidModels; }
 
 	// Functions to add and remove asteroids from the list. Used for levels
-	void AddAsteroids(std::vector<Asteroid>& asteroids);
+	void AddAsteroids(std::list<Asteroid>& asteroids);
 	void RemoveAllAsteroids();
 	int NumAsteroids();
 
 	std::vector<Camera>& GetCameras() { return cameras; }
 
 private:
-	
+
 	// Functions for removing asteroids by id or index
-	void RemoveAsteroid( int ID );
-	void RemoveAsteroid( std::vector<Asteroid>::iterator i );
-	void RemoveAsteroid( const Asteroid& asteroid );
+	void RemoveAsteroid(int ID);
+	void RemoveAsteroid(std::list<Asteroid>::iterator i);
+	void RemoveAsteroid(const Asteroid& asteroid);
 
 	void AddAsteroidsToQuadTree();
 };

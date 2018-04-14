@@ -10,6 +10,7 @@
 #define GAME_STATE_H
 
 class GameStateManager;
+class KeyboardState;
 
 class GameState
 {
@@ -22,14 +23,17 @@ public:
 
 	virtual ~GameState() = default;
 
+	// Move but not copyable
 	GameState(GameState&& other) noexcept = default;
 	GameState& operator=(GameState&& other) noexcept = default;
+	GameState(const GameState& other) = delete;
+	GameState& operator=(const GameState& other) = delete;
 
 	// Called after the old state has been removed
 	virtual void Enter() = 0;
 
 	// Called each frame
-	virtual void Update( float dt ) = 0;
+	virtual void Update(float dt, const KeyboardState& keyboardState) = 0;
 
 	// Called when a new state change has been queued just before 
 	// destruction

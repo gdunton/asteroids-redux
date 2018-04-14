@@ -13,6 +13,7 @@
 #include "GameState.h"
 
 class GameLogic;
+class GraphicsDeviceManager;
 
 class GameStateManager
 {
@@ -26,9 +27,12 @@ private:
 	// Reference to the logic
 	GameLogic* gameLogic;
 
+	// We need the graphics to create level states
+	GraphicsDeviceManager* graphics = nullptr;
+
 public:
 	GameStateManager();
-	GameStateManager( GameLogic* logic );
+	GameStateManager(GraphicsDeviceManager* graphics, GameLogic* logic );
 
 	// Set state functions
 	void SetInitialState( std::shared_ptr<GameState> initialState );
@@ -40,6 +44,13 @@ public:
 
 	GameState& GetCurrentState();
 	GameLogic& GetGameLogic();
+
+	template <typename T>
+	void SetState()
+	{
+		static_assert(std::is_base_of_v<GameState, T>, "T must be a GameState subtype");
+		SetState(std::make_shared<T>(*graphics, this));
+	}
 };
 
 #endif

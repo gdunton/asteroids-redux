@@ -6,9 +6,10 @@
 #include "MenuItem.h"
 #include <utility>
 
-MenuItem::MenuItem(std::function<void()> selectAction, Vector2 pos, std::string text, Color color) : 
+MenuItem::MenuItem(GraphicsDeviceManager& graphics, std::function<void()> selectAction, Vector2 pos, std::string text, Color color) : 
 	centerPos(pos), 
 	text(std::move(text)), 
+	font(graphics),
 	selectAction(std::move(selectAction))
 {
 }

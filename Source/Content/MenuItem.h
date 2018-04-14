@@ -15,7 +15,7 @@ class GameState;
 class MenuItem
 {
 public:
-	MenuItem(std::function<void()> selectAction, Vector2 pos, std::string text, Color color);
+	MenuItem(GraphicsDeviceManager& graphics, std::function<void()> selectAction, Vector2 pos, std::string text, Color color);
 
 	// Calls the delegate
 	void Select() const;

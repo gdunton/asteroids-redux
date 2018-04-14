@@ -12,6 +12,7 @@
 #include "Bullet.h"
 #include "../EventManager/AnimationClock.h"
 
+class Channel;
 class Model2D;
 
 const int MAX_BULLETS = 5;
@@ -49,7 +50,7 @@ private:
 	float alpha;
 
 	//IStoppable* invulnerabilitySound;
-	IStoppable* thrustSound;
+	Channel* thrustSound;
 	bool playerBoosting;
 
 private:

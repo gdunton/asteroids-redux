@@ -6,6 +6,7 @@
 #ifndef MATH_TYPES_H
 #define MATH_TYPES_H
 
+class Model2D;
 // Forward decleration of external class
 class Camera;
 
@@ -130,10 +131,10 @@ namespace MathTypes
 			return true;
 		}
 
+		void Draw(Camera& camera, Model2D* quadModel) const;
+
 		bool Intersects(const Circle& circle) const;
 		bool Contains(const Circle& circle) const;
-
-		void Draw(Camera& camera);
 	};
 
 	// Second collision shape

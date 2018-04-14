@@ -13,29 +13,29 @@
 
 class MyWav;
 
-class Channel : public IStoppable
+using SourceVoicePtr = std::unique_ptr<IXAudio2SourceVoice, void(*)(IXAudio2SourceVoice*)>;
+
+class Channel
 {
-private:
-	IXAudio2SourceVoice* sourceVoice;
-
-	bool stopped;
-	WaveCallback callbacks;
-
 public:
 	Channel();
-	~Channel();
 
 	// Creates sourceVoice and supplies callbacks
 	void Init( IXAudio2* xAudio2, WAVEFORMATEX* format );
-	void Destroy();
 
 	// submit sound effect to the buffer and start playback
 	void PlayWav( MyWav* myWav );
 	bool PlayingSound() const;
 
-	void VStop() override;
+	void Stop();
 
 	void SetStopped( bool value ) { stopped = value; }
+
+private:
+	SourceVoicePtr sourceVoice;
+
+	bool stopped;
+	WaveCallback callbacks;
 };
 
 #endif

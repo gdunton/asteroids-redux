@@ -123,7 +123,7 @@ void Player::EndBoost() {
 		playerBoosting = false;
 		if(thrustSound)
 		{
-			thrustSound->VStop();
+			thrustSound->Stop();
 			thrustSound = nullptr;
 		}
 	}
@@ -201,7 +201,7 @@ void Player::StartInvulnerability() {
 void Player::StopSounds() {
 	if(thrustSound)
 	{
-		thrustSound->VStop();
+		thrustSound->Stop();
 		thrustSound = nullptr;
 	}
 }
@@ -225,7 +225,7 @@ void Player::ResetWorld() {
 
 	if(thrustSound)
 	{
-		thrustSound->VStop();
+		thrustSound->Stop();
 		thrustSound = nullptr;
 	}
 

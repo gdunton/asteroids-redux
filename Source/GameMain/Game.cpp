@@ -42,7 +42,7 @@ void Game::Initialize()
 	AudioManager::LoadAllAssets();
 
 	// Initialize the game logic
-	m_gameLogic.Initialize(this);
+	m_gameLogic.Initialize(this, ModelManager::GetInstance().GetModel("Quad"));
 
 	gameStateManager = GameStateManager(&graphicsDeviceManager, &m_gameLogic );
 	gameStateManager.SetInitialState(std::make_shared<MainMenuState>(graphicsDeviceManager, &gameStateManager));

@@ -104,7 +104,6 @@
     <ClInclude Include="GameMain\Game.h" />
     <ClInclude Include="Graphics\GraphicsDeviceManager.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="Utilities\Interfaces.h" />
     <ClInclude Include="Graphics\Particle.h" />
     <ClInclude Include="Graphics\ParticleSystem.h" />
     <ClInclude Include="Graphics\Sprite.h" />

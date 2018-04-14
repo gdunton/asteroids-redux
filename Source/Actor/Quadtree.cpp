@@ -7,10 +7,6 @@
 
 #include "PhysicsObject.h"
 
-#ifdef DEBUG
-#include "../Graphics/DebugFont.h"
-#endif
-
 const int Quadtree::MAX_CHILDREN = 5;
 const int Quadtree:: MAX_DEPTH = 6;
 
@@ -405,7 +401,6 @@ bool Quadtree::InsertFromHigher( PhysicsObject& object )
 		}
 	}
 	
-	
 	return true;
 }
 
@@ -427,25 +422,23 @@ void Quadtree::Reset()
 	}
 }
 
-void Quadtree::DrawQuads( Camera& camera )
+void Quadtree::DrawQuads(Camera& camera, Model2D* quadModel)
 {
 #ifdef PHYSICS_DEBUG_INFO
-	bounds.Draw( camera );
+	bounds.Draw( camera, quadModel );
 	// Draw name of quad
-	Vector2 pos = camera.ConvertWorldToScreenPos( bounds.position + (bounds.size / 2) );
-	DebugFont::DrawString( std::to_string( id ), pos ); 
+	Vector2 pos = camera.ConvertWorldToScreenPos( bounds.position + static_cast<Vector2>(bounds.size / 2) );
+	
 	// Draw the id of the quad on the position of each asteroid
 	for( PhysicsObjectRef& phys : physObjs )
 	{
 		PhysicsObject* p = phys.phys;
 		Vector2 pPos = camera.ConvertWorldToScreenPos( p->GetPos() );
-		DebugFont::DrawString( std::to_string( id ), pPos );
 	}
 	
-
 	for( Quadtree& c : children )
 	{
-		c.DrawQuads(camera);
+		c.DrawQuads(camera, quadModel);
 	}
 #endif
 }

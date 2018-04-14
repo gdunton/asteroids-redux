@@ -52,10 +52,13 @@ private:
 	// Font for writing the level number
 	Font font;
 
+	// Quad model for debugging
+	Model2D* quadModel;
+
 public:
 	GameLogic(GraphicsDeviceManager& graphics);
 
-	void Initialize(Game* _game);
+	void Initialize(Game* _game, Model2D* quadModel);
 
 	void Update(float dt);
 	void Render(bool showLives = true, bool showLevelNum = true);

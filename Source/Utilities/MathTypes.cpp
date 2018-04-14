@@ -118,15 +118,16 @@ namespace MathTypes
 		return false;
 	}
 
-	void Rectangle::Draw(Camera& camera)
+	void Rectangle::Draw(Camera& camera, Model2D* quadModel) const
 	{
 		World world;
 		world.pos = position + static_cast<Vector2>(size / 2);
 		world.rot = 0;
 		world.scale = size / 2.0f;
-		ModelManager::GetModel("Quad")->Render(camera, world);
+		quadModel->Render(camera, world);
 	}
-	;
+
+
 	bool Circle::Intersects(const Rectangle& rect) const
 	{
 		// if rectangle and circle are seperable

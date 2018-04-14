@@ -56,11 +56,6 @@ AudioManager::AudioManager()
 
 AudioManager::~AudioManager()
 {
-	// Clear up all the channels
-	for(auto& channel : channels)
-	{
-		channel.Destroy();
-	}
 	channels.clear();
 
 	// Destroy all the sounds
@@ -110,12 +105,12 @@ void AudioManager::InLoadAllAssets()
 	}
 }
 
-IStoppable* AudioManager::PlaySoundByName(std::string soundName)
+Channel* AudioManager::PlaySoundByName(std::string soundName)
 {
 	return GetInstance().InPlaySoundByName(soundName);
 }
 
-IStoppable* AudioManager::InPlaySoundByName(std::string soundName)
+Channel* AudioManager::InPlaySoundByName(std::string soundName)
 {
 	// Ensure that xAudio has been created
 	if(xAudio2 == nullptr || masteringVoice == nullptr)
@@ -158,7 +153,7 @@ void AudioManager::InStopAllSound()
 	{
 		if(channel.PlayingSound())
 		{
-			channel.VStop();
+			channel.Stop();
 		}
 	}
 }

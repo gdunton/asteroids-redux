@@ -5,7 +5,9 @@
 
 #ifndef QUADTREE_NODE_H
 #define QUADTREE_NODE_H
+#include "../Graphics/Font.h"
 
+class Model2D;
 class PhysicsObject;
 
 class PhysicsObjectRef
@@ -43,7 +45,7 @@ public:
 	// Remove all elements
 	void Reset();
 
-	void DrawQuads( Camera& camera );
+	void DrawQuads(Camera& camera, Model2D* quadModel);
 
 	// Get the number of physics objects in the quad and children
 	int NumPhysicsObjects();

@@ -7,39 +7,32 @@
 
 #include "MyWav.h"
 
-Channel::Channel()
-{
-	sourceVoice = nullptr;
-	stopped = true;
+namespace {
+	void DestroySourceVoice(IXAudio2SourceVoice* ptr)
+	{
+		if (ptr)
+		{
+			ptr->DestroyVoice();
+		}
+	}
 }
 
-Channel::~Channel()
+Channel::Channel() :
+	sourceVoice(nullptr, &DestroySourceVoice)
 {
-	if(sourceVoice)
-	{
-		ASSERTMSG( false, "Shouldn't be here. Remember to destroy Channel" );
-	}
+	stopped = true;
 }
 
 void Channel::Init(IXAudio2* xAudio2, WAVEFORMATEX* format)
 {
-	if(sourceVoice)
-	{
-		// source voice has already been initialized
-		sourceVoice->DestroyVoice();
-		sourceVoice = nullptr;
-	}
 	callbacks.Init(this);
 
 	// Initialize the voice with the callbacks
-	xAudio2->CreateSourceVoice(&sourceVoice, format, 0,
+	IXAudio2SourceVoice* newSourcePtr = nullptr;
+	xAudio2->CreateSourceVoice(&newSourcePtr, format, 0,
 	                           XAUDIO2_DEFAULT_FREQ_RATIO, &callbacks, nullptr, nullptr);
-}
 
-void Channel::Destroy()
-{
-	sourceVoice->DestroyVoice();
-	sourceVoice = nullptr;
+	sourceVoice = SourceVoicePtr(newSourcePtr, &DestroySourceVoice);
 }
 
 bool Channel::PlayingSound() const
@@ -54,7 +47,7 @@ void Channel::PlayWav(MyWav* wav)
 	stopped = false;
 }
 
-void Channel::VStop()
+void Channel::Stop()
 {
 	sourceVoice->Stop();
 	sourceVoice->FlushSourceBuffers();

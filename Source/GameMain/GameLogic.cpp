@@ -15,8 +15,6 @@
 #include "../Utilities/Functions.h"
 #include "../Graphics/Particle.h"
 
-#include "../Graphics/DebugFont.h"
-
 #include "../Content/AudioManager.h"
 
 GameLogic::GameLogic(GraphicsDeviceManager& graphics) :
@@ -27,13 +25,15 @@ GameLogic::GameLogic(GraphicsDeviceManager& graphics) :
 	lifeModel = nullptr;
 }
 
-void GameLogic::Initialize(Game* _game)
+void GameLogic::Initialize(Game* _game, Model2D* quadModel)
 {
 	// Store the game reference
 	game = _game;
 
 	// Create the camera array
 	cameras.reserve(9);
+
+	this->quadModel = quadModel;
 
 	// Initialize the models for all asteroids
 	asteroidModels.reserve(3);
@@ -201,7 +201,7 @@ void GameLogic::Render(bool showLives, bool showLevelNum)
 {
 	// Draw the quad tree for debug purposes
 #ifdef PHYSICS_DEBUG_INFO
-	quadtree.DrawQuads( cameras[0] );
+	quadtree.DrawQuads(cameras[0], quadModel);
 #endif
 
 	particleSystem.Render(cameras[0]);

@@ -43,7 +43,7 @@ public:
 
 	// Attaches sound to channel. Returns IStoppable allowing the sound to
 	// be stored and stopped by the caller
-	static IStoppable* PlaySoundByName(std::string soundName);
+	static Channel* PlaySoundByName(std::string soundName);
 
 	// Stops all channels
 	static void StopAllSound();
@@ -53,7 +53,7 @@ private:
 
 	// Internal functions with simpler access to member variables
 	void InLoadAllAssets();
-	IStoppable* InPlaySoundByName(std::string soundName);
+	Channel* InPlaySoundByName(std::string soundName);
 	void InStopAllSound();
 };
 

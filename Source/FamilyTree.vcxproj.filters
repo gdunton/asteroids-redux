@@ -92,7 +92,6 @@
     <ClInclude Include="Utilities\WinWav.h" />
     <ClInclude Include="Content\MyWav.h" />
     <ClInclude Include="Content\Channel.h" />
-    <ClInclude Include="Utilities\Interfaces.h" />
     <ClInclude Include="Content\WaveCallback.h" />
     <ClInclude Include="GameMain\LevelCompleteState.h" />
     <ClInclude Include="GameMain\LevelStartState.h" />

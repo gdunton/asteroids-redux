@@ -25,7 +25,7 @@ void Line::Initialize( const Color color )
 	SetColor( color );
 }
 
-void Line::Render( Camera* camera, const std::vector<Vector2>& points, const World& world )
+void Line::Render( Camera* camera, const std::vector<Vector2>& points, const World& world ) const
 {
 	std::vector<DirectX::VertexPositionColor> outPoints;
 	outPoints.reserve(points.size());

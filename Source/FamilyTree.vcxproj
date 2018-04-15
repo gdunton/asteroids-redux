@@ -182,6 +182,7 @@
       <PreprocessorDefinitions>_DEBUG;DEBUG;WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <EnablePREfast>false</EnablePREfast>
       <TreatWarningAsError>false</TreatWarningAsError>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>

@@ -11,36 +11,18 @@
 
 #include "../Graphics/Model2D.h"
 
-class ModelManager : public Singleton< ModelManager >
+class ModelManager
 {
 public:
-	friend Singleton< ModelManager >;
 
-private:
-	std::map< std::string, Model2D > m_modelMap;
+	static Model2D CreateAsteroidModel1();
+	static Model2D CreateAsteroidModel2();
+	static Model2D CreateAsteroidModel3();
+	static Model2D CreatePlayerModel();
 
-public:
-	static Model2D* GetModel(const std::string& modelName);
-
-protected:
-	ModelManager();
-	~ModelManager();
-
-private:
-	Model2D* InGetModel(const std::string& modelName);
-
-	void LoadModelFiles();
-	
-	void CreateAsteroidModel1();
-	void CreateAsteroidModel2();
-	void CreateAsteroidModel3();
-	void CreatePlayerModel();
-	void CreatePlayerModelAlt();
-
-	void CreateQuadModel();
-	void CreateCircle();
+	static Model2D CreateQuadModel();
+	static Model2D CreateCircle();
 };
-
 
 
 #endif

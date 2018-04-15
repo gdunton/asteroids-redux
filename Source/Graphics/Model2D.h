@@ -14,29 +14,26 @@ class Camera;
 class Model2D
 {
 public:
-	friend class ModelManager;
+	Model2D() = default;
+	explicit Model2D(std::vector<Vector2> points);
+
+	void Render( Camera& camera, const World& world ) const;
+	void Render(const Vector2& screenPosition, const Vector2& scale, float rotation) const;
+
+	float GetModelRadius() const { return modelRadius; }
+
+	const std::vector<Vector2>& GetPoints() const { return points; }
+
+	void SetColor( Color color ) { line.SetColor( color ); }
 
 private:
 	std::vector<Vector2> points;
 	Line line;
 
-	float modelRadius;
-
-public:
-	Model2D();
-	~Model2D();
-
-	void Render( Camera& camera, const World& world );
-	void Render(const Vector2& screenPosition, const Vector2& scale, float rotation);
+	float modelRadius = 0;
 
 	// Calculates the radius of the model
-	void CalculateModelStats();
-
-	float GetModelRadius() { return modelRadius; }
-
-	const std::vector<Vector2>& GetPoints() { return points; }
-
-	void SetColor( Color color ) { line.SetColor( color ); }
+	float ModelStats();
 };
 
 #endif

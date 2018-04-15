@@ -17,6 +17,7 @@
 #include "../Graphics/Font.h"
 #include "../Graphics/GraphicsDeviceManager.h"
 #include "../Content/TextureManager.h"
+#include "../Content/ModelManager.h"
 
 class Game
 {
@@ -45,6 +46,7 @@ private:
 	Window m_window;
 	GraphicsDeviceManager graphicsDeviceManager;
 	TextureManager textureManager;
+	ModelManager modelManager;
 
 	std::string fpsString;
 	Font font;

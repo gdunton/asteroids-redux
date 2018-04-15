@@ -118,13 +118,13 @@ namespace MathTypes
 		return false;
 	}
 
-	void Rectangle::Draw(Camera& camera, Model2D* quadModel) const
+	void Rectangle::Draw(Camera& camera, const Model2D& quadModel) const
 	{
 		World world;
 		world.pos = position + static_cast<Vector2>(size / 2);
 		world.rot = 0;
 		world.scale = size / 2.0f;
-		quadModel->Render(camera, world);
+		quadModel.Render(camera, world);
 	}
 
 

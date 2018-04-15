@@ -117,7 +117,7 @@ void MeteorShowerLevel::CreateAsteroid( Asteroid& asteroid )
 
 	// Pick random model
 	auto models = parent->GetAsteroidModels();
-	Model2D* model = models[ RandomInt( 0, models.size() ) ];
-	asteroid = Asteroid( pos, size, rot, model, vel, mass, health );
+	Model2D model = models[ RandomInt( 0, models.size() ) ];
+	asteroid = Asteroid( pos, size, rot, std::move(model), vel, mass, health );
 	asteroid.SetWrapAround( false );
 }

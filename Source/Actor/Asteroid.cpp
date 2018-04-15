@@ -25,7 +25,7 @@ Asteroid::Asteroid()
 }
 
 Asteroid::Asteroid( const Vector2& pos, const float& size, float rot,
-		Model2D* model, const Vector2& velocity, float mass, int _health )
+		const Model2D& model, const Vector2& velocity, float mass, int _health )
 		: PhysicsObject( pos, Vector2(size,size), rot, model, velocity, mass ), 
 		health( _health )
 {
@@ -52,9 +52,10 @@ void Asteroid::Render( Camera& camera ) const
 		Vector2 screenPos = camera.ConvertWorldToScreenPos( world.pos );
 
         // Render the bounding circle of the asteroid to the screen
-		MathTypes::Circle c = GetCircle();
-        ModelManager::GetModel("Circle")->SetColor( BLUE );
-		ModelManager::GetModel("Circle")->Render( camera, World( c.position, Vector2(c.radius, c.radius), 0 ) );
+		const MathTypes::Circle circle = GetCircle();
+		auto model = ModelManager::CreateCircle();
+		model.SetColor( BLUE );
+		model.Render( camera, World( circle.position, Vector2(circle.radius, circle.radius), 0 ) );
 #endif
 	}
 }

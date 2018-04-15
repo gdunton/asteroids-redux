@@ -34,6 +34,7 @@ void DebugLevel::Initialize()
 	cameras[8].Initialize( Vector2(WORLD_WIDTH, -WORLD_HEIGHT), Vector2(WORLD_WIDTH*0.99f, WORLD_HEIGHT*0.985f ), WINDOW_WIDTH, WINDOW_HEIGHT ); // Right-Bottom
 
 	parent->GetPlayer().Reset();
+	parent->GetPlayer().SetWrapAround(true);
 }
 
 bool DebugLevel::Complete()

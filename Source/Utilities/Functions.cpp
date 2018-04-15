@@ -10,7 +10,7 @@
 void AsteroidToParticles( Asteroid& asteroid, std::vector<Particle>& outVec )
 {
 	// Convert each line in the asteroid into a particle
-	const std::vector<Vector2>& points =  asteroid.GetModel()->GetPoints();
+	const std::vector<Vector2>& points =  asteroid.GetModel().GetPoints();
 
 	outVec.reserve( points.size() );
 

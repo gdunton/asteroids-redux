@@ -59,7 +59,7 @@ private:
 public:
 	Player();
 	Player( const Vector2& pos, const Vector2& size, float rot,
-		Model2D* model, const Vector2& velocity, float mass,
+		const Model2D& model, const Vector2& velocity, float mass,
 		int worldWidth, int worldHeight );
 
 	void Update( float dt );

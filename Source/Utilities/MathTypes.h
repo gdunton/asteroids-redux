@@ -131,7 +131,7 @@ namespace MathTypes
 			return true;
 		}
 
-		void Draw(Camera& camera, Model2D* quadModel) const;
+		void Draw(Camera& camera, const Model2D& quadModel) const;
 
 		bool Intersects(const Circle& circle) const;
 		bool Contains(const Circle& circle) const;

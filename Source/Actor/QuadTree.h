@@ -45,7 +45,7 @@ public:
 	// Remove all elements
 	void Reset();
 
-	void DrawQuads(Camera& camera, Model2D* quadModel);
+	void DrawQuads(Camera& camera, const Model2D& quadModel);
 
 	// Get the number of physics objects in the quad and children
 	int NumPhysicsObjects();

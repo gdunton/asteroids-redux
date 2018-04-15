@@ -22,10 +22,9 @@ GameLogic::GameLogic(GraphicsDeviceManager& graphics) :
 	font(graphics)
 {
 	paused = false;
-	lifeModel = nullptr;
 }
 
-void GameLogic::Initialize(Game* _game, Model2D* quadModel)
+void GameLogic::Initialize(Game* _game, const Model2D& quadModel, const Model2D& playerModel, std::vector<Model2D> asteroidModels)
 {
 	// Store the game reference
 	game = _game;
@@ -36,17 +35,13 @@ void GameLogic::Initialize(Game* _game, Model2D* quadModel)
 	this->quadModel = quadModel;
 
 	// Initialize the models for all asteroids
-	asteroidModels.reserve(3);
-	asteroidModels.push_back(ModelManager::GetInstance().GetModel("Asteroid1"));
-	asteroidModels.push_back(ModelManager::GetInstance().GetModel("Asteroid2"));
-	asteroidModels.push_back(ModelManager::GetInstance().GetModel("Asteroid3"));
+	this->asteroidModels = std::move(asteroidModels);
 
 	// Initialize the life model
-	lifeModel = ModelManager::GetModel("Player");
+	lifeModel = playerModel;
 
 	// Initialize the player
-	player = Player(Vector2(0, 0), Vector2(2, 3), 0,
-	                ModelManager::GetInstance().GetModel("PlayerAlt"), Vector2(0, 0), 5,
+	player = Player(Vector2(), Vector2(2, 3), 0, playerModel, Vector2(0, 0), 5,
 	                static_cast<int>(WORLD_WIDTH), static_cast<int>(WORLD_HEIGHT));
 
 	// Initialize the quad tree
@@ -114,9 +109,10 @@ void GameLogic::Update(const float dt)
 			Bullet* bulletArray = player.GetBullets();
 			for(int j = 0; j < MAX_BULLETS; j++)
 			{
-				if(bulletArray[j].GetAlive())
+				if(bulletArray[j].IsAlive())
 				{
-					if(bulletArray[j].CheckCollision(*begin, Vector2(0, 0)))
+					[[maybe_unused]] Vector2 ignoredOutput;
+					if(bulletArray[j].CheckCollision(*begin, ignoredOutput))
 					{
 						// Remove the bullet from the array
 						bulletArray[j].KillBullet();
@@ -238,7 +234,7 @@ void GameLogic::Render(bool showLives, bool showLevelNum)
 		Bullet* bulletList = player.GetBullets();
 		for(int j = 0; j < MAX_BULLETS; ++j)
 		{
-			if(bulletList[j].GetAlive())
+			if(bulletList[j].IsAlive())
 			{
 				if(camera.GetScreenRect().Intersects(bulletList[j].GetCircle()))
 				{
@@ -254,7 +250,7 @@ void GameLogic::Render(bool showLives, bool showLevelNum)
 		for(int i = 0; i < player.GetLives(); i++)
 		{
 			Vector2 pos(15 + (static_cast<float>(i) * 20), 18);
-			lifeModel->Render(pos, Vector2(6, 6), PI);
+			lifeModel.Render(pos, Vector2(6, 6), PI);
 		}
 	}
 

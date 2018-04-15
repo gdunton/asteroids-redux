@@ -38,13 +38,13 @@ private:
 
 	// Player
 	Player player;
-	Model2D* lifeModel;
+	Model2D lifeModel;
 
 	// Complete world area
 	MathTypes::Rectangle worldArea;
 
 	// Asteroid models in a single array to randomly choose
-	std::vector<Model2D*> asteroidModels;
+	std::vector<Model2D> asteroidModels;
 
 	// is game paused
 	bool paused;
@@ -53,12 +53,12 @@ private:
 	Font font;
 
 	// Quad model for debugging
-	Model2D* quadModel;
+	Model2D quadModel;
 
 public:
 	GameLogic(GraphicsDeviceManager& graphics);
 
-	void Initialize(Game* _game, Model2D* quadModel);
+	void Initialize(Game* _game, const Model2D& quadModel, const Model2D& playerModel, std::vector<Model2D> asteroidModels);
 
 	void Update(float dt);
 	void Render(bool showLives = true, bool showLevelNum = true);
@@ -78,7 +78,7 @@ public:
 	Player& GetPlayer() { return player; }
 	Game& GetParent() { return *game; }
 
-	std::vector<Model2D*>& GetAsteroidModels() { return asteroidModels; }
+	const std::vector<Model2D>& GetAsteroidModels() { return asteroidModels; }
 
 	// Functions to add and remove asteroids from the list. Used for levels
 	void AddAsteroids(std::list<Asteroid>& asteroids);

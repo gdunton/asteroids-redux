@@ -12,7 +12,7 @@ int GameEntity::lastID = 1;
 
 void GameEntity::Render( Camera& camera ) const
 {
-	model->Render( camera, world );
+	model.Render( camera, world );
 }
 
 void GameEntity::WrapPosition()

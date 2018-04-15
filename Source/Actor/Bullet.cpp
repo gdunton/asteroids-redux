@@ -5,17 +5,7 @@
 #include "STD.h"
 #include "Bullet.h"
 
-// Constant definitions
-const int Bullet::DAMAGE = 10;
-const float Bullet::MAX_LIFETIME = 2;
-const float Bullet::FIRING_SPEED = 60;
-
-Bullet::Bullet()
-{
-	lifetime = MAX_LIFETIME;
-}
-
-Bullet::Bullet(const Vector2& pos, const Vector2& size, float rot, Model2D* model, const Vector2& velocity) : 
+Bullet::Bullet(const Vector2& pos, const Vector2& size, float rot, const Model2D& model, const Vector2& velocity) : 
 	PhysicsObject(pos, size, rot, model, velocity, 10)
 {
 	lifetime = 0.0f;
@@ -41,7 +31,7 @@ void Bullet::KillBullet()
 
 // Checks the total lifetime against the maximum lifetime
 // to determine if the bullet is still alive;
-bool Bullet::GetAlive() const
+bool Bullet::IsAlive() const
 {
 	return lifetime < MAX_LIFETIME;
 }
@@ -49,5 +39,5 @@ bool Bullet::GetAlive() const
 // Override the default from PhysicsObject
 MathTypes::Circle Bullet::GetCircle() const
 {
-	return MathTypes::Circle(world.pos, world.scale.Length() * model->GetModelRadius());
+	return { world.pos, world.scale.Length() * model.GetModelRadius() };
 }

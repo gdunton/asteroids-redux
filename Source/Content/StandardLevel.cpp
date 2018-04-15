@@ -87,14 +87,16 @@ void StandardLevel::Initialize()
 
 		// Pick random model
 		auto models = parent->GetAsteroidModels();
-		Model2D* model = models[ RandomInt( 0, models.size() ) ];
-		asteroids.emplace_back(pos, size, rot, model, vel, mass, health);
+		Model2D model = models[ RandomInt( 0, models.size() ) ];
+		asteroids.emplace_back(pos, size, rot, std::move(model), vel, mass, health);
 	}
 
 	parent->AddAsteroids( asteroids );
 
 	// Set up the player in the parent
 	parent->GetPlayer().ResetWorld();
+
+	parent->GetPlayer().SetWrapAround(true);
 }
 
 bool StandardLevel::Complete()

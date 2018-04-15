@@ -28,7 +28,7 @@ public:
 
 	// Initialize creates the line interface from DX and sets the color
 	void Initialize( const Color color );
-	void Render( Camera* camera, const std::vector<Vector2>& points, const World& world );
+	void Render( Camera* camera, const std::vector<Vector2>& points, const World& world ) const;
 
 	void SetColor( const Color _color ) { m_color = _color; }
 };

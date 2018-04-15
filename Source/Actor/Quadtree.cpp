@@ -422,7 +422,7 @@ void Quadtree::Reset()
 	}
 }
 
-void Quadtree::DrawQuads(Camera& camera, Model2D* quadModel)
+void Quadtree::DrawQuads(Camera& camera, const Model2D& quadModel)
 {
 #ifdef PHYSICS_DEBUG_INFO
 	bounds.Draw( camera, quadModel );

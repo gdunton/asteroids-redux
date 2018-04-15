@@ -16,9 +16,9 @@ public:
 	// Constructors
 	GameEntity() = default;
 
-	GameEntity( const Vector2& _pos, const Vector2& _size, const float _rot,
-		Model2D* _model ) :
-		world(_pos, _size, _rot ), model( _model ), wrapAroundWorld( true )
+	GameEntity( const Vector2& pos, const Vector2& size, const float rot,
+		const Model2D& model ) :
+		world(pos, size, rot ), model( model ), wrapAroundWorld( true )
 	{
 		id = ++lastID;
 	}
@@ -35,7 +35,7 @@ public:
 	Vector2 GetPos() const { return world.pos; }
 	Vector2 GetSize() const { return world.scale; }
 	float GetRot() const { return world.rot; }
-	Model2D* GetModel() const { return model; }
+	const Model2D& GetModel() const { return model; }
 	const World& GetWorld() const { return world; }
 	int GetID() const { return id; }
 
@@ -49,7 +49,7 @@ protected:
 
 	World world;
 
-	Model2D* model = nullptr;
+	Model2D model;
 	bool wrapAroundWorld = true;
 };
 

@@ -30,7 +30,7 @@ Player::Player() {
 }
 
 Player::Player(const Vector2& _pos, const Vector2& _size, float _rot,
-               Model2D* _model, const Vector2& _velocity, float _mass,
+               const Model2D& _model, const Vector2& _velocity, float _mass,
                int _WORLD_WIDTH, int _WORLD_HEIGHT)
 	: PhysicsObject(_pos, _size, _rot, _model, _velocity, _mass) {
 	bulletCooldown = 0;
@@ -139,14 +139,14 @@ void Player::FireBullet() {
 	// Search for a bullet that isn't alive
 	for(int i = 0; i < MAX_BULLETS; ++i)
 	{
-		if(!bulletsArray[i].GetAlive()) // bullet not alive
+		if(!bulletsArray[i].IsAlive()) // bullet not alive
 		{
 			// Get the player direction
 			Vector2 direction(0, 1);
 			direction = RotatePoint(direction, world.rot);
 			// Create new bullet
 			bulletsArray[i] = Bullet(world.pos, Vector2(1, 1), world.rot,
-			                         ModelManager::GetInstance().GetModel("Player"),
+			                         ModelManager::CreatePlayerModel(),
 			                         direction * Bullet::FIRING_SPEED);
 
 			// Reset the cooldown
@@ -167,7 +167,7 @@ Bullet* Player::GetBullets() {
 
 // Override the default
 MathTypes::Circle Player::GetCircle() const {
-	return MathTypes::Circle(world.pos, model->GetModelRadius() * world.scale.Length());
+	return MathTypes::Circle(world.pos, model.GetModelRadius() * world.scale.Length());
 }
 
 void Player::RemoveLife() {
@@ -306,5 +306,5 @@ void Player::TickInvulnerability(float dt) {
 	// Set the model color
 	float alphaFactor = alpha / 255.0f;
 	const Color col(1.0f * alphaFactor, 1.0f * alphaFactor, 1.0f * alphaFactor, 1.0f);
-	model->SetColor(col);
+	model.SetColor(col);
 }

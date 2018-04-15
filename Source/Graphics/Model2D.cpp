@@ -4,41 +4,31 @@
 
 #include "STD.h"
 #include "Model2D.h"
+#include <numeric>
 
-Model2D::Model2D()
+Model2D::Model2D(std::vector<Vector2> points) :
+	points(std::move(points)),
+	modelRadius(ModelStats())
 {
-	line.Initialize(ColorRGBA( 255, 255, 255, 255 ));
+	line.Initialize(WHITE);
 }
 
-Model2D::~Model2D()
-{
-}
-
-void Model2D::Render( Camera& camera, const World& world )
+void Model2D::Render( Camera& camera, const World& world ) const
 {
 	line.Render( &camera, points, world );
 }
 
-void Model2D::Render(const Vector2& screenPos, const Vector2& scale, float rot)
+void Model2D::Render(const Vector2& screenPosition, const Vector2& scale, float rotation) const
 {
 	// Object already in screen pos so no need for a camera
-	line.Render(nullptr, points, World( screenPos, scale, rot ) );
+	line.Render(nullptr, points, World(screenPosition, scale, rotation) );
 }
 
-void Model2D::CalculateModelStats()
+float Model2D::ModelStats()
 {
-	Vector2 centerTotal = Vector2(0, 0);
-	float averageRadius = 0;
-
-	// Calculate the average radius from the center
-	int i = 0;
-	for( auto begin = points.begin(), end = points.end();
-		begin != end; ++begin )
+	return std::accumulate(points.begin(), points.end(), 0.0f,
+		[](float currentTotal, const Vector2& point)
 	{
-		averageRadius += distanceBetween( Vector2(0,0), *begin );
-		i++;
-	}
-	averageRadius /= i;
-
-	modelRadius = averageRadius;
+		return currentTotal += point.Length();
+	}) / points.size();
 }

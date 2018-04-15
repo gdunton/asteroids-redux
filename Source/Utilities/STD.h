@@ -8,6 +8,7 @@
 #ifndef STD_H
 #define STD_H
 
+#define NOMINMAX
 #include <Windows.h>
 #define WIN32_LEAN_AND_MEAN
 

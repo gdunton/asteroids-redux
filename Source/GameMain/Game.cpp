@@ -8,8 +8,6 @@
 // State managers. All singletons
 #include "../Input/Keyboard.h"
 #include "../Graphics/GraphicsDeviceManager.h"
-#include "../Content/ModelManager.h"
-#include "../Content/TextureManager.h"
 #include "../Content/AudioManager.h"
 
 #include "Globals.h"
@@ -34,15 +32,17 @@ void Game::Initialize()
 	m_timer.Start();
 	lastFrame = m_timer.GetHighResTimer();
 
-	// Initialize the model manager
-	ModelManager::Create();
-
 	// Create the audio manager
 	AudioManager::Create();
 	AudioManager::LoadAllAssets();
 
+	std::vector<Model2D> asteroidsModels;
+	asteroidsModels.emplace_back(ModelManager::CreateAsteroidModel1());
+	asteroidsModels.emplace_back(ModelManager::CreateAsteroidModel2());
+	asteroidsModels.emplace_back(ModelManager::CreateAsteroidModel3());
+
 	// Initialize the game logic
-	m_gameLogic.Initialize(this, ModelManager::GetInstance().GetModel("Quad"));
+	m_gameLogic.Initialize(this, ModelManager::CreateQuadModel(), ModelManager::CreatePlayerModel(), std::move(asteroidsModels));
 
 	gameStateManager = GameStateManager(&graphicsDeviceManager, &m_gameLogic );
 	gameStateManager.SetInitialState(std::make_shared<MainMenuState>(graphicsDeviceManager, &gameStateManager));
@@ -80,7 +80,6 @@ void Game::Render()
 // Called from the event handler. Destroys all the assets and singletons
 void Game::Close()
 {
-	ModelManager::Destroy();
 	AudioManager::Destroy();
 
 	// Close the window

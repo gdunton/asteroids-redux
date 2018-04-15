@@ -32,11 +32,11 @@ private:
 
 public:
 	GameStateManager();
-	GameStateManager(GraphicsDeviceManager* graphics, GameLogic* logic );
+	GameStateManager(GraphicsDeviceManager* graphics, GameLogic* logic);
 
 	// Set state functions
-	void SetInitialState( std::shared_ptr<GameState> initialState );
-	void SetState( std::shared_ptr<GameState> state );
+	void SetInitialState(std::shared_ptr<GameState> initialState);
+	void SetState(std::shared_ptr<GameState> state);
 
 	// Moves the incoming state into the currentState. Calls corrent GameState 
 	// functions
@@ -45,7 +45,7 @@ public:
 	GameState& GetCurrentState();
 	GameLogic& GetGameLogic();
 
-	template <typename T>
+	template<typename T>
 	void SetState()
 	{
 		static_assert(std::is_base_of_v<GameState, T>, "T must be a GameState subtype");

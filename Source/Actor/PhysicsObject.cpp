@@ -6,40 +6,36 @@
 #include "PhysicsObject.h"
 #include "../GameMain/Globals.h"
 
-PhysicsObject::PhysicsObject( const Vector2& _pos, const Vector2& _size, 
-	float _rot, Model2D* _model, const Vector2& _velocity, 
-	float _mass )
-		: GameEntity( _pos, _size, _rot, _model )
+PhysicsObject::PhysicsObject(const Vector2& pos, const Vector2& size, float rot,
+                             const Model2D& model, const Vector2& velocity, float mass)
+	: GameEntity(pos, size, rot, model), mass(mass), velocity(velocity)
 {
-	velocity = _velocity;
-	mass = _mass;
-
 	// is model set by now?
-	collision.Initialize( model->GetPoints() );
+	collision.Initialize(model.GetPoints());
 }
 
-bool PhysicsObject::CompleteCollisionCompute( PhysicsObject& object )
+bool PhysicsObject::CompleteCollisionCompute(PhysicsObject& object)
 {
-	Vector2 res(0, 0);
-	if( CheckCollision( object, res ) ) // if collision occures
+	Vector2 res;
+	if(CheckCollision(object, res)) // if collision occures
 	{
 		// Move the objects apart and then perform the elastic
 		// collision calculations
-		AdvancedMoveApart( object, res );
-		PerformCollisionCalculation( object );
+		AdvancedMoveApart(object, res);
+		PerformCollisionCalculation(object);
 
 		return true;
 	}
 	return false;
 }
 
-bool PhysicsObject::CheckCollision( PhysicsObject& object, Vector2& minTranslation )
+bool PhysicsObject::CheckCollision(PhysicsObject& object, Vector2& minTranslation)
 {
 	// Get the distance between the two objects
 	Vector2 direction;
-	if( wrapAroundWorld )
+	if(wrapAroundWorld)
 	{
-		GetShortestWrappedDistance( object.GetPos(), world.pos, WORLD_WIDTH, WORLD_HEIGHT, direction );
+		GetShortestWrappedDistance(object.GetPos(), world.pos, WORLD_WIDTH, WORLD_HEIGHT, direction);
 	}
 	else
 	{
@@ -50,22 +46,19 @@ bool PhysicsObject::CheckCollision( PhysicsObject& object, Vector2& minTranslati
 	float r2 = object.GetCircle().radius;
 
 	// if length is less than the collision radii
-	if( LengthSquared( direction ) < ((r1+r2) * (r1+r2)) )
+	if(LengthSquared(direction) < ((r1 + r2) * (r1 + r2)))
 	{
 		// Set the world value on both collision shapes
-		collision.SetWorld( world );
-		object.collision.SetWorld( object.world );
+		collision.SetWorld(world);
+		object.collision.SetWorld(object.world);
 
 		// Do deeper collision check using the collision geometry
-		return collision.CheckCollision( object.collision, minTranslation );
+		return collision.CheckCollision(object.collision, minTranslation);
 	}
-	else
-	{
-		return false;
-	}
+	return false;
 }
 
-void PhysicsObject::PerformCollisionCalculation( PhysicsObject& object )
+void PhysicsObject::PerformCollisionCalculation(PhysicsObject& object)
 {
 	// Check that the objects are in each other
 	Vector2 direction;
@@ -73,10 +66,10 @@ void PhysicsObject::PerformCollisionCalculation( PhysicsObject& object )
 	Vector2 tangent;
 
 	// Get the distance between the two objects
-	if( wrapAroundWorld )
+	if(wrapAroundWorld)
 	{
-		GetShortestWrappedDistance( world.pos, object.GetPos(), 
-		                            WORLD_WIDTH, WORLD_HEIGHT, direction );
+		GetShortestWrappedDistance(world.pos, object.GetPos(),
+		                           WORLD_WIDTH, WORLD_HEIGHT, direction);
 	}
 	else
 	{
@@ -85,13 +78,14 @@ void PhysicsObject::PerformCollisionCalculation( PhysicsObject& object )
 
 	// Get normalized distance and tangents between two objects
 	normal = direction;
-	Normalize( normal );
-	tangent = Vector2( -normal.y, normal.x );
+	Normalize(normal);
+	tangent = Vector2(-normal.y, normal.x);
 
 	float r1 = GetCircle().radius;
 	float r2 = object.GetCircle().radius;
-	
-	{ // Change both velocities from the collision
+
+	{
+		// Change both velocities from the collision
 		// Get both masses
 		float m1 = mass;
 		float m2 = object.GetMass();
@@ -101,10 +95,10 @@ void PhysicsObject::PerformCollisionCalculation( PhysicsObject& object )
 		Vector2 v2 = object.GetVelocity();
 
 		// Create the normal and tangent velocities using the dot product
-		float v1n = Dot( normal, v1 );
-		float v1t = Dot( tangent, v1 );
-		float v2n = Dot( normal, v2 );
-		float v2t = Dot( tangent, v2 );
+		float v1n = Dot(normal, v1);
+		float v1t = Dot(tangent, v1);
+		float v2n = Dot(normal, v2);
+		float v2t = Dot(tangent, v2);
 
 		// use the elastic collision equation to get the new normal velocity for 
 		// both physics components
@@ -118,20 +112,20 @@ void PhysicsObject::PerformCollisionCalculation( PhysicsObject& object )
 
 // Moves two physicsObjects apart by minTranslation but takes into account
 // whether the world wraps around
-void PhysicsObject::AdvancedMoveApart( PhysicsObject& ob, Vector2& res )
+void PhysicsObject::AdvancedMoveApart(PhysicsObject& ob, Vector2& res)
 {
 	// Work out which object is facing the other
-	Vector2 wrappedDistance(0,0);
-	if( wrapAroundWorld )
+	Vector2 wrappedDistance(0, 0);
+	if(wrapAroundWorld)
 	{
-		GetShortestWrappedDistance( ob.GetPos(), world.pos, WORLD_WIDTH, WORLD_HEIGHT, wrappedDistance );
+		GetShortestWrappedDistance(ob.GetPos(), world.pos, WORLD_WIDTH, WORLD_HEIGHT, wrappedDistance);
 	}
 	else
 	{
 		//wrappedDistance = ob.GetPos() - world.pos;
 		wrappedDistance = world.pos - ob.GetPos();
 	}
-	if( Dot( res, wrappedDistance) < 0.0f )
+	if(Dot(res, wrappedDistance) < 0.0f)
 	{
 		res = -res;
 	}
@@ -142,5 +136,5 @@ void PhysicsObject::AdvancedMoveApart( PhysicsObject& ob, Vector2& res )
 MathTypes::Circle PhysicsObject::GetCircle() const
 {
 	// remember that the circle should be scaled from the model size by the world
-	return MathTypes::Circle( world.pos, model->GetModelRadius() * world.scale.Length() );
+	return MathTypes::Circle(world.pos, model.GetModelRadius() * world.scale.Length());
 }

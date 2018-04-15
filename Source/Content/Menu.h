@@ -10,6 +10,7 @@
 #include "../Graphics/Font.h"
 #include "MenuItem.h"
 #include "../Input/KeyboardState.h"
+#include "../Graphics/Model2D.h"
 
 class Model2D;
 class GameState;
@@ -17,8 +18,6 @@ class GameState;
 class Menu
 {
 private:
-	GameState* parentState = nullptr;
-
 	Font font;
 
 	std::shared_ptr<std::vector<MenuItem>> menuItems;
@@ -27,7 +26,7 @@ private:
 
 	// The model for the pointer that indicates the selected item 
 	// and the y offset from center
-	Model2D* pointerModel = nullptr;
+	Model2D pointerModel;
 	int pointerOffset = 0;
 
 	KeyboardState prevKbState;

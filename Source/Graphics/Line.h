@@ -7,7 +7,6 @@
 #ifndef LINE_H
 #define LINE_H
 
-#include <memory>
 #include <PrimitiveBatch.h>
 #include <VertexTypes.h>
 

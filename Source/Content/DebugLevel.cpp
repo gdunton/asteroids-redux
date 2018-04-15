@@ -18,20 +18,17 @@ void DebugLevel::Initialize()
 {
 	// Initialize the camera array
 	std::vector<Camera>& cameras = parent->GetCameras();
-	for( int i = 0; i < 9; i++ )
-	{
-		cameras.emplace_back();
-	}
+	cameras.reserve(9);
 
-	cameras[0].Initialize( Vector2( 0.0f, 0.0f ), Vector2(WORLD_WIDTH*0.99f, WORLD_HEIGHT*0.985f ), WINDOW_WIDTH, WINDOW_HEIGHT );		 // Center-Center
-	cameras[1].Initialize( Vector2( -WORLD_WIDTH, 0.0f ), Vector2(WORLD_WIDTH*0.99f, WORLD_HEIGHT*0.985f ), WINDOW_WIDTH, WINDOW_HEIGHT );	 // Left-Center
-	cameras[2].Initialize( Vector2(WORLD_WIDTH, 0.0f ), Vector2(WORLD_WIDTH*0.99f, WORLD_HEIGHT*0.985f ), WINDOW_WIDTH, WINDOW_HEIGHT );	 // Right-Center
-	cameras[3].Initialize( Vector2( -WORLD_WIDTH, WORLD_HEIGHT), Vector2(WORLD_WIDTH*0.99f, WORLD_HEIGHT*0.985f ), WINDOW_WIDTH, WINDOW_HEIGHT ); // Left-Top
-	cameras[4].Initialize( Vector2( 0.0f, WORLD_HEIGHT), Vector2(WORLD_WIDTH*0.99f, WORLD_HEIGHT*0.985f ), WINDOW_WIDTH, WINDOW_HEIGHT );    // Center-Top
-	cameras[5].Initialize( Vector2(WORLD_WIDTH, WORLD_HEIGHT), Vector2(WORLD_WIDTH*0.99f, WORLD_HEIGHT*0.985f ), WINDOW_WIDTH, WINDOW_HEIGHT );  // Right-Top
-	cameras[6].Initialize( Vector2( -WORLD_WIDTH, -WORLD_HEIGHT), Vector2(WORLD_WIDTH*0.99f, WORLD_HEIGHT*0.985f ), WINDOW_WIDTH, WINDOW_HEIGHT );// Left-Bottom
-	cameras[7].Initialize( Vector2( 0.0f, -WORLD_HEIGHT), Vector2(WORLD_WIDTH*0.99f, WORLD_HEIGHT*0.985f ), WINDOW_WIDTH, WINDOW_HEIGHT );	 // Center-Bottom
-	cameras[8].Initialize( Vector2(WORLD_WIDTH, -WORLD_HEIGHT), Vector2(WORLD_WIDTH*0.99f, WORLD_HEIGHT*0.985f ), WINDOW_WIDTH, WINDOW_HEIGHT ); // Right-Bottom
+	cameras.emplace_back( Vector2( 0.0f, 0.0f ), Vector2(WORLD_WIDTH*0.99f, WORLD_HEIGHT*0.985f ), WINDOW_WIDTH, WINDOW_HEIGHT );		 // Center-Center
+	cameras.emplace_back( Vector2( -WORLD_WIDTH, 0.0f ), Vector2(WORLD_WIDTH*0.99f, WORLD_HEIGHT*0.985f ), WINDOW_WIDTH, WINDOW_HEIGHT );	 // Left-Center
+	cameras.emplace_back( Vector2(WORLD_WIDTH, 0.0f ), Vector2(WORLD_WIDTH*0.99f, WORLD_HEIGHT*0.985f ), WINDOW_WIDTH, WINDOW_HEIGHT );	 // Right-Center
+	cameras.emplace_back( Vector2( -WORLD_WIDTH, WORLD_HEIGHT), Vector2(WORLD_WIDTH*0.99f, WORLD_HEIGHT*0.985f ), WINDOW_WIDTH, WINDOW_HEIGHT ); // Left-Top
+	cameras.emplace_back( Vector2( 0.0f, WORLD_HEIGHT), Vector2(WORLD_WIDTH*0.99f, WORLD_HEIGHT*0.985f ), WINDOW_WIDTH, WINDOW_HEIGHT );    // Center-Top
+	cameras.emplace_back( Vector2(WORLD_WIDTH, WORLD_HEIGHT), Vector2(WORLD_WIDTH*0.99f, WORLD_HEIGHT*0.985f ), WINDOW_WIDTH, WINDOW_HEIGHT );  // Right-Top
+	cameras.emplace_back( Vector2( -WORLD_WIDTH, -WORLD_HEIGHT), Vector2(WORLD_WIDTH*0.99f, WORLD_HEIGHT*0.985f ), WINDOW_WIDTH, WINDOW_HEIGHT );// Left-Bottom
+	cameras.emplace_back( Vector2( 0.0f, -WORLD_HEIGHT), Vector2(WORLD_WIDTH*0.99f, WORLD_HEIGHT*0.985f ), WINDOW_WIDTH, WINDOW_HEIGHT );	 // Center-Bottom
+	cameras.emplace_back( Vector2(WORLD_WIDTH, -WORLD_HEIGHT), Vector2(WORLD_WIDTH*0.99f, WORLD_HEIGHT*0.985f ), WINDOW_WIDTH, WINDOW_HEIGHT ); // Right-Bottom
 
 	parent->GetPlayer().Reset();
 	parent->GetPlayer().SetWrapAround(true);

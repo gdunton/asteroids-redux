@@ -9,19 +9,9 @@
 
 class Camera
 {
-private:
-	Vector2 center;
-	Vector2 size;
-
-	// The window client dimensions
-	int windowWidth;
-	int windowHeight;
-
 public:
-	Camera();
-	~Camera();
 
-	void Initialize(const Vector2& center, const Vector2& size, float windowWidth, float windowHeight);
+	Camera(const Vector2& center, const Vector2& size, float windowWidth, float windowHeight);
 
 	// Takes world position and outputs a point with coords in the client dimensions
 	Vector2 ConvertWorldToScreenPos( const Vector2& worldPos ) const;
@@ -34,6 +24,14 @@ public:
 
 	void SetCenter( const Vector2& _center ) { center = _center; }
 	void SetSize( const Vector2& _size ) { size = _size; }
+
+private:
+	Vector2 center;
+	Vector2 size;
+
+	// The window client dimensions
+	int windowWidth = 0;
+	int windowHeight = 0;
 };
 
 #endif

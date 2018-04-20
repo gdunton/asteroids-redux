@@ -27,7 +27,7 @@ Window::Window( HINSTANCE hInstance, int clientWidth, int clientHeight,
 	wc.hIcon = LoadIcon( hInstance, MAKEINTRESOURCE( IDI_ICON1 ) );
 	wc.hIconSm = wc.hIcon;
 	wc.hCursor = LoadCursor( nullptr, IDC_ARROW );
-	wc.hbrBackground = (HBRUSH)GetStockObject( WHITE_BRUSH );
+	wc.hbrBackground = static_cast<HBRUSH>(GetStockObject(WHITE_BRUSH));
 	wc.lpszClassName = L"GuyWindow";
 	wc.lpszMenuName = nullptr;
 

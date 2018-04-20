@@ -14,10 +14,12 @@
 #include "../Graphics/Sprite.h"
 #include "../Input/KeyboardState.h"
 
+class Content;
+
 class ControlScreenState : public GameState
 {
 public:
-	explicit ControlScreenState(GraphicsDeviceManager& graphics, GameStateManager* parent);
+	explicit ControlScreenState(const Content& content, GameStateManager* parent);
 
 	void Enter() override;
 	void Update(float dt, const KeyboardState& keyboardState) override;

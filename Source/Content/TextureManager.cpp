@@ -15,7 +15,7 @@ TextureManager::TextureManager(GraphicsDeviceManager& graphicsManager)
 	CreateTransparencyRect(graphicsManager);
 }
 
-Texture* TextureManager::GetTexture(const std::string& name)
+Texture* TextureManager::GetTexture(const std::string& name) const
 {
 	// Find the texture in the map 
 	const auto iter = m_textureMap.find(name);
@@ -26,11 +26,11 @@ Texture* TextureManager::GetTexture(const std::string& name)
 	return nullptr;
 }
 
-Vector2 TextureManager::GetDimensions(const std::string& name)
+Vector2 TextureManager::GetDimensions(const std::string& name) const
 {
 	D3D11_TEXTURE2D_DESC desc;
 	ZeroMemory(&desc, sizeof(desc));
-	m_textureMap[name].texture->GetDesc(&desc);
+	m_textureMap.at(name).texture->GetDesc(&desc);
 
 	return Vector2(static_cast<float>(desc.Width), static_cast<float>(desc.Height));
 }

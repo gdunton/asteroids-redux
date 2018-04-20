@@ -15,12 +15,12 @@
 #include "GameLogic.h"
 
 
-GamePausedState::GamePausedState(GraphicsDeviceManager& graphics, GameStateManager* parent) :
+GamePausedState::GamePausedState(const Content& content, GameStateManager* parent) :
 	GameState(parent),
-	font(graphics),
-	menu(graphics, this, MakeMenuItems(graphics), 100)
+	font(content.Graphics()),
+	menu(content, this, MakeMenuItems(content.Graphics()), 100)
 {
-	background.Initialize(graphics.GetTextureManager(), "transparent");
+	background.Initialize(content.Textures(), "transparent");
 }
 
 void GamePausedState::Enter()
@@ -71,7 +71,7 @@ void GamePausedState::SelectMainMenu() const
 	parent->SetState<MainMenuState>();
 }
 
-std::shared_ptr<std::vector<MenuItem>> GamePausedState::MakeMenuItems(GraphicsDeviceManager& graphics)
+std::shared_ptr<std::vector<MenuItem>> GamePausedState::MakeMenuItems(const GraphicsDeviceManager& graphics)
 {
 	auto items = std::make_shared<std::vector<MenuItem>>();
 

@@ -15,24 +15,21 @@
 #include <Effects.h>
 #include <SpriteBatch.h>
 #include <SpriteFont.h>
-#include "../Content/TextureManager.h"
 
 class GraphicsDeviceManager
 {
 public:
 	GraphicsDeviceManager(Window& window, bool windowed);
 
-	ID3D11Device* GetDevice() { return m_pGraphicsDevice.Get(); }
-	DirectX::PrimitiveBatch<DirectX::VertexPositionColor>* GetBatch() { return primitiveBatch.get(); }
+	ID3D11Device* GetDevice() const { return m_pGraphicsDevice.Get(); }
+	DirectX::PrimitiveBatch<DirectX::VertexPositionColor>* GetBatch() const { return primitiveBatch.get(); }
 
 	// Gets the graphics device ready for rendering
 	void BeginScene( const Color& backColor );
 
 	// Stops the graphics device rendering
 	void EndScene();
-	DirectX::SpriteBatch* GetSpriteBatch();
-
-	TextureManager& GetTextureManager();
+	DirectX::SpriteBatch* GetSpriteBatch() const;
 
 private:
 	// DirectX pointers
@@ -48,8 +45,6 @@ private:
 	std::unique_ptr<DirectX::SpriteFont> font;
 
 	ComPtr<ID3D11InputLayout> m_pInputLayout;
-
-	std::unique_ptr<TextureManager> textureManager;
 
 	bool sceneStarted = false;
 };

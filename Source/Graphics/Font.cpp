@@ -9,7 +9,7 @@
 
 DirectX::SpriteBatch* Font::spriteBatch = nullptr;
 
-Font::Font(GraphicsDeviceManager& graphicsManager, Color color) :
+Font::Font(const GraphicsDeviceManager& graphicsManager, Color color) :
 	color(color)
 {
 	// Create the font description

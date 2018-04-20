@@ -14,14 +14,13 @@
 class ModelManager
 {
 public:
+	Model2D CreateAsteroidModel1() const;
+	Model2D CreateAsteroidModel2() const;
+	Model2D CreateAsteroidModel3() const;
+	Model2D CreatePlayerModel() const;
 
-	static Model2D CreateAsteroidModel1();
-	static Model2D CreateAsteroidModel2();
-	static Model2D CreateAsteroidModel3();
-	static Model2D CreatePlayerModel();
-
-	static Model2D CreateQuadModel();
-	static Model2D CreateCircle();
+	Model2D CreateQuadModel() const;
+	Model2D CreateCircle() const;
 };
 
 

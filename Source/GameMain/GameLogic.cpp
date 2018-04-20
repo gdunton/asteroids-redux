@@ -16,15 +16,17 @@
 #include "../Graphics/Particle.h"
 
 #include "../Content/AudioManager.h"
+#include <set>
 
-GameLogic::GameLogic(GraphicsDeviceManager& graphics) :
+GameLogic::GameLogic(GraphicsDeviceManager& graphics, Content& content) :
 	game(nullptr),
+	content(content),
 	font(graphics)
 {
 	paused = false;
 }
 
-void GameLogic::Initialize(Game* _game, const Model2D& quadModel, const Model2D& playerModel, std::vector<Model2D> asteroidModels)
+void GameLogic::Initialize(Game* _game)
 {
 	// Store the game reference
 	game = _game;
@@ -32,17 +34,20 @@ void GameLogic::Initialize(Game* _game, const Model2D& quadModel, const Model2D&
 	// Create the camera array
 	cameras.reserve(9);
 
-	this->quadModel = quadModel;
+	this->quadModel = content.Models().CreateQuadModel();
 
 	// Initialize the models for all asteroids
-	this->asteroidModels = std::move(asteroidModels);
+	asteroidModels = {
+		content.Models().CreateAsteroidModel1(), 
+		content.Models().CreateAsteroidModel2(),
+		content.Models().CreateAsteroidModel3()
+	};
 
 	// Initialize the life model
-	lifeModel = playerModel;
+	lifeModel = content.Models().CreatePlayerModel();
 
 	// Initialize the player
-	player = Player(Vector2(), Vector2(2, 3), 0, playerModel, Vector2(0, 0), 5,
-	                static_cast<int>(WORLD_WIDTH), static_cast<int>(WORLD_HEIGHT));
+	player = Player(Vector2(), Vector2(2, 3), 0, content.Models().CreatePlayerModel(), Vector2(0, 0), 5, &content.Audio());
 
 	// Initialize the quad tree
 	quadtree.Initialize(nullptr, MathTypes::Rectangle(Vector2(-WORLD_WIDTH / 2, -WORLD_HEIGHT / 2),
@@ -62,7 +67,7 @@ void GameLogic::StartIdleMode()
 
 	player.ResetWorld();
 
-	int difficulty = 0;
+	const int difficulty = 0;
 	currentLevel.reset();
 	currentLevel = std::make_shared<MeteorShowerLevel>(this, difficulty + 1);
 	currentLevel->Initialize();
@@ -86,111 +91,104 @@ void GameLogic::Update(const float dt)
 {
 	currentLevel->Update(dt);
 
+	if(paused) return;
+
 	// If game is paused then don't update any of the game objects
-	if(!paused)
+	// Update all the asteroids movements
+	for(auto& asteroid : asteroids)
 	{
-		// Update all the asteroids movements
-		for(auto begin = asteroids.begin(); begin != asteroids.end(); ++begin)
+		if(!asteroid.GetAlive())
 		{
-			if(!begin->GetAlive())
-			{
-				continue;
-			}
+			continue;
+		}
 
-			begin->Update(dt);
+		asteroid.Update(dt);
 
-			// Make sure that the asteroids aren't outside the world area
-			if(!worldArea.Contains(begin->GetCircle()))
-			{
-				begin->KillAsteroid();
-			}
+		// Make sure that the asteroids aren't outside the world area
+		if(!worldArea.Contains(asteroid.GetCircle()))
+		{
+			asteroid.KillAsteroid();
+		}
 
-			// Loop through all the bullets in the array
-			Bullet* bulletArray = player.GetBullets();
-			for(int j = 0; j < MAX_BULLETS; j++)
+		// Loop through all the bullets in the array
+		Bullet* bulletArray = player.GetBullets();
+		for(int j = 0; j < MAX_BULLETS; j++)
+		{
+			if(bulletArray[j].IsAlive())
 			{
-				if(bulletArray[j].IsAlive())
+				if(bulletArray[j].CheckCollision(asteroid))
 				{
-					[[maybe_unused]] Vector2 ignoredOutput;
-					if(bulletArray[j].CheckCollision(*begin, ignoredOutput))
+					// Remove the bullet from the array
+					bulletArray[j].KillBullet();
+					// Make the asteroid smaller or kill it
+					asteroid.ReduceHealth();
+					if(asteroid.GetAlive()) // if asteroid is still alive than it has split
 					{
-						// Remove the bullet from the array
-						bulletArray[j].KillBullet();
-						// Make the asteroid smaller or kill it
-						begin->ReduceHealth();
-						if(begin->GetAlive()) // if asteroid is still alive than it has split
-						{
-							// Create another small asteroid
-							Asteroid newAsteroid = Asteroid(*begin);
-							newAsteroid.SetModel(asteroidModels[RandomInt(0, asteroidModels.size())]);
-							newAsteroid.Update(dt);
-							begin->SetModel(asteroidModels[RandomInt(0, asteroidModels.size())]);
-							begin->SplitAsteroids(newAsteroid);
+						// Create another small asteroid
+						Asteroid newAsteroid = asteroid;
+						newAsteroid.SetModel(asteroidModels[RandomInt(0, asteroidModels.size())]);
+						newAsteroid.Update(dt);
+						asteroid.SetModel(asteroidModels[RandomInt(0, asteroidModels.size())]);
+						asteroid.SplitAsteroids(newAsteroid);
 
-							// recreate asteroid
-							asteroids.push_back(newAsteroid);
-							quadtree.AddPhysicsObject(asteroids.back());
+						// recreate asteroid
+						asteroids.push_back(newAsteroid);
+						quadtree.AddPhysicsObject(asteroids.back());
 
-							// Play explosion sound
-							AudioManager::PlaySoundByName("Bang1");
-						}
-						else
-						{
-							currentLevel->AsteroidDestroyed();
+						// Play explosion sound
+						content.Audio().PlaySoundByName("Bang1");
+					}
+					else
+					{
+						currentLevel->AsteroidDestroyed();
 
-							// Create the particle and add to the particle system
-							std::vector<Particle> newParticles;
-							AsteroidToParticles(*begin, newParticles);
-							particleSystem.AddParticles(newParticles);
+						// Create the particle and add to the particle system
+						std::vector<Particle> newParticles = AsteroidToParticles(asteroid);
+						particleSystem.AddParticles(newParticles);
 
-							// Play the second explosion sound
-							AudioManager::PlaySoundByName("Bang2");
-						}
+						// Play the second explosion sound
+						content.Audio().PlaySoundByName("Bang2");
 					}
 				}
 			}
 		}
-
-		// Remove dead asteroids
-		auto i = asteroids.begin();
-		while(i != asteroids.end())
-		{
-			if(!i->GetAlive())
-			{
-				// Get rid of the asteroid
-				RemoveAsteroid(i++);
-			}
-			else
-			{
-				++i;
-			}
-		}
-
-		// update the quad tree to check the collisions of all asteroids
-		quadtree.Update();
-
-		int numPhys = quadtree.NumPhysicsObjects();
-
-		// Loop all the asteroids to check the player collision
-		if(player.Alive())
-		{
-			if(quadtree.ComputeIndividual(player))
-			{
-				// Play the sound of a collision
-				AudioManager::PlaySoundByName("Thump");
-				if(!player.GetInvulnerable())
-				{
-					// Handle the collision between player and asteroids e.g. lose health 
-					player.RemoveLife();
-					player.StartInvulnerability();
-				}
-			}
-		}
-
-		player.Update(dt);
-
-		particleSystem.Update(dt);
 	}
+
+	// Remove dead asteroids
+	std::set<int> removeIds;
+	for(const auto& a : asteroids)
+	{
+		if(!a.GetAlive())
+		{
+			removeIds.insert(a.GetID());
+		}
+	}
+	std::for_each(removeIds.begin(), removeIds.end(), [this](int id) { RemoveAsteroid(id); });
+
+	// update the quad tree to check the collisions of all asteroids
+	quadtree.Update();
+
+	int numPhys = quadtree.NumPhysicsObjects();
+
+	// Loop all the asteroids to check the player collision
+	if(player.Alive())
+	{
+		if(quadtree.ComputeIndividual(player))
+		{
+			// Play the sound of a collision
+			content.Audio().PlaySoundByName("Thump");
+			if(!player.GetInvulnerable())
+			{
+				// Handle the collision between player and asteroids e.g. lose health 
+				player.RemoveLife();
+				player.StartInvulnerability();
+			}
+		}
+	}
+
+	player.Update(dt);
+
+	particleSystem.Update(dt);
 }
 
 void GameLogic::Render(bool showLives, bool showLevelNum)

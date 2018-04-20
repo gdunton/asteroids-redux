@@ -16,6 +16,7 @@
 #include "../Actor/Quadtree.h"
 #include "../Graphics/ParticleSystem.h"
 #include "../Graphics/Font.h"
+#include "../Content/Content.h"
 
 class Game;
 class Level;
@@ -25,6 +26,8 @@ class GameLogic
 private:
 	// Pointer to the parent game
 	Game* game;
+
+	Content& content;
 
 	// Game objects
 	std::vector<Camera> cameras;
@@ -56,9 +59,9 @@ private:
 	Model2D quadModel;
 
 public:
-	GameLogic(GraphicsDeviceManager& graphics);
+	GameLogic(GraphicsDeviceManager& graphics, Content& content);
 
-	void Initialize(Game* _game, const Model2D& quadModel, const Model2D& playerModel, std::vector<Model2D> asteroidModels);
+	void Initialize(Game* _game);
 
 	void Update(float dt);
 	void Render(bool showLives = true, bool showLevelNum = true);
@@ -78,7 +81,7 @@ public:
 	Player& GetPlayer() { return player; }
 	Game& GetParent() { return *game; }
 
-	const std::vector<Model2D>& GetAsteroidModels() { return asteroidModels; }
+	const std::vector<Model2D>& GetAsteroidModels() const { return asteroidModels; }
 
 	// Functions to add and remove asteroids from the list. Used for levels
 	void AddAsteroids(std::list<Asteroid>& asteroids);

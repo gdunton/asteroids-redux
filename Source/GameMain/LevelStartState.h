@@ -14,10 +14,12 @@
 #include "../Graphics/Font.h"
 #include "../Graphics/Sprite.h"
 
+class Content;
+
 class LevelStartState : public GameState
 {
 public:
-	LevelStartState(GraphicsDeviceManager& graphics, GameStateManager* parent);
+	LevelStartState(const Content& content, GameStateManager* parent);
 
 	// Virtual functions from GameState
 	void Enter() override;

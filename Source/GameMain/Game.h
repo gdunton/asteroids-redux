@@ -18,6 +18,7 @@
 #include "../Graphics/GraphicsDeviceManager.h"
 #include "../Content/TextureManager.h"
 #include "../Content/ModelManager.h"
+#include "../Content/Content.h"
 
 class Game
 {
@@ -45,8 +46,7 @@ private:
 	
 	Window m_window;
 	GraphicsDeviceManager graphicsDeviceManager;
-	TextureManager textureManager;
-	ModelManager modelManager;
+	Content content;
 
 	std::string fpsString;
 	Font font;

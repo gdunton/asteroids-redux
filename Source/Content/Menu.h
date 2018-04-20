@@ -12,6 +12,7 @@
 #include "../Input/KeyboardState.h"
 #include "../Graphics/Model2D.h"
 
+class Content;
 class Model2D;
 class GameState;
 
@@ -32,7 +33,7 @@ private:
 	KeyboardState prevKbState;
 
 public:
-	Menu(GraphicsDeviceManager& graphics, GameState* parent, std::shared_ptr<std::vector<MenuItem>> items, int pointerOffset);
+	Menu(const Content& graphics, GameState* parent, std::shared_ptr<std::vector<MenuItem>> items, int pointerOffset);
 
 	// Called each frame to check input
 	void Update(const KeyboardState& keyboardState);

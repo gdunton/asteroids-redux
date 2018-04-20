@@ -42,8 +42,8 @@ bool PhysicsObject::CheckCollision(PhysicsObject& object, Vector2& minTranslatio
 		direction = world.pos - object.GetPos();
 	}
 
-	float r1 = GetCircle().radius;
-	float r2 = object.GetCircle().radius;
+	const float r1 = GetCircle().radius;
+	const float r2 = object.GetCircle().radius;
 
 	// if length is less than the collision radii
 	if(LengthSquared(direction) < ((r1 + r2) * (r1 + r2)))
@@ -58,12 +58,16 @@ bool PhysicsObject::CheckCollision(PhysicsObject& object, Vector2& minTranslatio
 	return false;
 }
 
+bool PhysicsObject::CheckCollision(PhysicsObject& object)
+{
+	[[maybe_unused]] Vector2 unusedVector2;
+	return CheckCollision(object, unusedVector2);
+}
+
 void PhysicsObject::PerformCollisionCalculation(PhysicsObject& object)
 {
 	// Check that the objects are in each other
 	Vector2 direction;
-	Vector2 normal;
-	Vector2 tangent;
 
 	// Get the distance between the two objects
 	if(wrapAroundWorld)
@@ -77,9 +81,9 @@ void PhysicsObject::PerformCollisionCalculation(PhysicsObject& object)
 	}
 
 	// Get normalized distance and tangents between two objects
-	normal = direction;
+	Vector2 normal = direction;
 	Normalize(normal);
-	tangent = Vector2(-normal.y, normal.x);
+	Vector2 tangent = Vector2(-normal.y, normal.x);
 
 	float r1 = GetCircle().radius;
 	float r2 = object.GetCircle().radius;

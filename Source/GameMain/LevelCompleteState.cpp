@@ -11,7 +11,7 @@
 
 const float LevelCompleteState::EXIT_TIME = 1.0f;
 
-LevelCompleteState::LevelCompleteState(GraphicsDeviceManager&, GameStateManager* _parent )
+LevelCompleteState::LevelCompleteState(const Content&, GameStateManager* _parent )
 	: GameState( _parent )
 {
 }

@@ -21,7 +21,7 @@ class GameStateManager;
 class GamePausedState : public GameState
 {
 public:
-	GamePausedState(GraphicsDeviceManager& graphics, GameStateManager* parent);
+	GamePausedState(const Content& content, GameStateManager* parent);
 
 	// Virtuals from GameState
 	void Enter() override;
@@ -35,7 +35,7 @@ public:
 	void SelectMainMenu() const;
 
 private:
-	std::shared_ptr<std::vector<MenuItem>> MakeMenuItems(GraphicsDeviceManager& graphics);
+	std::shared_ptr<std::vector<MenuItem>> MakeMenuItems(const GraphicsDeviceManager& graphics);
 
 	Font font;
 	Menu menu;

@@ -18,7 +18,7 @@
 class MainMenuState : public GameState
 {
 public:
-	MainMenuState(GraphicsDeviceManager& graphics, GameStateManager* parent );
+	MainMenuState(const Content& content, GameStateManager* parent );
 
 	// Virtual functions from GameState
 	void Enter() override;
@@ -34,7 +34,7 @@ public:
 
 private:
 
-	std::shared_ptr<std::vector<MenuItem>> MakeMenuItems(GraphicsDeviceManager& graphics);
+	std::shared_ptr<std::vector<MenuItem>> MakeMenuItems(const GraphicsDeviceManager& graphics);
 
 	Font titleFont;
 	Font subFont1;

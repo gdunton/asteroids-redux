@@ -24,7 +24,7 @@ private:
 public:
 	Sprite();
 
-	void Initialize(TextureManager& textureManager, const std::string& textureName);
+	void Initialize(const TextureManager& textureManager, const std::string& textureName);
 	void Draw( const Vector2& _position, const Vector2& _size, const float alpha );
 
 	static void SetSpriteBatch(DirectX::SpriteBatch* sb);

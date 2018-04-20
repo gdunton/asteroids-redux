@@ -14,11 +14,11 @@
 
 const float LevelStartState::INTRO_TIME = 3.0f;
 
-LevelStartState::LevelStartState(GraphicsDeviceManager& graphics, GameStateManager* _parent) : 
+LevelStartState::LevelStartState(const Content& content, GameStateManager* _parent) : 
 	GameState(_parent),
-	font(graphics)
+	font(content.Graphics())
 {
-	background.Initialize(graphics.GetTextureManager(), "transparent");
+	background.Initialize(content.Textures(), "transparent");
 
 	// Set the initial text
 	onScreenText = "Level Starts In";

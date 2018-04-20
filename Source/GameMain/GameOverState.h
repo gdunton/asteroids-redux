@@ -13,10 +13,12 @@
 #include "../Content/Menu.h"
 #include "../Graphics/Sprite.h"
 
+class Content;
+
 class GameOverState : public GameState
 {
 public:
-	explicit GameOverState(GraphicsDeviceManager& graphics, GameStateManager* parent);
+	explicit GameOverState(const Content& graphics, GameStateManager* parent);
 
 	// Virtuals from GameState
 	void Enter() override;
@@ -30,7 +32,7 @@ public:
 	void SelectRestartGame();
 
 private:
-	std::shared_ptr<std::vector<MenuItem>> MakeMenuItems(GraphicsDeviceManager& graphics);
+	std::shared_ptr<std::vector<MenuItem>> MakeMenuItems(const GraphicsDeviceManager& graphics);
 
 	Font font;
 	Menu menu;

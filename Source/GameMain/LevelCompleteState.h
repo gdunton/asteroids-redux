@@ -11,6 +11,7 @@
 #include "GameState.h"
 #include "../EventManager/AnimationClock.h"
 
+class Content;
 class GraphicsDeviceManager;
 
 class LevelCompleteState : public GameState
@@ -21,7 +22,7 @@ private:
 	const static float EXIT_TIME;
 
 public:
-	LevelCompleteState( GraphicsDeviceManager&, GameStateManager* _parent );
+	LevelCompleteState( const Content&, GameStateManager* _parent );
 
 	// Virtual functions from GameState
 	void Enter();

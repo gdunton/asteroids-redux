@@ -22,12 +22,12 @@ std::string const ControlScreenState::controlStrings[] = {
 	"Pause: Esc"
 };
 
-ControlScreenState::ControlScreenState(GraphicsDeviceManager& graphics, GameStateManager* parent) :
+ControlScreenState::ControlScreenState(const Content& content, GameStateManager* parent) :
 	GameState(parent),
-	titleFont(graphics),
-	subFont1(graphics)
+	titleFont(content.Graphics()),
+	subFont1(content.Graphics())
 {
-	background.Initialize(graphics.GetTextureManager(), "transparent");
+	background.Initialize(content.Textures(), "transparent");
 }
 
 void ControlScreenState::Enter()

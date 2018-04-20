@@ -12,6 +12,7 @@
 #include "Bullet.h"
 #include "../EventManager/AnimationClock.h"
 
+class AudioManager;
 class Channel;
 class Model2D;
 
@@ -49,9 +50,10 @@ private:
 	float pulseSeconds;
 	float alpha;
 
-	//IStoppable* invulnerabilitySound;
 	Channel* thrustSound;
 	bool playerBoosting;
+
+	AudioManager* audioManager;
 
 private:
 	void TickInvulnerability( float dt );
@@ -60,7 +62,7 @@ public:
 	Player();
 	Player( const Vector2& pos, const Vector2& size, float rot,
 		const Model2D& model, const Vector2& velocity, float mass,
-		int worldWidth, int worldHeight );
+		AudioManager* audioManager );
 
 	void Update( float dt );
 	void Render( Camera& camera );

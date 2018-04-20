@@ -9,7 +9,7 @@
 #include "../Actor/Player.h"
 #include "../Input/Keyboard.h"
 
-MainGameState::MainGameState(GraphicsDeviceManager&, GameStateManager* _parent ) : GameState( _parent )
+MainGameState::MainGameState(const Content&, GameStateManager* _parent ) : GameState( _parent )
 {
 }
 

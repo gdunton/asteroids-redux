@@ -14,13 +14,13 @@
 
 #include "Globals.h"
 
-MainMenuState::MainMenuState(GraphicsDeviceManager& graphics, GameStateManager* parent) :
+MainMenuState::MainMenuState(const Content& content, GameStateManager* parent) :
 	GameState(parent),
-	titleFont(graphics),
-	subFont1(graphics),
-	menu(graphics, this, MakeMenuItems(graphics), 100)
+	titleFont(content.Graphics()),
+	subFont1(content.Graphics()),
+	menu(content, this, MakeMenuItems(content.Graphics()), 100)
 {
-	background.Initialize(graphics.GetTextureManager(), "transparent");
+	background.Initialize(content.Textures(), "transparent");
 }
 
 void MainMenuState::Enter()
@@ -77,7 +77,7 @@ void MainMenuState::SelectExit() const
 	parent->GetGameLogic().GetParent().Quit();
 }
 
-std::shared_ptr<std::vector<MenuItem>> MainMenuState::MakeMenuItems(GraphicsDeviceManager& graphics)
+std::shared_ptr<std::vector<MenuItem>> MainMenuState::MakeMenuItems(const GraphicsDeviceManager& graphics)
 {
 	auto newItems = std::make_shared<std::vector<MenuItem>>();
 

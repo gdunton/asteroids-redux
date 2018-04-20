@@ -48,11 +48,11 @@
     <ClCompile Include="Content\MenuItem.cpp" />
     <ClCompile Include="Graphics\GraphicsDeviceManager.cpp" />
     <ClCompile Include="Utilities\Functions.cpp" />
+    <ClCompile Include="Content\Content.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Utilities\STD.h" />
     <ClInclude Include="UserInterface\Window.h" />
-    <ClInclude Include="Utilities\templates.h" />
     <ClInclude Include="Debugging\Error.h" />
     <ClInclude Include="Input\Keyboard.h" />
     <ClInclude Include="Input\KeyboardState.h" />
@@ -101,6 +101,7 @@
     <ClInclude Include="Content\Menu.h" />
     <ClInclude Include="Content\MenuItem.h" />
     <ClInclude Include="Graphics\GraphicsDeviceManager.h" />
+    <ClInclude Include="Content\Content.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="icon1.ico" />

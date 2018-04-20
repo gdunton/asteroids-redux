@@ -9,9 +9,10 @@
 #include "../GameMain/GameState.h"
 #include "../Input/Keyboard.h"
 #include "../Content/ModelManager.h"
+#include "Content.h"
 
-Menu::Menu(GraphicsDeviceManager& graphics, GameState* parent, std::shared_ptr<std::vector<MenuItem>> items, int _pointerOffset) :
-	font(graphics, WHITE), menuItems(std::move(items)), pointerOffset(_pointerOffset)
+Menu::Menu(const Content& content, GameState* parent, std::shared_ptr<std::vector<MenuItem>> items, int _pointerOffset) :
+	font(content.Graphics(), WHITE), menuItems(std::move(items)), pointerOffset(_pointerOffset)
 {
 	// Calculate current Item Index by finding the menu item with the smallest Y position
 	float y = 10000;
@@ -27,7 +28,7 @@ Menu::Menu(GraphicsDeviceManager& graphics, GameState* parent, std::shared_ptr<s
 	}
 
 	// Set the model
-	pointerModel = ModelManager::CreateCircle();
+	pointerModel = content.Models().CreateCircle();
 }
 
 void Menu::Update(const KeyboardState& keyboardState)

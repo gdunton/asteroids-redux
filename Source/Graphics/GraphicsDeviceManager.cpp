@@ -81,8 +81,6 @@ GraphicsDeviceManager::GraphicsDeviceManager(Window& window, bool windowed)
 	StringToWString(assetsDir, wStr);
 
 	font = std::make_unique<DirectX::SpriteFont>(m_pGraphicsDevice.Get(), wStr.c_str());
-
-	textureManager = std::make_unique<TextureManager>(*this);
 }
 
 
@@ -117,12 +115,8 @@ void GraphicsDeviceManager::EndScene()
 	sceneStarted = false;
 }
 
-DirectX::SpriteBatch* GraphicsDeviceManager::GetSpriteBatch() 
+DirectX::SpriteBatch* GraphicsDeviceManager::GetSpriteBatch() const
 {
 	return spriteBatch.get();
 }
 
-TextureManager& GraphicsDeviceManager::GetTextureManager()
-{
-	return *textureManager;
-}

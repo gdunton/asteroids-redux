@@ -31,8 +31,8 @@ Player::Player() {
 
 Player::Player(const Vector2& _pos, const Vector2& _size, float _rot,
                const Model2D& _model, const Vector2& _velocity, float _mass,
-               int _WORLD_WIDTH, int _WORLD_HEIGHT)
-	: PhysicsObject(_pos, _size, _rot, _model, _velocity, _mass) {
+               AudioManager* audioManager)
+	: PhysicsObject(_pos, _size, _rot, _model, _velocity, _mass), audioManager(audioManager) {
 	bulletCooldown = 0;
 	lives = STARTING_LIVES;
 
@@ -112,7 +112,7 @@ void Player::Boost(float dt) {
 	if(!playerBoosting)
 	{
 		playerBoosting = true;
-		thrustSound = AudioManager::PlaySoundByName("Thrust");
+		thrustSound = audioManager->PlaySoundByName("Thrust");
 	}
 }
 
@@ -146,14 +146,14 @@ void Player::FireBullet() {
 			direction = RotatePoint(direction, world.rot);
 			// Create new bullet
 			bulletsArray[i] = Bullet(world.pos, Vector2(1, 1), world.rot,
-			                         ModelManager::CreatePlayerModel(),
+			                         model,
 			                         direction * Bullet::FIRING_SPEED);
 
 			// Reset the cooldown
 			bulletCooldown = FIRING_COOLDOWN;
 
 			// Play the fire sound
-			AudioManager::PlaySoundByName("FireAlt");
+			audioManager->PlaySoundByName("FireAlt");
 
 			// Quit loop to stop firing bullets
 			break;
@@ -176,7 +176,7 @@ void Player::RemoveLife() {
 		lives--;
 
 		// Play collision sound
-		AudioManager::PlaySoundByName("Bang3");
+		audioManager->PlaySoundByName("Bang3");
 	}
 }
 

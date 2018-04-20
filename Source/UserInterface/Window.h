@@ -26,7 +26,7 @@ public:
 	KeyboardState GetKeyboardState() const;
 
 	// Accessors
-	HWND GetWindowHandle() { return windowHandle; }
+	HWND GetWindowHandle() const { return windowHandle; }
 
 	int GetClientWidth() const { return clientWidth; }
 	int GetClientHeight() const { return clientHeight; }

@@ -35,6 +35,8 @@ public:
 	// returns true if collision occured
 	bool CheckCollision(PhysicsObject& object, Vector2& minTranslation);
 
+	bool CheckCollision(PhysicsObject& object);
+
 	// Moves two physicsObjects apart by minTranslation but takes into account
 	// whether the world wraps around
 	void AdvancedMoveApart(PhysicsObject& ob, Vector2& minTranslation);

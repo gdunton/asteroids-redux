@@ -11,6 +11,7 @@
 
 #include "../Input/KeyboardState.h"
 
+class Content;
 class GraphicsDeviceManager;
 
 class MainGameState : public GameState
@@ -19,7 +20,7 @@ private:
 	KeyboardState prevKbState;
 
 public:
-	MainGameState(GraphicsDeviceManager&, GameStateManager* _parent );
+	MainGameState(const Content&, GameStateManager* _parent );
 	MainGameState() = default;
 
 	// Virtual functions from GameState

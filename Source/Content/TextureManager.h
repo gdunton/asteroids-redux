@@ -15,8 +15,8 @@ class TextureManager
 public:
 	TextureManager(GraphicsDeviceManager& graphicsManager);
 
-	Texture* GetTexture(const std::string& name);
-	Vector2 GetDimensions(const std::string& name);
+	Texture* GetTexture(const std::string& name) const;
+	Vector2 GetDimensions(const std::string& name) const;
 
 private:
 	// Creates a texture that is 

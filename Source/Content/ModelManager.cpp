@@ -10,7 +10,7 @@
 #define Vector2(x,y) Vector2(x,y*-1)
 #endif
 
-Model2D ModelManager::CreateAsteroidModel1()
+Model2D ModelManager::CreateAsteroidModel1() const
 {
 	return Model2D({
 		Vector2(-1.9f, 2.2f),
@@ -26,7 +26,7 @@ Model2D ModelManager::CreateAsteroidModel1()
 	});
 }
 
-Model2D ModelManager::CreateAsteroidModel2()
+Model2D ModelManager::CreateAsteroidModel2() const
 {
 	return Model2D({
 		Vector2(-2.0f, 3.2f),
@@ -44,7 +44,7 @@ Model2D ModelManager::CreateAsteroidModel2()
 	});
 }
 
-Model2D ModelManager::CreateAsteroidModel3()
+Model2D ModelManager::CreateAsteroidModel3() const
 {
 	return Model2D({
 		Vector2(-0.3f, 3.1f),
@@ -62,7 +62,7 @@ Model2D ModelManager::CreateAsteroidModel3()
 	});
 }
 
-Model2D ModelManager::CreatePlayerModel()
+Model2D ModelManager::CreatePlayerModel() const
 {
 	return Model2D({
 		Vector2(-1.0f, -1.0f),
@@ -72,7 +72,7 @@ Model2D ModelManager::CreatePlayerModel()
 	});
 }
 
-Model2D ModelManager::CreateQuadModel()
+Model2D ModelManager::CreateQuadModel() const
 {
 	return Model2D({
 		Vector2(-1.0f, -1.0f),
@@ -83,7 +83,7 @@ Model2D ModelManager::CreateQuadModel()
 	});
 }
 
-Model2D ModelManager::CreateCircle()
+Model2D ModelManager::CreateCircle() const
 {
 	return Model2D({
 		Vector2(1.0f, 0.0f),

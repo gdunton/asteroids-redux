@@ -20,6 +20,7 @@
     <ClCompile Include="Actor\Quadtree.cpp" />
     <ClCompile Include="Content\AudioManager.cpp" />
     <ClCompile Include="Content\Channel.cpp" />
+    <ClCompile Include="Content\Content.cpp" />
     <ClCompile Include="Content\DebugLevel.cpp" />
     <ClCompile Include="Content\MeteorShowerLevel.cpp" />
     <ClCompile Include="Content\StandardLevel.cpp" />
@@ -73,6 +74,7 @@
     <ClInclude Include="Actor\Quadtree.h" />
     <ClInclude Include="Content\AudioManager.h" />
     <ClInclude Include="Content\Channel.h" />
+    <ClInclude Include="Content\Content.h" />
     <ClInclude Include="Content\DebugLevel.h" />
     <ClInclude Include="Content\Level.h" />
     <ClInclude Include="Content\MeteorShowerLevel.h" />
@@ -113,7 +115,6 @@
     <ClInclude Include="Utilities\Functions.h" />
     <ClInclude Include="Utilities\MathTypes.h" />
     <ClInclude Include="Utilities\STD.h" />
-    <ClInclude Include="Utilities\templates.h" />
     <ClInclude Include="Utilities\WinWav.h" />
   </ItemGroup>
   <ItemGroup>

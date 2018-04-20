@@ -6,31 +6,11 @@
 #include "Particle.h"
 
 #include "Camera.h"
-using std::vector;
 
-const float Particle::ScaleRate = 1.01f;
-
-Particle::Particle()
+Particle::Particle(Vector2 _p1, Vector2 _p2, Vector2 _pos, Vector2 _scale, Vector2 _velocity,
+                          float rot, float rotationSpeed, float _lifespan)
 {
-	points.reserve(2);
-	points.push_back(Vector2(0,0));
-	points.push_back(Vector2(0,0));
-	rotSpeed = 0;
-	lifespan = 0;
-	rotation = 0;
-	alpha = 0;
-	initialLife = 0;
-	pos = Vector2(0, 0);
-	scale = Vector2( 1, 1 );
-}
-
-Particle::~Particle()
-{
-}
-
-void Particle::Initialize( Vector2 _p1, Vector2 _p2, Vector2 _pos, Vector2 _scale, Vector2 _velocity, 
-		float rot, float rotationSpeed, float _lifespan )
-{
+	points = std::vector<Vector2>(2, Vector2());
 	points[0] = _p1;
 	points[1] = _p2;
 	velocity = _velocity;
@@ -46,9 +26,9 @@ void Particle::Initialize( Vector2 _p1, Vector2 _p2, Vector2 _pos, Vector2 _scal
 	alpha = 255;
 }
 
-void Particle::Update( float dt )
+void Particle::Update(float dt)
 {
- 	pos += velocity * dt;
+	pos += velocity * dt;
 
 	rotation += rotSpeed * dt;
 	scale *= ScaleRate;
@@ -56,7 +36,7 @@ void Particle::Update( float dt )
 	lifespan -= dt;
 
 	// Update the alpha to fade out as the particle dies
-	if( lifespan > 0 )
+	if(lifespan > 0)
 	{
 		alpha = 255 * (lifespan / initialLife);
 	}
@@ -66,15 +46,15 @@ void Particle::Update( float dt )
 	}
 }
 
-void Particle::Render( Camera& camera )
+void Particle::Render(Camera& camera)
 {
 	// Reset the color of the particle with the alpha
-	line.SetColor( ColorRGBA( 255, 255, 255, alpha ) );
+	line.SetColor(ColorRGBA(255, 255, 255, alpha));
 
-	line.Render( &camera, points, World(pos, scale, rotation) );
+	line.Render(&camera, points, World(pos, scale, rotation));
 }
 
-bool Particle::Alive()
+bool Particle::Alive() const
 {
 	return (lifespan > 0);
 }

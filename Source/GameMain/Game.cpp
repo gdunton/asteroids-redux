@@ -19,9 +19,9 @@
 Game::Game(HINSTANCE hInstance) :
 	m_window(hInstance, 800, 600, "Asteroids Redux", this),
 	graphicsDeviceManager(m_window, true),
-	textureManager(graphicsDeviceManager),
+	content(graphicsDeviceManager),
 	font(graphicsDeviceManager, GREEN),
-	m_gameLogic(graphicsDeviceManager)
+	m_gameLogic(graphicsDeviceManager, content)
 {
 	m_desiredTimePerFrame = 1.0 / FRAMES_PER_SECOND;
 }
@@ -32,20 +32,11 @@ void Game::Initialize()
 	m_timer.Start();
 	lastFrame = m_timer.GetHighResTimer();
 
-	// Create the audio manager
-	AudioManager::Create();
-	AudioManager::LoadAllAssets();
-
-	std::vector<Model2D> asteroidsModels;
-	asteroidsModels.emplace_back(ModelManager::CreateAsteroidModel1());
-	asteroidsModels.emplace_back(ModelManager::CreateAsteroidModel2());
-	asteroidsModels.emplace_back(ModelManager::CreateAsteroidModel3());
-
 	// Initialize the game logic
-	m_gameLogic.Initialize(this, ModelManager::CreateQuadModel(), ModelManager::CreatePlayerModel(), std::move(asteroidsModels));
+	m_gameLogic.Initialize(this);
 
-	gameStateManager = GameStateManager(&graphicsDeviceManager, &m_gameLogic );
-	gameStateManager.SetInitialState(std::make_shared<MainMenuState>(graphicsDeviceManager, &gameStateManager));
+	gameStateManager = GameStateManager(&content, &m_gameLogic );
+	gameStateManager.SetInitialState(std::make_shared<MainMenuState>(content, &gameStateManager));
 
 	Line::SetLine(graphicsDeviceManager.GetBatch());
 	Sprite::SetSpriteBatch(graphicsDeviceManager.GetSpriteBatch());
@@ -80,8 +71,6 @@ void Game::Render()
 // Called from the event handler. Destroys all the assets and singletons
 void Game::Close()
 {
-	AudioManager::Destroy();
-
 	// Close the window
 	m_window.Close();
 }

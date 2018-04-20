@@ -16,7 +16,7 @@
 using Microsoft::WRL::ComPtr;
 
 #ifdef DEBUG
-#define PHYSICS_DEBUG_INFO
+//#define PHYSICS_DEBUG_INFO
 #endif
 
 // STL headers and typedefs
@@ -46,7 +46,6 @@ constexpr Color BLUE = Color(0, 0, 255, 255);
 
 // Commonly used header throughout the program
 #include "../Debugging/Error.h"
-#include "templates.h"
 #include "MathTypes.h"
 
 // Random functions

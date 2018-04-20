@@ -12,13 +12,9 @@
 #include "MyWav.h"
 #include "Channel.h"
 
-class AudioManager : public Singleton< AudioManager >
+class AudioManager
 {
 public:
-	friend Singleton< AudioManager >;
-
-	// Functions protected for the singleton
-protected:
 	AudioManager();
 	~AudioManager();
 
@@ -36,25 +32,18 @@ private:
 	static const int NUM_CHANNELS;
 
 public:
-	// Public static functions for easier calling
-
-
-	static void LoadAllAssets();
-
 	// Attaches sound to channel. Returns IStoppable allowing the sound to
 	// be stored and stopped by the caller
-	static Channel* PlaySoundByName(std::string soundName);
+	Channel* PlaySoundByName(const std::string& soundName);
 
 	// Stops all channels
-	static void StopAllSound();
+	void StopAllSound();
 
 private:
-	void LoadWavFile(std::string filename, std::string assetName, bool soundLoops = false );
+	void LoadWavFile(const std::string& filename, const std::string& assetName, bool soundLoops = false);
 
 	// Internal functions with simpler access to member variables
-	void InLoadAllAssets();
-	Channel* InPlaySoundByName(std::string soundName);
-	void InStopAllSound();
+	void LoadAllAssets();
 };
 
 #endif

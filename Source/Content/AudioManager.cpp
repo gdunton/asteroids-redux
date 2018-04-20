@@ -4,9 +4,8 @@
 
 #include "STD.h"
 #include "AudioManager.h"
+#include <algorithm>
 
-template<>
-AudioManager* Singleton<AudioManager>::instance = nullptr;
 const int AudioManager::NUM_CHANNELS = 10;
 
 AudioManager::AudioManager()
@@ -52,15 +51,12 @@ AudioManager::AudioManager()
 	masteringVoice->SetVolume(volume);
 
 	channels.reserve(NUM_CHANNELS);
+
+	LoadAllAssets();
 }
 
 AudioManager::~AudioManager()
 {
-	channels.clear();
-
-	// Destroy all the sounds
-	soundMap.clear();
-
 	// Destroy the mastering voice and the audio device
 	if(masteringVoice)
 	{
@@ -73,11 +69,6 @@ AudioManager::~AudioManager()
 }
 
 void AudioManager::LoadAllAssets()
-{
-	GetInstance().InLoadAllAssets();
-}
-
-void AudioManager::InLoadAllAssets()
 {
 	// Ensure that xAudio has been created
 	if(xAudio2 == nullptr || masteringVoice == nullptr)
@@ -105,12 +96,7 @@ void AudioManager::InLoadAllAssets()
 	}
 }
 
-Channel* AudioManager::PlaySoundByName(std::string soundName)
-{
-	return GetInstance().InPlaySoundByName(soundName);
-}
-
-Channel* AudioManager::InPlaySoundByName(std::string soundName)
+Channel* AudioManager::PlaySoundByName(const std::string& soundName)
 {
 	// Ensure that xAudio has been created
 	if(xAudio2 == nullptr || masteringVoice == nullptr)
@@ -118,36 +104,17 @@ Channel* AudioManager::InPlaySoundByName(std::string soundName)
 		return nullptr;
 	}
 
-	// Search for a free channel. 
-	// Loop an iterator until either then end of the array has been reached (return null)
-	// or a clear channel has been found
-	int i = 0;
-	for(auto beg = channels.begin(), end = channels.end(); ; ++beg, i++) // remember to increment i each time
+	auto beg = std::find_if(channels.begin(), channels.end(), [](const Channel& channel) { return !channel.PlayingSound(); });
+	if (beg == channels.end())
 	{
-		if(beg == end)
-		{
-			return nullptr;
-		}
-		if(!beg->PlayingSound())
-		{
-			break;
-		}
+		return nullptr;
 	}
 
-	ASSERT( channels[i].PlayingSound() == false );
-
-	// play the wav through the channel and pass back the channel as IStoppable
-	channels[i].PlayWav(soundMap[soundName].get());
-	
-	return &channels[i];
+	beg->PlayWav(soundMap.at(soundName).get());
+	return &(*beg);
 }
 
 void AudioManager::StopAllSound()
-{
-	GetInstance().InStopAllSound();
-}
-
-void AudioManager::InStopAllSound()
 {
 	for(auto& channel : channels)
 	{
@@ -158,7 +125,7 @@ void AudioManager::InStopAllSound()
 	}
 }
 
-void AudioManager::LoadWavFile(std::string filename, std::string assetName, bool soundLoops)
+void AudioManager::LoadWavFile(const std::string& filename, const std::string& assetName, bool soundLoops)
 {
 	// Remove the file from the map if already loaded
 	auto iterator = soundMap.find(assetName);
@@ -168,8 +135,8 @@ void AudioManager::LoadWavFile(std::string filename, std::string assetName, bool
 	}
 
 	// Load the file
-	MyWav* newWave = new MyWav();
-	if(newWave->LoadFile(assetsDir + filename, GetInstance().xAudio2, soundLoops))
+	auto* newWave = new MyWav();
+	if(newWave->LoadFile(assetsDir + filename, xAudio2, soundLoops))
 	{
 		// Loaded the file
 		soundMap[assetName] = std::shared_ptr<MyWav>(newWave);

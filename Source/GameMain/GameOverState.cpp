@@ -15,12 +15,12 @@
 #include "LevelStartState.h"
 #include "MainMenuState.h"
 
-GameOverState::GameOverState(GraphicsDeviceManager& graphics, GameStateManager* parent) :
+GameOverState::GameOverState(const Content& content, GameStateManager* parent) :
 	GameState(parent),
-	font(graphics),
-	menu(graphics, this, MakeMenuItems(graphics), 100)
+	font(content.Graphics()),
+	menu(content, this, MakeMenuItems(content.Graphics()), 100)
 {
-	background.Initialize(graphics.GetTextureManager(), "transparent");
+	background.Initialize(content.Textures(), "transparent");
 }
 
 void GameOverState::Enter()
@@ -64,7 +64,7 @@ void GameOverState::SelectRestartGame()
 	parent->SetState<LevelStartState>();
 }
 
-std::shared_ptr<std::vector<MenuItem>> GameOverState::MakeMenuItems(GraphicsDeviceManager& graphics)
+std::shared_ptr<std::vector<MenuItem>> GameOverState::MakeMenuItems(const GraphicsDeviceManager& graphics)
 {
 	auto menuItems = std::make_shared<std::vector<MenuItem>>();
 

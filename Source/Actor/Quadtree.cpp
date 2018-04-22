@@ -6,17 +6,16 @@
 #include "Quadtree.h"
 
 #include "PhysicsObject.h"
+#include <algorithm>
 
 const int Quadtree::MAX_CHILDREN = 5;
-const int Quadtree:: MAX_DEPTH = 6;
+const int Quadtree::MAX_DEPTH = 6;
 
 Quadtree::Quadtree()
 {
 	children = std::vector<Quadtree>();
 	children.reserve(4);
 	parent = nullptr;
-
-	physObjs = std::list<PhysicsObjectRef>();
 
 	bounds = MathTypes::Rectangle();
 
@@ -25,16 +24,12 @@ Quadtree::Quadtree()
 
 
 // Initializer to set the bounding rectangle and the parent
-void Quadtree::Initialize( Quadtree* _parent, MathTypes::Rectangle _rect, int _level )
+void Quadtree::Initialize(Quadtree* _parent, MathTypes::Rectangle _rect, int _level)
 {
 	parent = _parent;
 
 	bounds = _rect;
 	level = _level;
-
-#ifdef PHYSICS_DEBUG_INFO
-	id = level;
-#endif
 }
 
 
@@ -49,14 +44,14 @@ void Quadtree::Update()
 	CheckCollisions();
 
 	// Update all children
-	for (Quadtree& i : children)
+	for(Quadtree& i : children)
 	{
 		i.Update();
 	}
 
 	// Attempt to shrink the tree. Must be last operation so that it happens to the
 	// lowest level child first
-	if( Shrinkable() )
+	if(Shrinkable())
 	{
 		ShrinkQuad();
 	}
@@ -65,25 +60,25 @@ void Quadtree::Update()
 
 // Adds an object into the top quad and attempts to send the object lower in
 // the tree
-bool Quadtree::AddPhysicsObject( PhysicsObject& object )
+bool Quadtree::AddPhysicsObject(const std::shared_ptr<PhysicsObject>& object)
 {
 	// Make sure that the quad is top level
 	ASSERT( level == 0 );
 
 	bool insertionOccured = false;
-	for( Quadtree& child : children )
+	for(Quadtree& child : children)
 	{
-		if( child.InsertFromHigher( object ) )
+		if(child.InsertFromHigher(object))
 		{
 			insertionOccured = true;
 			break;
 		}
 	}
-	if( !insertionOccured )
+	if(!insertionOccured)
 	{
-		AddObject( object );
+		AddObject(object);
 		// Check that the quad doesn't need to be split
-		if( physObjs.size() > MAX_CHILDREN )
+		if(physObjs.size() > MAX_CHILDREN)
 		{
 			// split the quads
 			SplitQuad();
@@ -95,23 +90,21 @@ bool Quadtree::AddPhysicsObject( PhysicsObject& object )
 
 // Remove the object from it's quad. If a quad recieves a true from a child
 // then it will stop further calculation.
-bool Quadtree::RemovePhysicsObject( int id )
+bool Quadtree::RemovePhysicsObject(const std::shared_ptr<PhysicsObject>& obj)
 {
 	// Search in current quad for the object
-	for( auto begin = physObjs.begin(), end = physObjs.end(); begin != end; ++begin )
+	const auto iter = std::find(physObjs.begin(), physObjs.end(), obj);
+	if(iter != physObjs.end())
 	{
-		if( (*begin).id == id )
-		{
-			physObjs.erase( begin );
-			return true;
-		}
+		physObjs.erase(iter);
+		return true;
 	}
 
 	// For each child
-	for (Quadtree& ch : children )
+	for(Quadtree& ch : children)
 	{
 		// if object is found and removed
-		if( ch.RemovePhysicsObject( id ) )
+		if(ch.RemovePhysicsObject(obj))
 		{
 			return true;
 		}
@@ -122,24 +115,23 @@ bool Quadtree::RemovePhysicsObject( int id )
 
 
 // Check an individual physicsobject for collision and compute collision after
-bool Quadtree::ComputeIndividual( PhysicsObject& ob )
+bool Quadtree::ComputeIndividual(PhysicsObject& ob)
 {
 	bool collisionOccured = false;
 	// Check against each object
-	if( bounds.Intersects( ob.GetCircle() ) )
+	if(bounds.Intersects(ob.GetCircle()))
 	{
-		for( PhysicsObjectRef& phys : physObjs )
+		for(auto& phys : physObjs)
 		{
-			PhysicsObject* p = phys.phys;
-			if( p->CompleteCollisionCompute( ob ) )
+			if(phys->CompleteCollisionCompute(ob))
 			{
 				return true;
-			}			
+			}
 		}
 		// Then check against each child
-		for( Quadtree& child : children )
+		for(Quadtree& child : children)
 		{
-			if( child.ComputeIndividual( ob ) )
+			if(child.ComputeIndividual(ob))
 			{
 				return true;
 			}
@@ -154,23 +146,18 @@ bool Quadtree::ComputeIndividual( PhysicsObject& ob )
 // the quad. if not send it to the parent quad
 void Quadtree::CheckObjects()
 {
-	std::list<PhysicsObjectRef>::iterator i = physObjs.begin();
-	while( i != physObjs.end() )
+	for (auto& i : physObjs)
 	{
-		bool nothingChanged = true;
-
 		// Check that the object is still contained in the quad
-		PhysicsObject *p = i->phys;
-		if( bounds.Contains( p->GetCircle()) )
+		if(bounds.Contains(i->GetCircle()))
 		{
 			// if so then check whether is can be moved into the children
-			for( Quadtree& child : children )
+			for(Quadtree& child : children)
 			{
-				if( child.InsertFromHigher( *p ) )
+				if(child.InsertFromHigher(i))
 				{
 					// successfully inserted physics object into child quad
-					physObjs.erase( i++ );
-					nothingChanged = false;
+					i = nullptr;
 					break;
 				}
 			}
@@ -178,16 +165,15 @@ void Quadtree::CheckObjects()
 		else
 		{
 			// else pass to the parent if available
-			if( parent )
+			if(parent)
 			{
-				parent->InsertFromLower( *p ); 
-				physObjs.erase( i++ );
-				nothingChanged = false;
+				parent->InsertFromLower(i);
+				i = nullptr;
 			}
-		}	
+		}
+	}
 
-		if( nothingChanged ) i++;
-	}	
+	physObjs.erase(std::remove(physObjs.begin(), physObjs.end(), nullptr), physObjs.end());
 }
 
 
@@ -197,23 +183,21 @@ void Quadtree::CheckObjects()
 void Quadtree::CheckCollisions()
 {
 	// Compute the collisions of each object against those stored in the children.
-	for( auto begin = physObjs.begin(), end = physObjs.end(); begin != end; ++begin )
+	for(auto begin = physObjs.begin(); begin != physObjs.end(); ++begin)
 	{
-		for( Quadtree& tree : children )
+		for(Quadtree& tree : children)
 		{
-			tree.ComputeCollisionAgainstChildren( *(*begin).phys );
+			tree.ComputeCollisionAgainstChildren(**begin);
 		}
 
 		// Then compute the collisions of all the objects against each other
-		auto b2 = begin; // use allocator that already exists
-		++b2;
-		for( ; b2 != end; ++b2 )
+		for(auto b2 = begin + 1; b2 != physObjs.end(); ++b2)
 		{
-			Vector2 res( 0, 0 );
-			if( (*begin).phys->CheckCollision( *(*b2).phys, res ) )
+			Vector2 res(0, 0);
+			if((*begin)->CheckCollision(**b2, res))
 			{
-				(*begin).phys->AdvancedMoveApart( *(*b2).phys, res );
-				(*begin).phys->PerformCollisionCalculation( *(*b2).phys );
+				(*begin)->AdvancedMoveApart(**b2, res);
+				(*begin)->PerformCollisionCalculation(**b2);
 			}
 		}
 	}
@@ -222,26 +206,26 @@ void Quadtree::CheckCollisions()
 
 // Checks an object against any children. Specifically for objects
 // that overlap quads. Can also pass onto other children quads.
-void Quadtree::ComputeCollisionAgainstChildren( PhysicsObject& ob )
+void Quadtree::ComputeCollisionAgainstChildren(PhysicsObject& ob)
 {
 	// Check the object against the quad
-	if( bounds.Intersects( ob.GetCircle() ) )
+	if(bounds.Intersects(ob.GetCircle()))
 	{
 		// then check object against all children objects
-		for( PhysicsObjectRef& phys : physObjs )
+		for(auto& phys : physObjs)
 		{
-			Vector2 res( 0, 0 );
-			if( ob.CheckCollision( *phys.phys, res ) )
+			Vector2 res(0, 0);
+			if(ob.CheckCollision(*phys, res))
 			{
-				ob.AdvancedMoveApart( *phys.phys, res );
-				ob.PerformCollisionCalculation( *phys.phys );
+				ob.AdvancedMoveApart(*phys, res);
+				ob.PerformCollisionCalculation(*phys);
 			}
 		}
 
 		// send object to each child quad
-		for( Quadtree& tree : children )
+		for(Quadtree& tree : children)
 		{
-			tree.ComputeCollisionAgainstChildren( ob );
+			tree.ComputeCollisionAgainstChildren(ob);
 		}
 	}
 }
@@ -251,7 +235,7 @@ void Quadtree::ComputeCollisionAgainstChildren( PhysicsObject& ob )
 // contrained by the maximum levels. returns false if max level reached
 bool Quadtree::SplitQuad()
 {
-	if( (level >= MAX_DEPTH) || (children.size() > 0) ) 
+	if((level >= MAX_DEPTH) || (children.size() > 0))
 	{
 		return false; // Cannot create more levels
 	}
@@ -259,39 +243,30 @@ bool Quadtree::SplitQuad()
 	// Create the new children and add them
 	Quadtree newChildren[4];
 	// Initialize each of the new children
-	newChildren[0].Initialize( this, MathTypes::Rectangle( bounds.position, bounds.size / 2 ), level + 1 );
-	newChildren[1].Initialize( this, MathTypes::Rectangle( bounds.position + Vector2(bounds.size.x / 2, 0), bounds.size / 2 ), level + 1 );
-	newChildren[2].Initialize( this, MathTypes::Rectangle( bounds.position + Vector2(0, bounds.size.y / 2), bounds.size / 2 ), level + 1 );
-	newChildren[3].Initialize( this, MathTypes::Rectangle( bounds.position + static_cast<Vector2>(bounds.size / 2), bounds.size / 2 ), level + 1 );
-#ifdef PHYSICS_DEBUG_INFO
-	newChildren[0].id = (level + 1) * 10 + 1;
-	newChildren[1].id = (level + 1) * 10 + 2;
-	newChildren[2].id = (level + 1) * 10 + 3;
-	newChildren[3].id = (level + 1) * 10 + 4;
-#endif
-	children.assign( newChildren, newChildren+4 );
+	newChildren[0].Initialize(this, MathTypes::Rectangle(bounds.position, bounds.size / 2), level + 1);
+	newChildren[1].Initialize(this, MathTypes::Rectangle(bounds.position + Vector2(bounds.size.x / 2, 0), bounds.size / 2),
+	                          level + 1);
+	newChildren[2].Initialize(this, MathTypes::Rectangle(bounds.position + Vector2(0, bounds.size.y / 2), bounds.size / 2),
+	                          level + 1);
+	newChildren[3].Initialize(
+		this, MathTypes::Rectangle(bounds.position + static_cast<Vector2>(bounds.size / 2), bounds.size / 2), level + 1);
+	children.assign(newChildren, newChildren + 4);
 
 	// Attempt to insert each of the physics objects into the children
-	//for( auto begin = physObjs.begin(); begin != physObjs.end(); ++begin )
-	std::list<PhysicsObjectRef>::iterator i = physObjs.begin();
-	while( i != physObjs.end() )
+	for(auto begin = physObjs.begin(); begin != physObjs.end(); ++begin)
 	{
-		bool insertionHappend = false;
-		for( Quadtree& child : children )
+		for(Quadtree& child : children)
 		{
-			PhysicsObject *p = i->phys;
-			if( child.InsertFromHigher( *p ) )
+			if(child.InsertFromHigher(*begin))
 			{
-				insertionHappend = true;
-				physObjs.erase( i++ );
+				*begin = nullptr;
 				break;
 			}
-			else
-			{
-			}
 		}
-		if( !insertionHappend ) i++;
 	}
+
+	// Remove all the nullptr objects
+	physObjs.erase(std::remove(physObjs.begin(), physObjs.end(), nullptr), physObjs.end());
 
 	return true;
 }
@@ -303,7 +278,7 @@ bool Quadtree::Shrinkable()
 {
 	// if Number of physics objects is less than the max children return true
 	bool shrink = NumPhysicsObjects() <= MAX_CHILDREN;
-	if( children.size() == 0 ) shrink = false;
+	if(children.size() == 0) shrink = false;
 	return shrink;
 }
 
@@ -313,12 +288,11 @@ bool Quadtree::Shrinkable()
 void Quadtree::ShrinkQuad()
 {
 	// Move all the phys obs from the children into the current quad
- 	for( Quadtree& child : children )
+	for(Quadtree& child : children)
 	{
-		for( PhysicsObjectRef& ob : child.physObjs )
+		for(auto& ob : child.physObjs)
 		{
-			PhysicsObject* p = ob.phys;
-			AddObject( *p );
+			AddObject(ob);
 		}
 	}
 
@@ -328,94 +302,87 @@ void Quadtree::ShrinkQuad()
 
 // Insert a physics object called from a lower level quad. Used for moving 
 // objects up the tree until they find a quad they fit in
-void Quadtree::InsertFromLower( PhysicsObject& object )
+void Quadtree::InsertFromLower(std::shared_ptr<PhysicsObject> object)
 {
 	// Top level needs to accept all objects
-	if( level <= 0 )
+	if(level <= 0)
 	{
-		AddObject( object );
+		AddObject(object);
 		return;
 	}
 
 	// object doesn't go in quad send further upwards
-	if( !bounds.Contains( object.GetCircle() ) )
+	if(!bounds.Contains(object->GetCircle()))
 	{
-		parent->InsertFromLower( object );
+		parent->InsertFromLower(object);
 	}
 	else // Quad contains object. Attempt to send lower
 	{
 		bool insertionOccured = false;
-		for( Quadtree& child : children )
+		for(Quadtree& child : children)
 		{
-			int id = object.GetID(); // store the id for later removal
-			if( child.InsertFromHigher( object ) )
+			if(child.InsertFromHigher(object))
 			{
 				insertionOccured = true;
 				break;
 			}
 		}
-		if( !insertionOccured )
+		if(!insertionOccured)
 		{
-			AddObject( object ); // couldn't go to child. Insert in current
+			AddObject(object); // couldn't go to child. Insert in current
 		}
 	}
 }
 
 // Insert from higher add object to lower level quad. Used for attempting 
 // to send object down the tree
-bool Quadtree::InsertFromHigher( PhysicsObject& object )
+bool Quadtree::InsertFromHigher(std::shared_ptr<PhysicsObject> object)
 {
-	if( level <= 0 )
+	if(level <= 0)
 	{
 		// WTF did this object come from
-		AddObject( object );
+		AddObject(object);
 		return true;
 	}
 
 	// object doesn't go in quad so return false
-	if( !bounds.Contains( object.GetCircle() ) )
+	if(!bounds.Contains(object->GetCircle()))
 	{
 		return false;
 	}
-	else // Quad contains object. Attempt to send lower
+	// Quad contains object. Attempt to send lower
+	bool insertionOccured = false;
+	for(Quadtree& child : children)
 	{
-		bool insertionOccured = false;
-		for( Quadtree& child : children )
+		if(child.InsertFromHigher(object))
 		{
-			int id = object.GetID(); // store the id for later removal
-			if( child.InsertFromHigher( object ) )
-			{
-				insertionOccured = true;
-				break;
-			}
-		}
-		if( !insertionOccured )
-		{
-			AddObject( object );
-			// Check that the quad doesn't need to be split
-			if( physObjs.size() > MAX_CHILDREN )
-			{
-				// split the quads
-				SplitQuad();
-			}
+			insertionOccured = true;
+			break;
 		}
 	}
-	
+	if(!insertionOccured)
+	{
+		AddObject(object);
+		// Check that the quad doesn't need to be split
+		if(physObjs.size() > MAX_CHILDREN)
+		{
+			// split the quads
+			SplitQuad();
+		}
+	}
+
 	return true;
 }
 
 // Inserts the object into the actual array
-void Quadtree::AddObject( PhysicsObject& object )
+void Quadtree::AddObject(const std::shared_ptr<PhysicsObject>& object)
 {
-	PhysicsObjectRef ref;
-	ref.id = object.GetID();
-	ref.phys = &object;
-	physObjs.push_back( ref );
+	physObjs.push_back(object);
 }
 
 void Quadtree::Reset()
 {
-	if( level == 0 )
+	if(level == 0)
 	{
 		children.clear();
 		physObjs.clear();
@@ -425,18 +392,17 @@ void Quadtree::Reset()
 void Quadtree::DrawQuads(Camera& camera, const Model2D& quadModel)
 {
 #ifdef PHYSICS_DEBUG_INFO
-	bounds.Draw( camera, quadModel );
+	bounds.Draw(camera, quadModel);
 	// Draw name of quad
-	Vector2 pos = camera.ConvertWorldToScreenPos( bounds.position + static_cast<Vector2>(bounds.size / 2) );
-	
+	Vector2 pos = camera.ConvertWorldToScreenPos(bounds.position + static_cast<Vector2>(bounds.size / 2));
+
 	// Draw the id of the quad on the position of each asteroid
-	for( PhysicsObjectRef& phys : physObjs )
+	for(auto& phys : physObjs)
 	{
-		PhysicsObject* p = phys.phys;
-		Vector2 pPos = camera.ConvertWorldToScreenPos( p->GetPos() );
+		Vector2 pPos = camera.ConvertWorldToScreenPos(phys->GetPos());
 	}
-	
-	for( Quadtree& c : children )
+
+	for(Quadtree& c : children)
 	{
 		c.DrawQuads(camera, quadModel);
 	}
@@ -448,7 +414,7 @@ int Quadtree::NumPhysicsObjects()
 	int amount = physObjs.size();
 
 	// Add the number in each child
-	for( Quadtree& child : children )
+	for(Quadtree& child : children)
 	{
 		amount += child.NumPhysicsObjects();
 	}

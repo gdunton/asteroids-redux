@@ -34,12 +34,10 @@ void MeteorShowerLevel::Initialize()
 		(MAX_ASTEROIDS_PER_COUNTDOWN - MIN_ASTEROIDS_PER_COUNTDOWN) * 4;
 
 	// Create the asteroids
-	std::list<Asteroid> asteroids;
+	std::vector<std::shared_ptr<Asteroid>> asteroids;
 	for( int i = 0; i < numAsteroids; i++ )
 	{
-		Asteroid asteroid;
-		CreateAsteroid( asteroid );
-		asteroids.push_back( asteroid );
+		asteroids.push_back(CreateAsteroid());
 	}
 
 	parent->AddAsteroids( asteroids );
@@ -69,12 +67,10 @@ void MeteorShowerLevel::Update( float dt )
 		int numAsteroids = MIN_ASTEROIDS_PER_COUNTDOWN + static_cast<int>(Random()) * 
 			(MAX_ASTEROIDS_PER_COUNTDOWN - MIN_ASTEROIDS_PER_COUNTDOWN);
 
-		std::list<Asteroid> newAsteroids;
+		std::vector<std::shared_ptr<Asteroid>> newAsteroids;
 		for( int i = 0; i < numAsteroids; i++ )
 		{
-			Asteroid asteroid;
-			CreateAsteroid( asteroid );
-			newAsteroids.push_back( asteroid );
+			newAsteroids.push_back(CreateAsteroid());
 		}
 
 		parent->AddAsteroids( newAsteroids );
@@ -85,7 +81,7 @@ void MeteorShowerLevel::Update( float dt )
 	}
 }
 
-void MeteorShowerLevel::CreateAsteroid( Asteroid& asteroid )
+std::shared_ptr<Asteroid> MeteorShowerLevel::CreateAsteroid()
 {
 
 	Vector2 pos = Vector2( 
@@ -117,6 +113,8 @@ void MeteorShowerLevel::CreateAsteroid( Asteroid& asteroid )
 	// Pick random model
 	auto models = parent->GetAsteroidModels();
 	Model2D model = models[ RandomInt( 0, models.size() ) ];
-	asteroid = Asteroid( pos, size, rot, std::move(model), vel, mass, health );
-	asteroid.SetWrapAround( false );
+	auto asteroid = std::make_shared<Asteroid>( pos, size, rot, model, vel, mass, health );
+	asteroid->SetWrapAround( false );
+
+	return asteroid;
 }

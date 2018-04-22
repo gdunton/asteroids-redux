@@ -31,7 +31,7 @@ private:
 
 	// Game objects
 	std::vector<Camera> cameras;
-	std::list<Asteroid> asteroids;
+	std::vector<std::shared_ptr<Asteroid>> asteroids;
 
 	std::shared_ptr<Level> currentLevel;
 
@@ -84,18 +84,15 @@ public:
 	const std::vector<Model2D>& GetAsteroidModels() const { return asteroidModels; }
 
 	// Functions to add and remove asteroids from the list. Used for levels
-	void AddAsteroids(std::list<Asteroid>& asteroids);
+	void AddAsteroids(const std::vector<std::shared_ptr<Asteroid>>& asteroids);
 	void RemoveAllAsteroids();
-	int NumAsteroids();
+	int NumAsteroids() const;
 
 	std::vector<Camera>& GetCameras() { return cameras; }
 
 private:
 
-	// Functions for removing asteroids by id or index
-	void RemoveAsteroid(int ID);
-	void RemoveAsteroid(std::list<Asteroid>::iterator i);
-	void RemoveAsteroid(const Asteroid& asteroid);
+	void RemoveDeadAsteroids();
 
 	void AddAsteroidsToQuadTree();
 };

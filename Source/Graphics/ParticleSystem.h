@@ -14,15 +14,8 @@ class Camera;
 
 class ParticleSystem
 {
-private:
-	std::vector<Particle> particleArray;
-
-	// The initial size of the particleArray.
-	static const int BUFFER_SIZE;
-
 public:
 	ParticleSystem();
-	~ParticleSystem();
 
 	void Reset();
 
@@ -31,6 +24,12 @@ public:
 
 	void Update( float dt );
 	void Render( Camera& camera );
+
+private:
+	std::vector<Particle> particleArray;
+
+	// The initial size of the particleArray.
+	static const int BUFFER_SIZE;
 };
 
 #endif

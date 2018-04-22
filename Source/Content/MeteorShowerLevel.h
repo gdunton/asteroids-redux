@@ -42,7 +42,7 @@ public:
 	void Update( float dt );
 
 private:
-	void CreateAsteroid( Asteroid& asteroid );
+	std::shared_ptr<Asteroid> CreateAsteroid();
 };
 
 #endif

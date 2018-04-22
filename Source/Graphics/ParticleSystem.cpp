@@ -13,14 +13,6 @@ ParticleSystem::ParticleSystem()
 	particleArray.reserve( BUFFER_SIZE );
 }
 
-ParticleSystem::~ParticleSystem()
-{
-	if( particleArray.size() > 0 )
-	{
-		particleArray.clear();
-	}
-}
-
 void ParticleSystem::Reset()
 {
 	particleArray.clear();

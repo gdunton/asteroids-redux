@@ -55,7 +55,7 @@ void StandardLevel::Initialize()
 		numAsteroids = 10;
 	}
 
-	std::list<Asteroid> asteroids;
+	std::vector<std::shared_ptr<Asteroid>> asteroids;
 
 	// Set up all the asteroids in the parent
 	// Initialize all of the asteroids 
@@ -85,7 +85,7 @@ void StandardLevel::Initialize()
 		// Pick random model
 		auto models = parent->GetAsteroidModels();
 		Model2D model = models[ RandomInt( 0, models.size() ) ];
-		asteroids.emplace_back(pos, size, rot, std::move(model), vel, mass, health);
+		asteroids.emplace_back(std::make_unique<Asteroid>(pos, size, rot, std::move(model), vel, mass, health));
 	}
 
 	parent->AddAsteroids( asteroids );

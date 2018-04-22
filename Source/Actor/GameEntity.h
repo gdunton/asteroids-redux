@@ -7,20 +7,19 @@
 #ifndef GAME_ENTITY_H
 #define GAME_ENTITY_H
 
+#include <utility>
 #include "../Graphics/Model2D.h"
 #include "../Graphics/Camera.h"
 
 class GameEntity
 {
 public:
-	// Constructors
 	GameEntity() = default;
 
 	GameEntity( const Vector2& pos, const Vector2& size, const float rot,
-		const Model2D& model ) :
-		world(pos, size, rot ), model( model ), wrapAroundWorld( true )
+	            Model2D model ) :
+		world(pos, size, rot ), model(std::move(model))
 	{
-		id = ++lastID;
 	}
 
 	virtual ~GameEntity() = default;
@@ -37,15 +36,10 @@ public:
 	float GetRot() const { return world.rot; }
 	const Model2D& GetModel() const { return model; }
 	const World& GetWorld() const { return world; }
-	int GetID() const { return id; }
 
 	void SetWrapAround( bool value ) { wrapAroundWorld = value; }
 
 protected:
-	void ResetID() { id = ++lastID; }
-
-	static int lastID;
-	int id = 0;
 
 	World world;
 

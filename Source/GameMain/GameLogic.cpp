@@ -16,7 +16,6 @@
 #include "../Graphics/Particle.h"
 
 #include "../Content/AudioManager.h"
-#include <set>
 
 GameLogic::GameLogic(GraphicsDeviceManager& graphics, Content& content) :
 	game(nullptr),
@@ -93,21 +92,22 @@ void GameLogic::Update(const float dt)
 
 	if(paused) return;
 
-	// If game is paused then don't update any of the game objects
+	std::vector<std::shared_ptr<Asteroid>> newAsteroids;
+
 	// Update all the asteroids movements
 	for(auto& asteroid : asteroids)
 	{
-		if(!asteroid.GetAlive())
+		if(!asteroid->GetAlive())
 		{
 			continue;
 		}
 
-		asteroid.Update(dt);
+		asteroid->Update(dt);
 
 		// Make sure that the asteroids aren't outside the world area
-		if(!worldArea.Contains(asteroid.GetCircle()))
+		if(!worldArea.Contains(asteroid->GetCircle()))
 		{
-			asteroid.KillAsteroid();
+			asteroid->KillAsteroid();
 		}
 
 		// Loop through all the bullets in the array
@@ -116,24 +116,22 @@ void GameLogic::Update(const float dt)
 		{
 			if(bulletArray[j].IsAlive())
 			{
-				if(bulletArray[j].CheckCollision(asteroid))
+				if(bulletArray[j].CheckCollision(*asteroid))
 				{
 					// Remove the bullet from the array
 					bulletArray[j].KillBullet();
 					// Make the asteroid smaller or kill it
-					asteroid.ReduceHealth();
-					if(asteroid.GetAlive()) // if asteroid is still alive than it has split
+					asteroid->ReduceHealth();
+					if(asteroid->GetAlive()) // if asteroid is still alive than it has split
 					{
 						// Create another small asteroid
-						Asteroid newAsteroid = asteroid;
-						newAsteroid.SetModel(asteroidModels[RandomInt(0, asteroidModels.size())]);
-						newAsteroid.Update(dt);
-						asteroid.SetModel(asteroidModels[RandomInt(0, asteroidModels.size())]);
-						asteroid.SplitAsteroids(newAsteroid);
+						auto newAsteroid = std::make_shared<Asteroid>(*asteroid);
+						newAsteroid->SetModel(asteroidModels[RandomInt(0, asteroidModels.size())]);
+						newAsteroid->Update(dt);
+						asteroid->SetModel(asteroidModels[RandomInt(0, asteroidModels.size())]);
+						asteroid->SplitAsteroids(*newAsteroid);
 
-						// recreate asteroid
-						asteroids.push_back(newAsteroid);
-						quadtree.AddPhysicsObject(asteroids.back());
+						newAsteroids.push_back(newAsteroid);
 
 						// Play explosion sound
 						content.Audio().PlaySoundByName("Bang1");
@@ -143,7 +141,7 @@ void GameLogic::Update(const float dt)
 						currentLevel->AsteroidDestroyed();
 
 						// Create the particle and add to the particle system
-						std::vector<Particle> newParticles = AsteroidToParticles(asteroid);
+						std::vector<Particle> newParticles = AsteroidToParticles(*asteroid);
 						particleSystem.AddParticles(newParticles);
 
 						// Play the second explosion sound
@@ -154,16 +152,10 @@ void GameLogic::Update(const float dt)
 		}
 	}
 
-	// Remove dead asteroids
-	std::set<int> removeIds;
-	for(const auto& a : asteroids)
-	{
-		if(!a.GetAlive())
-		{
-			removeIds.insert(a.GetID());
-		}
-	}
-	std::for_each(removeIds.begin(), removeIds.end(), [this](int id) { RemoveAsteroid(id); });
+	// Add any new asteroids
+	asteroids.insert(asteroids.end(), newAsteroids.begin(), newAsteroids.end());
+	std::for_each(newAsteroids.begin(), newAsteroids.end(), 
+		[this](const auto& asteroid) { quadtree.AddPhysicsObject(asteroid); });
 
 	// update the quad tree to check the collisions of all asteroids
 	quadtree.Update();
@@ -189,6 +181,8 @@ void GameLogic::Update(const float dt)
 	player.Update(dt);
 
 	particleSystem.Update(dt);
+
+	RemoveDeadAsteroids();
 }
 
 void GameLogic::Render(bool showLives, bool showLevelNum)
@@ -206,10 +200,10 @@ void GameLogic::Render(bool showLives, bool showLevelNum)
 		for(auto& asteroid : asteroids)
 		{
 			// Check that the asteroids is in the camera
-			if(camera.GetScreenRect().Intersects(asteroid.GetCircle()))
+			if(camera.GetScreenRect().Intersects(asteroid->GetCircle()))
 			{
 				// Render the object
-				asteroid.Render(camera);
+				asteroid->Render(camera);
 			}
 		}
 	}
@@ -281,14 +275,14 @@ void GameLogic::Reset()
 	player.StartInvulnerability();
 }
 
-void GameLogic::AddAsteroids(std::list<Asteroid>& n)
+void GameLogic::AddAsteroids(const std::vector<std::shared_ptr<Asteroid>>& newAsteroids)
 {
-	// try adding the asteroids one at a time
-	for(int i = 0, size = n.size(); i < size; i++)
+	for (const auto& asteroid : newAsteroids)
 	{
-		quadtree.AddPhysicsObject(*n.begin());
-		asteroids.splice(asteroids.end(), n, n.begin());
+		quadtree.AddPhysicsObject(asteroid);
 	}
+
+	asteroids.insert(asteroids.begin(), newAsteroids.begin(), newAsteroids.end());
 }
 
 void GameLogic::RemoveAllAsteroids()
@@ -296,35 +290,24 @@ void GameLogic::RemoveAllAsteroids()
 	asteroids.clear();
 }
 
-int GameLogic::NumAsteroids()
+int GameLogic::NumAsteroids() const
 {
 	return asteroids.size();
 }
 
-void GameLogic::RemoveAsteroid(int id)
+void GameLogic::RemoveDeadAsteroids()
 {
-	// search the asteroids to find a matching id
-	for(auto begin = asteroids.begin(), end = asteroids.end(); begin != end; ++begin)
+	for(const auto& asteroid : asteroids)
 	{
-		if(begin->GetID() == id)
+		if (!asteroid->GetAlive())
 		{
-			quadtree.RemovePhysicsObject(begin->GetID());
-			asteroids.erase(begin++);
-			break;
+ 			quadtree.RemovePhysicsObject(asteroid);
 		}
 	}
-}
 
-void GameLogic::RemoveAsteroid(std::list<Asteroid>::iterator i)
-{
-	quadtree.RemovePhysicsObject(i->GetID());
-	asteroids.erase(i);
-}
-
-void GameLogic::RemoveAsteroid(const Asteroid& asteroid)
-{
-	int id = asteroid.GetID();
-	RemoveAsteroid(id);
+	asteroids.erase(
+		std::remove_if(asteroids.begin(), asteroids.end(), [](auto asteroid) { return !asteroid->GetAlive(); }), 
+		asteroids.end());
 }
 
 void GameLogic::AddAsteroidsToQuadTree()

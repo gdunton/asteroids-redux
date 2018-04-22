@@ -10,13 +10,6 @@
 class Model2D;
 class PhysicsObject;
 
-class PhysicsObjectRef
-{
-public:
-	PhysicsObject* phys;
-	int id;
-};
-
 class Quadtree
 {
 public:
@@ -33,11 +26,11 @@ public:
 	
 	// Adds an object into the top quad and attempts to send the object lower in
 	// the tree
-	bool AddPhysicsObject( PhysicsObject& object );
+	bool AddPhysicsObject(const std::shared_ptr<PhysicsObject>& object);
 
 	// Remove the object from it's quad. If a quad recieves a true from a child
 	// then it will stop further calculation.
-	bool RemovePhysicsObject( int id );
+	bool RemovePhysicsObject(const std::shared_ptr<PhysicsObject>& obj);
 
 	// Check an individual physicsobject for collision and compute collision after
 	bool ComputeIndividual( PhysicsObject& object );
@@ -50,10 +43,6 @@ public:
 	// Get the number of physics objects in the quad and children
 	int NumPhysicsObjects();
 
-#ifdef PHYSICS_DEBUG_INFO
-	int id;
-#endif
-	
 private:
 
 	// Check that all objects are in the correct quad.
@@ -84,14 +73,14 @@ private:
 
 	// Insert a physics object called from a lower level quad. Used for moving 
 	// objects up the tree until they find a quad they fit in
-	void InsertFromLower( PhysicsObject& object );
+	void InsertFromLower(std::shared_ptr<PhysicsObject> object);
 
 	// Insert from higher add object to lower level quad. Used for attempting 
 	// to send object down the tree
-	bool InsertFromHigher( PhysicsObject& object );
+	bool InsertFromHigher(std::shared_ptr<PhysicsObject> object);
 
 	// Inserts the object into the actual array
-	void AddObject( PhysicsObject& ob );
+	void AddObject(const std::shared_ptr<PhysicsObject>& ob);
 	
 
 private:
@@ -102,7 +91,7 @@ private:
 	Quadtree* parent;
 
 	// Container of references to all the physicsObjects
-	std::list<PhysicsObjectRef> physObjs;
+	std::vector<std::shared_ptr<PhysicsObject>> physObjs;
 
 	// Rectangle containing position and size of the quad
 	MathTypes::Rectangle bounds;

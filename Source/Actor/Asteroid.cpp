@@ -53,9 +53,9 @@ void Asteroid::Render( Camera& camera ) const
 
         // Render the bounding circle of the asteroid to the screen
 		const MathTypes::Circle circle = GetCircle();
-		auto model = ModelManager::CreateCircle();
+		/*auto model = ModelManager::CreateCircle();
 		model.SetColor( BLUE );
-		model.Render( camera, World( circle.position, Vector2(circle.radius, circle.radius), 0 ) );
+		model.Render( camera, World( circle.position, Vector2(circle.radius, circle.radius), 0 ) );*/
 #endif
 	}
 }
@@ -87,12 +87,6 @@ void Asteroid::SplitAsteroids( Asteroid& asteroid )
 {
 	// make sure that both asteroids are alive
 	if( !alive || !asteroid.GetAlive() ) return;
-
-	// Check that the asteroids don't have the same id
-	if( id == asteroid.GetID() )
-	{
-		asteroid.ResetID();
-	}
 
 	// Set the velocity to push the objects apart
 	Vector2 res(0,0);

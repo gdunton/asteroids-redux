@@ -4,6 +4,7 @@
 #include "TextureManager.h"
 #include "AudioManager.h"
 #include "ModelManager.h"
+#include "../Graphics/Font.h"
 
 class Content
 {
@@ -14,10 +15,13 @@ public:
 	const TextureManager& Textures() const;
 	AudioManager& Audio();
 	const GraphicsDeviceManager& Graphics() const;
+	Font* DefaultFont();
 private:
 	ModelManager models;
 	TextureManager textures;
 	AudioManager audio;
+
+	Font defaultFont;
 
 	GraphicsDeviceManager& graphics;
 };

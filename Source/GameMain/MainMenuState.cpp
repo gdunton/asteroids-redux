@@ -74,7 +74,7 @@ void MainMenuState::SelectControls()
 
 void MainMenuState::SelectExit() const
 {
-	parent->GetGameLogic().GetParent().Quit();
+	parent->GetGameLogic().GetParent().Close();
 }
 
 std::shared_ptr<std::vector<MenuItem>> MainMenuState::MakeMenuItems(const GraphicsDeviceManager& graphics)

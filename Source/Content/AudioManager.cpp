@@ -10,6 +10,7 @@ const int AudioManager::NUM_CHANNELS = 10;
 
 AudioManager::AudioManager()
 {
+	CoInitialize(nullptr);
 	GetAssetsDir(assetsDir);
 
 	// Create the audio device and mastering voice
@@ -19,7 +20,7 @@ AudioManager::AudioManager()
 	unsigned int flags = 0;
 #ifdef DEBUG
 	flags |= XAUDIO2_DEBUG_ENGINE;
-#endif
+#endif   
 
 	HRESULT hr = XAudio2Create(&xAudio2/*, flags*/);
 	if(hr != S_OK)

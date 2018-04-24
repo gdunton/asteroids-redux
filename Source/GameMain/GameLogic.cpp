@@ -6,6 +6,7 @@
 #include "GameLogic.h"
 #include "Game.h"
 #include "Globals.h"
+#include <algorithm>
 
 #include "../Content/ModelManager.h"
 #include "../Content/Level.h"
@@ -17,12 +18,15 @@
 
 #include "../Content/AudioManager.h"
 
-GameLogic::GameLogic(GraphicsDeviceManager& graphics, Content& content) :
+GameLogic::GameLogic(Content& content) :
 	game(nullptr),
 	content(content),
-	font(graphics)
+	font(nullptr)
 {
 	paused = false;
+	font = content.DefaultFont();
+
+	ASSERT(font != nullptr);
 }
 
 void GameLogic::Initialize(Game* _game)
@@ -251,9 +255,9 @@ void GameLogic::Render(bool showLives, bool showLevelNum)
 	{
 		std::string levelStr;
 		to_String(currentLevel->GetLevelNumber(), 1, levelStr);
-		Vector2 size = font.GetTextSize("Level: " + levelStr);
+		Vector2 size = font->GetTextSize("Level: " + levelStr);
 		Vector2 pos((WINDOW_WIDTH / 2) - (size.x / 2), 7);
-		font.DrawString("Level: " + levelStr, pos);
+		font->DrawString("Level: " + levelStr, pos);
 	}
 
 	currentLevel->Render();

@@ -4,6 +4,7 @@
 
 #include "STD.h"
 #include "GraphicsDeviceManager.h"
+#include "../UserInterface/IWindow.h"
 
 #include "../Graphics/Line.h"
 #include <CommonStates.h>
@@ -11,7 +12,7 @@
 #include <DirectXColors.h>
 
 
-GraphicsDeviceManager::GraphicsDeviceManager(Window& window, bool windowed)
+GraphicsDeviceManager::GraphicsDeviceManager(IWindow& window, bool windowed)
 {
 	DXGI_SWAP_CHAIN_DESC swapDesc;
 	ZeroMemory(&swapDesc, sizeof(swapDesc));
@@ -24,7 +25,7 @@ GraphicsDeviceManager::GraphicsDeviceManager(Window& window, bool windowed)
 	swapDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
 	swapDesc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_SEQUENTIAL;
 	swapDesc.BufferCount = 2;
-	swapDesc.OutputWindow = window.GetWindowHandle();
+	swapDesc.OutputWindow = static_cast<HWND>(window.GetWindowHandle());
 	swapDesc.Windowed = TRUE;
 
 	HRESULT hr = D3D11CreateDeviceAndSwapChain(

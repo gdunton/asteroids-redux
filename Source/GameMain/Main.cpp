@@ -6,6 +6,8 @@
 
 #include "STD.h"
 #include "Game.h"
+#include "Globals.h"
+#include "../UserInterface/Window.h"
 
 #ifdef RELEASE
 #define TIME_SEEDED_RANDOM
@@ -22,8 +24,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPSTR /*lpC
 	srand( time(NULL) );
 #endif
 
-	Game game(hInstance);
-	game.Initialize();
+	Window window(hInstance, 800, 600, "Asteroids Redux");
 
-	return game.Run();
+	return window.Run();
 }

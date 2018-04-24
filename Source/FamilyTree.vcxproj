@@ -111,6 +111,7 @@
     <ClInclude Include="Graphics\Sprite.h" />
     <ClInclude Include="Input\Keyboard.h" />
     <ClInclude Include="Input\KeyboardState.h" />
+    <ClInclude Include="UserInterface\IWindow.h" />
     <ClInclude Include="UserInterface\Window.h" />
     <ClInclude Include="Utilities\Functions.h" />
     <ClInclude Include="Utilities\MathTypes.h" />

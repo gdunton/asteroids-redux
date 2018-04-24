@@ -8,7 +8,6 @@
 #ifndef GRAPHICS_DEVICE_MANAGER_H
 #define GRAPHICS_DEVICE_MANAGER_H
 
-#include "../UserInterface/Window.h"
 #include <memory>
 #include <PrimitiveBatch.h>
 #include <VertexTypes.h>
@@ -16,10 +15,12 @@
 #include <SpriteBatch.h>
 #include <SpriteFont.h>
 
+class IWindow;
+
 class GraphicsDeviceManager
 {
 public:
-	GraphicsDeviceManager(Window& window, bool windowed);
+	GraphicsDeviceManager(IWindow& window, bool windowed);
 
 	ID3D11Device* GetDevice() const { return m_pGraphicsDevice.Get(); }
 	DirectX::PrimitiveBatch<DirectX::VertexPositionColor>* GetBatch() const { return primitiveBatch.get(); }

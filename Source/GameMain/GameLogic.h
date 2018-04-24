@@ -20,6 +20,7 @@
 
 class Game;
 class Level;
+class Content;
 
 class GameLogic
 {
@@ -53,13 +54,13 @@ private:
 	bool paused;
 
 	// Font for writing the level number
-	Font font;
+	Font* font;
 
 	// Quad model for debugging
 	Model2D quadModel;
 
 public:
-	GameLogic(GraphicsDeviceManager& graphics, Content& content);
+	GameLogic(Content& content);
 
 	void Initialize(Game* _game);
 

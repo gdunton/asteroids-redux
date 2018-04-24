@@ -9,7 +9,6 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include "../UserInterface/Window.h"
 #include "../EventManager/Timer.h"
 #include "GameLogic.h"
 #include "GameStateManager.h"
@@ -20,31 +19,27 @@
 #include "../Content/ModelManager.h"
 #include "../Content/Content.h"
 
+class IWindow;
+
 class Game
 {
 public:
-	explicit Game(HINSTANCE hInstance);
+	explicit Game(IWindow& windowHandle);
 
 	void Initialize();
-	int Run();
 
-	void Update();
+	void Update(const KeyboardState& keyboardState);
 	void Render();
 
-	// Called from the event handler. Destroys all the assets and singletons
-	void Close();
-	// Posts the quit message to the event handler
-	void Quit();
-
-	int GetClientWidth();
-	int GetClientHeight();
+	// Called from the event handler. Destroys all the assets
+	void Close() const;
 
 private:
 
 	// Update called when the required time has past to result in desired fps
-	void InternalUpdate(double deltaTime);
+	void InternalUpdate(double deltaTime, const KeyboardState& keyboardState);
 	
-	Window m_window;
+	IWindow& windowHandle;
 	GraphicsDeviceManager graphicsDeviceManager;
 	Content content;
 

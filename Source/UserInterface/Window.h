@@ -11,22 +11,23 @@
 #define WINDOW_H
 
 #include "../Input/Keyboard.h"
+#include "IWindow.h"
 
 class Game;
 
-class Window
+class Window : public IWindow
 {
 public:
 
 	Window(HINSTANCE hInstance, int clientWidth, int clientHeight,
-	       const std::string& windowTitle, Game* _parent);
+	       const std::string& windowTitle);
 	int Run();
-	void Close();
+	void Close() override;
 
 	KeyboardState GetKeyboardState() const;
 
 	// Accessors
-	HWND GetWindowHandle() const { return windowHandle; }
+	void* GetWindowHandle() const override { return windowHandle; }
 
 	int GetClientWidth() const { return clientWidth; }
 	int GetClientHeight() const { return clientHeight; }
@@ -40,7 +41,7 @@ private:
 
 
 	// Reference to the parent game
-	Game* gameParent = nullptr;
+	std::unique_ptr<Game> game;
 	HWND windowHandle = nullptr;
 
 	// Window sized

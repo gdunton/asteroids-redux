@@ -16,7 +16,7 @@
 using Microsoft::WRL::ComPtr;
 
 #ifdef DEBUG
-#define PHYSICS_DEBUG_INFO
+//#define PHYSICS_DEBUG_INFO
 #endif
 
 // STL headers and typedefs

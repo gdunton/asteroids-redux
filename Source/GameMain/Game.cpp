@@ -5,23 +5,21 @@
 #include "STD.h"
 #include "Game.h"
 
-// State managers. All singletons
+#include "../UserInterface/IWindow.h"
 #include "../Input/Keyboard.h"
 #include "../Graphics/GraphicsDeviceManager.h"
 #include "../Content/AudioManager.h"
-
-#include "Globals.h"
 
 #include "MainMenuState.h"
 #include "MainGameState.h"
 
 
-Game::Game(HINSTANCE hInstance) :
-	m_window(hInstance, 800, 600, "Asteroids Redux", this),
-	graphicsDeviceManager(m_window, true),
+Game::Game(IWindow& windowHandle) :
+	windowHandle(windowHandle),
+	graphicsDeviceManager(windowHandle, true),
 	content(graphicsDeviceManager),
 	font(graphicsDeviceManager, GREEN),
-	m_gameLogic(graphicsDeviceManager, content)
+	m_gameLogic(content)
 {
 	m_desiredTimePerFrame = 1.0 / FRAMES_PER_SECOND;
 }
@@ -35,63 +33,57 @@ void Game::Initialize()
 	// Initialize the game logic
 	m_gameLogic.Initialize(this);
 
-	gameStateManager = GameStateManager(&content, &m_gameLogic );
+	gameStateManager = GameStateManager(&content, &m_gameLogic);
 	gameStateManager.SetInitialState(std::make_shared<MainMenuState>(content, &gameStateManager));
 
 	Line::SetLine(graphicsDeviceManager.GetBatch());
 	Sprite::SetSpriteBatch(graphicsDeviceManager.GetSpriteBatch());
 }
 
-void Game::InternalUpdate( const double deltaTime )
+void Game::InternalUpdate(const double deltaTime, const KeyboardState& keyboardState)
 {
-	to_String( m_timer.GetFPS(), 10, fpsString );
-	
+	to_String(m_timer.GetFPS(), 10, fpsString);
+
 	// Update the main state then let the state manager check for any 
 	// state changes and resolve them
-	gameStateManager.GetCurrentState().Update( static_cast<float>(deltaTime), m_window.GetKeyboardState());
+	gameStateManager.GetCurrentState().Update(static_cast<float>(deltaTime), keyboardState);
 	gameStateManager.ResolveIncomingState();
 }
 
 void Game::Render()
 {
 	// Begin the rendering
-	graphicsDeviceManager.BeginScene( Color( 0, 0, 0, 0 ) );
+	graphicsDeviceManager.BeginScene(Color(0, 0, 0, 0));
 
 	// Start doing the line rendering
-	 gameStateManager.GetCurrentState().Render();
-	
+	gameStateManager.GetCurrentState().Render();
+
 	// Draw the frames per second on screen
 #ifdef DEBUG
-	font.DrawString( fpsString, Vector2( 0, 0 ) );
+	font.DrawString(fpsString, Vector2(0, 0));
 #endif
 
 	graphicsDeviceManager.EndScene();
 }
 
-// Called from the event handler. Destroys all the assets and singletons
-void Game::Close()
+void Game::Close() const
 {
 	// Close the window
-	m_window.Close();
+	windowHandle.Close();
 }
 
-int Game::Run()
-{
-	return m_window.Run();
-}
-
-void Game::Update()
+void Game::Update(const KeyboardState& keyboardState)
 {
 	// Get the current time in seconds
 	double currTime = m_timer.GetCurrTimeSecs();
 	__int64 begin = m_timer.GetHighResTimer();
-	
+
 	double dt = (begin - lastFrame) * m_timer.GetSecsPerCount();
 	bool runUpdate = dt > m_desiredTimePerFrame;
-	if( runUpdate )
+	if(runUpdate)
 	{
 		// Limit the dt value
-		if( dt > (m_desiredTimePerFrame * 2) )
+		if(dt > (m_desiredTimePerFrame * 2))
 		{
 			dt = m_desiredTimePerFrame;
 		}
@@ -99,26 +91,8 @@ void Game::Update()
 		// Tick the fps counter
 		m_timer.TickFPSCounter();
 
-		InternalUpdate(dt);
+		InternalUpdate(dt, keyboardState);
 		Render();
 		lastFrame = begin;
 	}
-
-	
 }
-
-// Posts the quit message to the event handler
-void Game::Quit()
-{
-	PostMessage( m_window.GetWindowHandle(), WM_CLOSE, 0, 0 );
-}
-
-int Game::GetClientWidth()
-{
-	return m_window.GetClientWidth();
-}
-int Game::GetClientHeight()
-{
-	return m_window.GetClientHeight();
-}
-

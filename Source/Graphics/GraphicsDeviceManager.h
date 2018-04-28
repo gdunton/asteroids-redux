@@ -12,15 +12,20 @@
 #include <PrimitiveBatch.h>
 #include <VertexTypes.h>
 #include <Effects.h>
+#include <wrl/client.h>
 #include <SpriteBatch.h>
 #include <SpriteFont.h>
+#include "../Utilities/Color.h"
 
 class IWindow;
+
+using Microsoft::WRL::ComPtr;
 
 class GraphicsDeviceManager
 {
 public:
-	GraphicsDeviceManager(IWindow& window, bool windowed);
+	
+	GraphicsDeviceManager(IWindow* window, bool windowed);
 
 	ID3D11Device* GetDevice() const { return m_pGraphicsDevice.Get(); }
 	DirectX::PrimitiveBatch<DirectX::VertexPositionColor>* GetBatch() const { return primitiveBatch.get(); }
@@ -33,6 +38,14 @@ public:
 	DirectX::SpriteBatch* GetSpriteBatch() const;
 
 private:
+
+	void CreateDeviceOnly();
+
+	void CreateSwapChainAndDevice(IWindow& window);
+	void CreateBatchesAndEffect();
+	void CreateSpriteFont();
+	void CreateBackBuffers();
+
 	// DirectX pointers
 	ComPtr<ID3D11Device> m_pGraphicsDevice;
 	ComPtr<ID3D11DeviceContext> m_pDeviceContext;

@@ -2,7 +2,6 @@
 // File: ModelManager.cpp
 //-----------------------------------------------------------
 
-#include "STD.h"
 #include "ModelManager.h"
 
 //#define INVERT_MODEL_Y

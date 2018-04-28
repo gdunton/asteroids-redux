@@ -1,4 +1,3 @@
-#include "STD.h"
 #include "WinWav.h"
 
 //-----------------------------------------------------------------------------
@@ -12,7 +11,6 @@
 // Copyright (c) Microsoft Corp. All rights reserved.
 //-----------------------------------------------------------------------------
 
-#include "WinWav.h"
 #undef min // use __min instead
 #undef max // use __max instead
 

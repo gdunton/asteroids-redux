@@ -2,9 +2,9 @@
 // File: Model2D.cpp
 //-----------------------------------------------------------
 
-#include "STD.h"
 #include "Model2D.h"
 #include <numeric>
+#include "../Utilities/MathTypes.h"
 
 Model2D::Model2D(std::vector<Vector2> points) :
 	points(std::move(points)),

@@ -2,7 +2,6 @@
 // File: Timer.cpp
 //-----------------------------------------------------------
 
-#include "STD.h"
 #include "Timer.h"
 
 Timer::Timer()

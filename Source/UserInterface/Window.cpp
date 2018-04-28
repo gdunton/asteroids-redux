@@ -2,11 +2,12 @@
 // File: Window.cpp
 //-----------------------------------------------------------
 
-#include "STD.h"
 #include "Window.h"
 
 #include "../GameMain/Game.h"
 #include "../resource.h"
+#include "../Debugging/Error.h"
+#include "../Utilities/Strings.h"
 
 Window::Window(HINSTANCE hInstance, int clientWidth, int clientHeight,
                const std::string& _windowTitle)
@@ -27,10 +28,10 @@ Window::Window(HINSTANCE hInstance, int clientWidth, int clientHeight,
 	wc.hIconSm = wc.hIcon;
 	wc.hCursor = LoadCursor(nullptr, IDC_ARROW);
 	wc.hbrBackground = static_cast<HBRUSH>(GetStockObject(WHITE_BRUSH));
-	wc.lpszClassName = L"GuyWindow";
+	wc.lpszClassName = L"GameWindow";
 	wc.lpszMenuName = nullptr;
 
-	HRESULT hr = RegisterClassEx(&wc);
+	const HRESULT hr = RegisterClassEx(&wc);
 	ASSERT( hr != E_FAIL );
 
 	RECT wr = { 0, 0, clientWidth, clientHeight };
@@ -43,7 +44,7 @@ Window::Window(HINSTANCE hInstance, int clientWidth, int clientHeight,
 	std::wstring windowTitle = StringToWString(_windowTitle);
 
 	// Create window
-	windowHandle = CreateWindow( L"GuyWindow", windowTitle.c_str(),
+	windowHandle = CreateWindow( L"GameWindow", windowTitle.c_str(),
 		(WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | WS_MAXIMIZEBOX),
 		CW_USEDEFAULT, CW_USEDEFAULT,
 		windowWidth, windowHeight,
@@ -51,7 +52,7 @@ Window::Window(HINSTANCE hInstance, int clientWidth, int clientHeight,
 
 	ASSERT( windowHandle );
 
-	game = std::make_unique<Game>(*this);
+	game = std::make_unique<Game>(this, std::make_unique<GraphicsDeviceManager>(this, false));
 	game->Initialize();
 
 	// Show window
@@ -124,8 +125,8 @@ LRESULT CALLBACK Window::CallbackWndProc(HWND hWnd, UINT message, WPARAM wParam,
 
 	if(message == WM_CREATE)
 	{
-		CREATESTRUCT* cs = (CREATESTRUCT*)lParam;
-		app = (Window*)cs->lpCreateParams;
+		const auto cs = reinterpret_cast<CREATESTRUCT*>(lParam);
+		app = static_cast<Window*>(cs->lpCreateParams);
 		return 0;
 	}
 

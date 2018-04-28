@@ -2,7 +2,6 @@
 // File: GameEntity.cpp
 //-----------------------------------------------------------
 
-#include "STD.h"
 #include "GameEntity.h"
 
 #include "../GameMain/Globals.h"

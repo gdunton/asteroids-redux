@@ -9,6 +9,7 @@
 #define CHANNEL_H
 
 #include <XAudio2.h>
+#include <memory>
 #include "WaveCallback.h"
 
 class MyWav;

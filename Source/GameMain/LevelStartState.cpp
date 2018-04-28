@@ -2,7 +2,6 @@
 // File: LevelStartState.cpp
 //-----------------------------------------------------------
 
-#include "STD.h"
 #include "LevelStartState.h"
 
 #include "GameStateManager.h"
@@ -53,7 +52,7 @@ void LevelStartState::Update(float dt, const KeyboardState& keyboardState)
 	else
 	{
 		// Set the onscreen text
-		to_String(static_cast<int>(INTRO_TIME - delta + 1), 1, countDownText);
+		countDownText = std::to_string(static_cast<int>(INTRO_TIME - delta + 1));
 	}
 }
 

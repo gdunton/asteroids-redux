@@ -3,7 +3,6 @@
 // Description: 
 //-----------------------------------------------------------
 
-#include "STD.h"
 #include "WaveCallback.h"
 
 #include "Channel.h"

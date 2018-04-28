@@ -2,8 +2,9 @@
 // File: MyWav.cpp
 //-----------------------------------------------------------
 
-#include "STD.h"
 #include "MyWav.h"
+#include "../Debugging/Error.h"
+#include "../Utilities/Strings.h"
 
 MyWav::MyWav()
 {
@@ -37,8 +38,7 @@ bool MyWav::LoadFile(std::string filename, IXAudio2* xAudio2, bool loopSound )
 	looping = loopSound;
 
 	// convert string to wstring
-	std::wstring wString;
-	StringToWString( filename, wString );
+	std::wstring wString = StringToWString( filename );
 
 	wav.Open( &wString[0], nullptr, WAVEFILE_READ );
 

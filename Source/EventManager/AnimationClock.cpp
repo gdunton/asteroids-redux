@@ -2,7 +2,6 @@
 // File: AnimationClock.cpp
 //-----------------------------------------------------------
 
-#include "STD.h"
 #include "AnimationClock.h"
 
 AnimationClock::AnimationClock()

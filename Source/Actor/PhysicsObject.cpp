@@ -2,7 +2,6 @@
 // File: PhysicsObject.cpp
 //-----------------------------------------------------------
 
-#include "STD.h"
 #include "PhysicsObject.h"
 #include "../GameMain/Globals.h"
 

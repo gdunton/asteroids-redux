@@ -24,7 +24,7 @@ class IWindow;
 class Game
 {
 public:
-	explicit Game(IWindow& windowHandle);
+	explicit Game(IWindow* windowHandle, std::unique_ptr<GraphicsDeviceManager> graphics);
 
 	void Initialize();
 
@@ -39,8 +39,8 @@ private:
 	// Update called when the required time has past to result in desired fps
 	void InternalUpdate(double deltaTime, const KeyboardState& keyboardState);
 	
-	IWindow& windowHandle;
-	GraphicsDeviceManager graphicsDeviceManager;
+	IWindow* windowHandle;
+	std::unique_ptr<GraphicsDeviceManager> graphicsDeviceManager;
 	Content content;
 
 	std::string fpsString;

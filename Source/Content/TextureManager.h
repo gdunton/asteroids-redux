@@ -6,6 +6,9 @@
 
 #ifndef TEXTUREMANAGER_H
 #define TEXTUREMANAGER_H
+#include "../Utilities/Vector2.h"
+#include <wrl/client.h>
+#include <map>
 
 class GraphicsDeviceManager;
 using Texture = ID3D11ShaderResourceView;
@@ -24,8 +27,8 @@ private:
 
 	struct ResourcePair
 	{
-		ComPtr<ID3D11ShaderResourceView> view;
-		ComPtr<ID3D11Texture2D> texture;
+		Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> view;
+		Microsoft::WRL::ComPtr<ID3D11Texture2D> texture;
 	};
 
 	std::map<std::string, ResourcePair> m_textureMap;

@@ -16,6 +16,8 @@ public:
 	AudioManager& Audio();
 	const GraphicsDeviceManager& Graphics() const;
 	Font* DefaultFont();
+
+	static std::string GetAssetsDir();
 private:
 	ModelManager models;
 	TextureManager textures;

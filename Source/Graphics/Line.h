@@ -7,9 +7,13 @@
 #ifndef LINE_H
 #define LINE_H
 
+#include <vector>
 #include <PrimitiveBatch.h>
 #include <VertexTypes.h>
+#include "../Utilities/Color.h"
+#include "../Utilities/Vector2.h"
 
+struct World;
 class Camera;
 
 using Batch = DirectX::PrimitiveBatch<DirectX::VertexPositionColor>;

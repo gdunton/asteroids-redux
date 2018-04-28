@@ -2,7 +2,6 @@
 // File: Globals.cpp
 //-----------------------------------------------------------
 
-#include "STD.h"
 #include "Globals.h"
 
 const float WORLD_HEIGHT = 180;

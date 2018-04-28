@@ -2,15 +2,16 @@
 // File: TextureManager.cpp
 //-----------------------------------------------------------
 
-#include "STD.h"
 #include "TextureManager.h"
 #include "../Graphics/GraphicsDeviceManager.h"
 #include "../GameMain/Globals.h"
+#include "Content.h"
+#include "../Debugging/Error.h"
 
 TextureManager::TextureManager(GraphicsDeviceManager& graphicsManager)
 {
 	// Get the asset path
-	GetAssetsDir(m_assetsDir);
+	m_assetsDir = Content::GetAssetsDir();
 
 	CreateTransparencyRect(graphicsManager);
 }

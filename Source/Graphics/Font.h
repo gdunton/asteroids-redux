@@ -10,6 +10,8 @@
 
 #include <memory>
 #include <SpriteFont.h>
+#include "../Utilities/Color.h"
+#include "../Utilities/Vector2.h"
 
 class GraphicsDeviceManager;
 

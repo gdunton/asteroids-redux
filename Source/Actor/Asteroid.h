@@ -8,6 +8,7 @@
 #define ASTEROID_H
 
 #include "PhysicsObject.h"
+#include "../Utilities/Vector2.h"
 
 class Camera;
 class Model2D;

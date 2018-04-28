@@ -7,6 +7,9 @@
 #define QUADTREE_NODE_H
 #include "../Graphics/Font.h"
 
+#include "../Utilities/MathTypes.h"
+#include <vector>
+
 class Model2D;
 class PhysicsObject;
 
@@ -83,7 +86,6 @@ private:
 	void AddObject(const std::shared_ptr<PhysicsObject>& ob);
 	
 
-private:
 	// Vector with all the different quads. Can have either 4 or 0 children
 	std::vector<Quadtree> children;
 

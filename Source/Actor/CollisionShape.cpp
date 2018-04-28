@@ -2,7 +2,6 @@
 // File: CollisionShape.cpp
 //-----------------------------------------------------------
 
-#include "STD.h"
 #include "CollisionShape.h"
 
 #include "../GameMain/Globals.h"

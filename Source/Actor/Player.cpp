@@ -2,14 +2,11 @@
 // File: Player.cpp
 //-----------------------------------------------------------
 
-#include "STD.h"
 #include "Player.h"
 
 #include "../Graphics/Model2D.h"
-#include "../Content/ModelManager.h"
 #include "../Content/AudioManager.h"
 
-#include "../GameMain/Globals.h"
 
 // Initialize the static variables
 const float Player::FRICTION_FACTOR = 0.975f;

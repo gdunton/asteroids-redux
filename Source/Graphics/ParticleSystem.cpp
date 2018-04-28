@@ -2,7 +2,6 @@
 // File: ParticleSystem.cpp
 //-----------------------------------------------------------
 
-#include "STD.h"
 #include "ParticleSystem.h"
 
 const int ParticleSystem::BUFFER_SIZE = 20;

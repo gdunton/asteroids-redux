@@ -2,7 +2,6 @@
 // File: MainMenuState.cpp
 //-----------------------------------------------------------
 
-#include "STD.h"
 #include "MainMenuState.h"
 
 #include "../Graphics/GraphicsDeviceManager.h"

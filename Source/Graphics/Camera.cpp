@@ -2,7 +2,6 @@
 // File: Camera.cpp
 //-----------------------------------------------------------
 
-#include "STD.h"
 #include "Camera.h"
 
 Camera::Camera(const Vector2& center, const Vector2& size,

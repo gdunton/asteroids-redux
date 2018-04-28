@@ -2,7 +2,6 @@
 // File: GameLogic.cpp
 //-----------------------------------------------------------
 
-#include "STD.h"
 #include "GameLogic.h"
 #include "Game.h"
 #include "Globals.h"
@@ -17,6 +16,8 @@
 #include "../Graphics/Particle.h"
 
 #include "../Content/AudioManager.h"
+#include "../Debugging/Error.h"
+#include "../Utilities/Random.h"
 
 GameLogic::GameLogic(Content& content) :
 	game(nullptr),
@@ -253,10 +254,9 @@ void GameLogic::Render(bool showLives, bool showLevelNum)
 	// Draw the level number to the screen
 	if(showLevelNum)
 	{
-		std::string levelStr;
-		to_String(currentLevel->GetLevelNumber(), 1, levelStr);
-		Vector2 size = font->GetTextSize("Level: " + levelStr);
-		Vector2 pos((WINDOW_WIDTH / 2) - (size.x / 2), 7);
+		const std::string levelStr = std::to_string(currentLevel->GetLevelNumber());
+		const Vector2 size = font->GetTextSize("Level: " + levelStr);
+		const Vector2 pos((WINDOW_WIDTH / 2) - (size.x / 2), 7);
 		font->DrawString("Level: " + levelStr, pos);
 	}
 

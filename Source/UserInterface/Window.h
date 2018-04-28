@@ -10,10 +10,13 @@
 #ifndef WINDOW_H
 #define WINDOW_H
 
+#define WIN32_LEAN_AND_MEAN
+#include <Windows.h>
+
 #include "../Input/Keyboard.h"
 #include "IWindow.h"
-
-class Game;
+#include <memory>
+#include "../GameMain/Game.h"
 
 class Window : public IWindow
 {

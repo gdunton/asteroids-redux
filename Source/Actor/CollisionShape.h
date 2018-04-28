@@ -7,6 +7,11 @@
 #ifndef COLLISION_SHAPE_H
 #define COLLISION_SHAPE_H
 
+#include <memory>
+#include <vector>
+#include "../Utilities/Vector2.h"
+#include "../Utilities/MathTypes.h"
+
 class CollisionShape
 {
 private:

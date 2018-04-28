@@ -2,14 +2,11 @@
 // File: Asteroid.cpp
 //-----------------------------------------------------------
 
-#include "STD.h"
 #include "Asteroid.h"
 
 #include "../Graphics/Camera.h"
 #include "../Graphics/Model2D.h"
-#include "../Content/ModelManager.h"
 
-#include "../GameMain/Globals.h"
 
 // Constant definitions
 const float Asteroid::MAX_SIZE = 6.0f;
@@ -47,16 +44,6 @@ void Asteroid::Render( Camera& camera ) const
 	{
         // Render the object to screen
 		GameEntity::Render( camera );
-        
-#ifdef PHYSICS_DEBUG_INFO
-		Vector2 screenPos = camera.ConvertWorldToScreenPos( world.pos );
-
-        // Render the bounding circle of the asteroid to the screen
-		const MathTypes::Circle circle = GetCircle();
-		/*auto model = ModelManager::CreateCircle();
-		model.SetColor( BLUE );
-		model.Render( camera, World( circle.position, Vector2(circle.radius, circle.radius), 0 ) );*/
-#endif
 	}
 }
 

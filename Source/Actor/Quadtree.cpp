@@ -2,11 +2,11 @@
 // File: Quadtree.cpp
 //-----------------------------------------------------------
 
-#include "STD.h"
 #include "Quadtree.h"
 
 #include "PhysicsObject.h"
 #include <algorithm>
+#include "../Debugging/Error.h"
 
 const int Quadtree::MAX_CHILDREN = 5;
 const int Quadtree::MAX_DEPTH = 6;
@@ -411,7 +411,7 @@ void Quadtree::DrawQuads(Camera& camera, const Model2D& quadModel)
 
 int Quadtree::NumPhysicsObjects()
 {
-	int amount = physObjs.size();
+	int amount = static_cast<int>(physObjs.size());
 
 	// Add the number in each child
 	for(Quadtree& child : children)

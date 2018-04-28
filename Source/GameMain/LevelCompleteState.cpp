@@ -2,7 +2,6 @@
 // File: LevelCompleteState.cpp
 //-----------------------------------------------------------
 
-#include "STD.h"
 #include "LevelCompleteState.h"
 
 #include "GameStateManager.h"

@@ -2,7 +2,6 @@
 // File: GamePausedState.cpp
 //-----------------------------------------------------------
 
-#include "STD.h"
 #include "GamePausedState.h"
 
 #include "GameStateManager.h"

@@ -2,7 +2,6 @@
 // File: Menu.cpp 
 //-----------------------------------------------------------
 
-#include "STD.h"
 #include "Menu.h"
 #include <utility>
 
@@ -10,6 +9,7 @@
 #include "../Input/Keyboard.h"
 #include "../Content/ModelManager.h"
 #include "Content.h"
+#include "../Utilities/MathTypes.h"
 
 Menu::Menu(const Content& content, GameState* parent, std::shared_ptr<std::vector<MenuItem>> items, int _pointerOffset) :
 	font(content.Graphics(), WHITE), menuItems(std::move(items)), pointerOffset(_pointerOffset)

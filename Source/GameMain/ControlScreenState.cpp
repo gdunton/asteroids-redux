@@ -2,7 +2,6 @@
 // File: ControlScreenState.cpp
 //-----------------------------------------------------------
 
-#include "STD.h"
 #include "ControlScreenState.h"
 
 #include "../Graphics/GraphicsDeviceManager.h"

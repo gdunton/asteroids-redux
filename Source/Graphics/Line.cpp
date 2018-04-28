@@ -2,8 +2,8 @@
 // File: Line.cpp
 //-----------------------------------------------------------
 
-#include "STD.h"
 #include <algorithm>
+#include "../Utilities/MathTypes.h"
 #include "Line.h"
 #include "Camera.h"
 #include "GraphicsDeviceManager.h"

@@ -2,7 +2,6 @@
 // File: GameOverState.cpp
 //-----------------------------------------------------------
 
-#include "STD.h"
 #include "GameOverState.h"
 
 #include "../Graphics/GraphicsDeviceManager.h"

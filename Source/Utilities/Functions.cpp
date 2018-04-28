@@ -2,8 +2,8 @@
 // File: Functions.cpp
 //-----------------------------------------------------------
 
-#include "STD.h"
 #include "Functions.h"
+#include "Random.h"
 
 // Converts an asteroid into a collection of particles for insertion into
 // a particle system. Simplifies asteroid destruction

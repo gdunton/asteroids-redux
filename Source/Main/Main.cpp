@@ -4,9 +4,6 @@
 //				Creates and intializes a game and runs it
 //-----------------------------------------------------------
 
-#include "STD.h"
-#include "Game.h"
-#include "Globals.h"
 #include "../UserInterface/Window.h"
 
 #ifdef RELEASE

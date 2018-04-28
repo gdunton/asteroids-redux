@@ -2,7 +2,6 @@
 // File: MenuItem.cpp
 //-----------------------------------------------------------
 
-#include "STD.h"
 #include "MenuItem.h"
 #include <utility>
 

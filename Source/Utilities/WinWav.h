@@ -2,7 +2,7 @@
 #define WINWAV_H
 
 #include <Windows.h>
-//#include <mmsystem.h>
+#include <mmsystem.h>
 #include <string>
 
 //-----------------------------------------------------------------------------

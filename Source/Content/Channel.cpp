@@ -2,7 +2,6 @@
 // File: Channel.cpp
 //-----------------------------------------------------------
 
-#include "STD.h"
 #include "Channel.h"
 
 #include "MyWav.h"

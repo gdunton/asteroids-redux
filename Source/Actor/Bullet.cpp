@@ -2,7 +2,6 @@
 // File: Bullet.cpp
 //-----------------------------------------------------------
 
-#include "STD.h"
 #include "Bullet.h"
 
 Bullet::Bullet(const Vector2& pos, const Vector2& size, float rot, const Model2D& model, const Vector2& velocity) : 

@@ -1,9 +1,11 @@
 //-----------------------------------------------------------
 // File: Sprite.cpp
 //-----------------------------------------------------------
-#include "STD.h"
 #include "Sprite.h"
 #include "GraphicsDeviceManager.h"
+#include "../Debugging/Error.h"
+#include <d3d11.h>
+#include <SimpleMath.h>
 
 DirectX::SpriteBatch* Sprite::spriteBatch = nullptr;
 

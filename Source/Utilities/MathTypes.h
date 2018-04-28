@@ -6,9 +6,13 @@
 #ifndef MATH_TYPES_H
 #define MATH_TYPES_H
 
+#include "Vector2.h"
+
 class Model2D;
 // Forward decleration of external class
 class Camera;
+
+constexpr float PI = 3.14159265359f;
 
 //----------------------------------------------
 // Vector2 functions

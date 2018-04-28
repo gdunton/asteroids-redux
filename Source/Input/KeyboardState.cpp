@@ -2,7 +2,6 @@
 // File: KeyboardState.cpp
 //-----------------------------------------------------------
 
-#include "STD.h"
 #include "KeyboardState.h"
 
 KeyboardState::KeyboardState() :

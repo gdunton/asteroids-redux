@@ -2,12 +2,12 @@
 // File: MeteorShowerLevel.cpp
 //-----------------------------------------------------------
 
-#include "STD.h"
 #include "MeteorShowerLevel.h"
 
 #include "../GameMain/GameLogic.h"
 #include "../GameMain/Globals.h"
 #include "../Actor/Asteroid.h"
+#include "../Utilities/Random.h"
 
 const float MeteorShowerLevel::MAX_TIME_TILL_ASTEROIDS = 3.0f;
 const float MeteorShowerLevel::MIN_TIME_TILL_ASTEROIDS = 1.5f;

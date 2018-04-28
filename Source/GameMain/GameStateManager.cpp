@@ -2,7 +2,6 @@
 // File: GameStateManager.cpp
 //-----------------------------------------------------------
 
-#include "STD.h"
 #include "GameStateManager.h"
 
 GameStateManager::GameStateManager( ) :

@@ -10,6 +10,8 @@
 #include <utility>
 #include "../Graphics/Model2D.h"
 #include "../Graphics/Camera.h"
+#include "../Utilities/Vector2.h"
+#include "../Utilities/MathTypes.h"
 
 class GameEntity
 {

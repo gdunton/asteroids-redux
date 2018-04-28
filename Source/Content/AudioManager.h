@@ -11,6 +11,9 @@
 #include <XAudio2.h>
 #include "MyWav.h"
 #include "Channel.h"
+#include <map>
+#include <memory>
+#include <vector>
 
 class AudioManager
 {

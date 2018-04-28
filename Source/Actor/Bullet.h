@@ -8,6 +8,7 @@
 #define BULLET_H
 
 #include "PhysicsObject.h"
+#include "../Utilities/MathTypes.h"
 
 class Bullet : public PhysicsObject
 {

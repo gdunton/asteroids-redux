@@ -2,23 +2,20 @@
 // File: Game.cpp
 //-----------------------------------------------------------
 
-#include "STD.h"
 #include "Game.h"
 
 #include "../UserInterface/IWindow.h"
-#include "../Input/Keyboard.h"
 #include "../Graphics/GraphicsDeviceManager.h"
-#include "../Content/AudioManager.h"
 
 #include "MainMenuState.h"
 #include "MainGameState.h"
 
 
-Game::Game(IWindow& windowHandle) :
+Game::Game(IWindow* windowHandle, std::unique_ptr<GraphicsDeviceManager> graphics) :
 	windowHandle(windowHandle),
-	graphicsDeviceManager(windowHandle, true),
-	content(graphicsDeviceManager),
-	font(graphicsDeviceManager, GREEN),
+	graphicsDeviceManager(std::move(graphics)),
+	content(*graphicsDeviceManager),
+	font(*graphicsDeviceManager, GREEN),
 	m_gameLogic(content)
 {
 	m_desiredTimePerFrame = 1.0 / FRAMES_PER_SECOND;
@@ -36,13 +33,13 @@ void Game::Initialize()
 	gameStateManager = GameStateManager(&content, &m_gameLogic);
 	gameStateManager.SetInitialState(std::make_shared<MainMenuState>(content, &gameStateManager));
 
-	Line::SetLine(graphicsDeviceManager.GetBatch());
-	Sprite::SetSpriteBatch(graphicsDeviceManager.GetSpriteBatch());
+	Line::SetLine(graphicsDeviceManager->GetBatch());
+	Sprite::SetSpriteBatch(graphicsDeviceManager->GetSpriteBatch());
 }
 
 void Game::InternalUpdate(const double deltaTime, const KeyboardState& keyboardState)
 {
-	to_String(m_timer.GetFPS(), 10, fpsString);
+	fpsString = std::to_string(m_timer.GetFPS());
 
 	// Update the main state then let the state manager check for any 
 	// state changes and resolve them
@@ -53,7 +50,7 @@ void Game::InternalUpdate(const double deltaTime, const KeyboardState& keyboardS
 void Game::Render()
 {
 	// Begin the rendering
-	graphicsDeviceManager.BeginScene(Color(0, 0, 0, 0));
+	graphicsDeviceManager->BeginScene(Color(0, 0, 0, 0));
 
 	// Start doing the line rendering
 	gameStateManager.GetCurrentState().Render();
@@ -63,13 +60,16 @@ void Game::Render()
 	font.DrawString(fpsString, Vector2(0, 0));
 #endif
 
-	graphicsDeviceManager.EndScene();
+	graphicsDeviceManager->EndScene();
 }
 
 void Game::Close() const
 {
 	// Close the window
-	windowHandle.Close();
+	if (windowHandle != nullptr)
+	{
+		windowHandle->Close();
+	}
 }
 
 void Game::Update(const KeyboardState& keyboardState)

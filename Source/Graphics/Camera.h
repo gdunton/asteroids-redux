@@ -7,6 +7,8 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
+#include "../Utilities/MathTypes.h"
+
 class Camera
 {
 public:

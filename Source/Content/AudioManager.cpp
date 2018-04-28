@@ -2,16 +2,16 @@
 // File: AudioManager.cpp
 //-----------------------------------------------------------
 
-#include "STD.h"
 #include "AudioManager.h"
 #include <algorithm>
+#include "Content.h"
 
 const int AudioManager::NUM_CHANNELS = 10;
 
 AudioManager::AudioManager()
 {
 	CoInitialize(nullptr);
-	GetAssetsDir(assetsDir);
+	assetsDir = Content::GetAssetsDir();
 
 	// Create the audio device and mastering voice
 	xAudio2 = nullptr;

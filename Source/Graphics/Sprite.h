@@ -11,6 +11,7 @@
 
 #include <SpriteBatch.h>
 #include "../Content/TextureManager.h"
+#include "../Utilities/Vector2.h"
 
 class Sprite
 {

@@ -2,7 +2,6 @@
 // File: Keyboard.cpp
 //-----------------------------------------------------------
 
-#include "STD.h"
 #include "Keyboard.h"
 
 Keyboard::Keyboard() :

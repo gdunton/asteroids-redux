@@ -2,13 +2,13 @@
 // File: StandardLevel.cpp
 //-----------------------------------------------------------
 
-#include "STD.h"
 #include "StandardLevel.h"
 
 #include "../GameMain/GameLogic.h"
 #include "../GameMain/Globals.h"
 
 #include "../Actor/Asteroid.h"
+#include "../Utilities/Random.h"
 
 StandardLevel::StandardLevel( GameLogic* parent, int levelNumber )
 	: Level( parent, levelNumber )

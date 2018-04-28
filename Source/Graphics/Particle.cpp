@@ -2,7 +2,6 @@
 // File: Particle.cpp
 //-----------------------------------------------------------
 
-#include "STD.h"
 #include "Particle.h"
 
 #include "Camera.h"

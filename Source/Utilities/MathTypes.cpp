@@ -2,7 +2,6 @@
 // File: MathTypes.cpp
 //-----------------------------------------------------------
 
-#include "STD.h"
 #include "MathTypes.h"
 
 #include "../Content/ModelManager.h"

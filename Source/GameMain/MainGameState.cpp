@@ -1,4 +1,3 @@
-#include "STD.h"
 #include "MainGameState.h"
 #include "GameStateManager.h"
 #include "GameLogic.h"

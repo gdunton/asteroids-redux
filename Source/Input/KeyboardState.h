@@ -23,8 +23,13 @@ public:
 
 	KeyState GetKeyState(KeyCode key) const;
 
+	static KeyboardState FromString(const std::string& str);
+
 private:
 	std::array<KeyState, 256> keyList;
 };
+
+std::ostream& operator<<(std::ostream& str, const KeyboardState& state);
+
 
 #endif

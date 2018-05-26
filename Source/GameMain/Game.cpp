@@ -4,11 +4,13 @@
 
 #include "Game.h"
 
+#include <fstream>
 #include "../UserInterface/IWindow.h"
 #include "../Graphics/GraphicsDeviceManager.h"
 
 #include "MainMenuState.h"
 #include "MainGameState.h"
+#include <iomanip>
 
 
 Game::Game(IWindow* windowHandle, std::unique_ptr<GraphicsDeviceManager> graphics) :
@@ -19,6 +21,7 @@ Game::Game(IWindow* windowHandle, std::unique_ptr<GraphicsDeviceManager> graphic
 	m_gameLogic(content)
 {
 	m_desiredTimePerFrame = 1.0 / FRAMES_PER_SECOND;
+	stateBuffer.reserve(1800);
 }
 
 void Game::Initialize()
@@ -39,6 +42,8 @@ void Game::Initialize()
 
 void Game::InternalUpdate(const double deltaTime, const KeyboardState& keyboardState)
 {
+	stateBuffer.emplace_back(deltaTime, keyboardState);
+
 	fpsString = std::to_string(m_timer.GetFPS());
 
 	// Update the main state then let the state manager check for any 
@@ -69,6 +74,19 @@ void Game::Close() const
 	if (windowHandle != nullptr)
 	{
 		windowHandle->Close();
+	}
+
+	// Save the buffer to disk
+	std::ofstream outStream;
+	outStream.open("run.txt", std::ostream::out);
+	outStream << std::setprecision(10);
+	if (outStream.is_open())
+	{
+		for (const auto& frame : stateBuffer)
+		{
+			outStream << frame.first << '|' << frame.second << '\n';
+		}
+		outStream.close();
 	}
 }
 

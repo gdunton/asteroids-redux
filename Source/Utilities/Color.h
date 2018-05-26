@@ -1,7 +1,7 @@
 ﻿#ifndef COLOR_H
 #define COLOR_H
 
-#include <SimpleMathInc.h>
+#include "SimpleMathInc.h"
 
 using Color = DirectX::XMFLOAT4;
 

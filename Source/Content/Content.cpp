@@ -1,5 +1,6 @@
 ﻿#include "Content.h"
 #include "../Utilities/Strings.h"
+#include <filesystem>
 
 Content::Content(GraphicsDeviceManager& graphics) :
 	textures(graphics),
@@ -19,10 +20,8 @@ std::string Content::GetAssetsDir()
 
 	if (s_assetPath.empty())
 	{
-		WCHAR dir[MAX_PATH];
-		GetCurrentDirectory(MAX_PATH, dir);
-
-		s_assetPath = WStringToString(dir);
+		auto current = std::experimental::filesystem::current_path();
+		s_assetPath = current.generic_string();
 
 		const auto found = s_assetPath.find_last_of("/\\");
 		s_assetPath.erase(found, s_assetPath.length());

@@ -18,6 +18,7 @@
 #include "../Content/TextureManager.h"
 #include "../Content/ModelManager.h"
 #include "../Content/Content.h"
+#include "../Input/KeyboardState.h"
 
 class IWindow;
 
@@ -34,10 +35,10 @@ public:
 	// Called from the event handler. Destroys all the assets
 	void Close() const;
 
-private:
-
 	// Update called when the required time has past to result in desired fps
 	void InternalUpdate(double deltaTime, const KeyboardState& keyboardState);
+
+private:
 	
 	IWindow* windowHandle;
 	std::unique_ptr<GraphicsDeviceManager> graphicsDeviceManager;
@@ -55,6 +56,8 @@ private:
 	double m_desiredTimePerFrame = 0.0;
 
 	const int FRAMES_PER_SECOND = 60;
+
+	std::vector<std::pair<double, KeyboardState>> stateBuffer;
 };
 
 #endif

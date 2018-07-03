@@ -15,9 +15,10 @@ const float LevelStartState::INTRO_TIME = 3.0f;
 
 LevelStartState::LevelStartState(const Content& content, GameStateManager* _parent) : 
 	GameState(_parent),
-	font(content.Graphics())
+	font(content.Graphics()),
+	background(content.Textures(), "transparent")
 {
-	background.Initialize(content.Textures(), "transparent");
+	
 
 	// Set the initial text
 	onScreenText = "Level Starts In";
@@ -38,7 +39,7 @@ void LevelStartState::Enter()
 	clock.Start();
 }
 
-void LevelStartState::Update(float dt, const KeyboardState& keyboardState)
+void LevelStartState::Update(float dt, const KeyboardState& /*keyboardState*/)
 {
 	clock.Tick(dt);
 
@@ -64,7 +65,7 @@ void LevelStartState::Render()
 	parent->GetGameLogic().Render();
 
 	// Darken the level using the transparent sprite
-	background.Draw(Vector2(0, 0), Vector2(WINDOW_WIDTH, WINDOW_HEIGHT), 0.6f);
+	background.Draw(Vector2(0, 0), 0.6f);
 
 	// Draw the text onto the window
 	font.DrawString(onScreenText, textPosition);

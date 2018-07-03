@@ -17,9 +17,9 @@
 GameOverState::GameOverState(const Content& content, GameStateManager* parent) :
 	GameState(parent),
 	font(content.Graphics()),
-	menu(content, this, MakeMenuItems(content.Graphics()), 100)
+	menu(content, this, MakeMenuItems(content.Graphics()), 100),
+	background(content.Textures(), "transparent")
 {
-	background.Initialize(content.Textures(), "transparent");
 }
 
 void GameOverState::Enter()
@@ -40,7 +40,7 @@ void GameOverState::Render()
 	parent->GetGameLogic().Render(false, false);
 
 	// Darken the game
-	background.Draw(Vector2(0, 0), Vector2(WINDOW_WIDTH, WINDOW_HEIGHT), 0.7f);
+	background.Draw(Vector2(0, 0), 0.7f);
 
 	// Draw menu
 	menu.Render();

@@ -5,7 +5,7 @@
 #include "Bullet.h"
 
 Bullet::Bullet(const Vector2& pos, const Vector2& size, float rot, const Model2D& model, const Vector2& velocity) : 
-	PhysicsObject(pos, size, rot, model, velocity, 10)
+	ActorBase(pos, size, rot, model, velocity, 10)
 {
 	lifetime = 0.0f;
 }
@@ -35,7 +35,7 @@ bool Bullet::IsAlive() const
 	return lifetime < MAX_LIFETIME;
 }
 
-// Override the default from PhysicsObject
+// Override the default from ActorBase
 MathTypes::Circle Bullet::GetCircle() const
 {
 	return { world.pos, world.scale.Length() * model.GetModelRadius() };

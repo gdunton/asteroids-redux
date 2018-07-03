@@ -6,34 +6,7 @@
 #include "../Debugging/Error.h"
 #include "../Utilities/Strings.h"
 
-MyWav::MyWav()
-{
-	wavData = nullptr;
-	looping = false;
-}
-
-MyWav::~MyWav()
-{
-	if( wavData )
-	{
-		delete[] wavData;
-		wavData = nullptr;
-	}
-}
-
-// Should never run copy constructor or equals op
-MyWav::MyWav( const MyWav& wav )
-{
-	ASSERT( false );
-}
-
-MyWav& MyWav::operator=( const MyWav& wav )
-{
-	ASSERT( false );
-	return *this;
-}
-
-bool MyWav::LoadFile(std::string filename, IXAudio2* xAudio2, bool loopSound )
+bool MyWav::LoadFile(const std::string& filename, bool loopSound )
 {
 	looping = loopSound;
 
@@ -42,15 +15,14 @@ bool MyWav::LoadFile(std::string filename, IXAudio2* xAudio2, bool loopSound )
 
 	wav.Open( &wString[0], nullptr, WAVEFILE_READ );
 
-	// Get the format and size of the buffer
-	WAVEFORMATEX* format = wav.GetFormat();
+	// Get the size of the buffer
 	DWORD size = wav.GetSize();
 
 	// Create the array to store the buffer
-	wavData = new Byte[ size ];
+	wavData = std::make_unique<Byte[]>(size);
 
 	// Read from the file into the buffer
-	wav.Read( wavData, size, &size );
+	wav.Read( wavData.get(), size, &size );
 
 	// Sbumit the wav sample data using a buffer
 	buffer.LoopBegin = 0;
@@ -59,7 +31,7 @@ bool MyWav::LoadFile(std::string filename, IXAudio2* xAudio2, bool loopSound )
 	buffer.PlayBegin = 0;
 	buffer.PlayLength = 0;
 
-	buffer.pAudioData = wavData;
+	buffer.pAudioData = wavData.get();
 	buffer.Flags = XAUDIO2_END_OF_STREAM; // tell the source voice not to expect any data after this buffer
 	buffer.AudioBytes = size;
 	buffer.LoopCount = (loopSound ? XAUDIO2_LOOP_INFINITE : 0);	

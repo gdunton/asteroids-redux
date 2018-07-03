@@ -13,15 +13,18 @@
 #include <iomanip>
 
 
-Game::Game(IWindow* windowHandle, std::unique_ptr<GraphicsDeviceManager> graphics) :
+Game::Game(IWindow* windowHandle, std::unique_ptr<GraphicsDeviceManager> graphics, bool recordSession) :
 	windowHandle(windowHandle),
 	graphicsDeviceManager(std::move(graphics)),
 	content(*graphicsDeviceManager),
 	font(*graphicsDeviceManager, GREEN),
-	m_gameLogic(content)
+	m_gameLogic(content),
+	recordSession(recordSession)
 {
 	m_desiredTimePerFrame = 1.0 / FRAMES_PER_SECOND;
-	stateBuffer.reserve(1800);
+
+	if (recordSession)
+		stateBuffer.reserve(1800);
 }
 
 void Game::Initialize()
@@ -42,7 +45,8 @@ void Game::Initialize()
 
 void Game::InternalUpdate(const double deltaTime, const KeyboardState& keyboardState)
 {
-	stateBuffer.emplace_back(deltaTime, keyboardState);
+	if (recordSession)
+		stateBuffer.emplace_back(deltaTime, keyboardState);
 
 	fpsString = std::to_string(m_timer.GetFPS());
 
@@ -76,28 +80,30 @@ void Game::Close() const
 		windowHandle->Close();
 	}
 
-	// Save the buffer to disk
-	std::ofstream outStream;
-	outStream.open("run.txt", std::ostream::out);
-	outStream << std::setprecision(10);
-	if (outStream.is_open())
+	if (recordSession)
 	{
-		for (const auto& frame : stateBuffer)
+		// Save the buffer to disk
+		std::ofstream outStream;
+		outStream.open("run.txt", std::ostream::out);
+		outStream << std::setprecision(10);
+		if (outStream.is_open())
 		{
-			outStream << frame.first << '|' << frame.second << '\n';
+			for (const auto& frame : stateBuffer)
+			{
+				outStream << frame.first << '|' << frame.second << '\n';
+			}
+			outStream.close();
 		}
-		outStream.close();
 	}
 }
 
 void Game::Update(const KeyboardState& keyboardState)
 {
 	// Get the current time in seconds
-	double currTime = m_timer.GetCurrTimeSecs();
-	__int64 begin = m_timer.GetHighResTimer();
+	const __int64 begin = m_timer.GetHighResTimer();
 
 	double dt = (begin - lastFrame) * m_timer.GetSecsPerCount();
-	bool runUpdate = dt > m_desiredTimePerFrame;
+	const bool runUpdate = dt > m_desiredTimePerFrame;
 	if(runUpdate)
 	{
 		// Limit the dt value

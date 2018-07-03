@@ -17,15 +17,16 @@
 GamePausedState::GamePausedState(const Content& content, GameStateManager* parent) :
 	GameState(parent),
 	font(content.Graphics()),
-	menu(content, this, MakeMenuItems(content.Graphics()), 100)
+	menu(content, this, MakeMenuItems(content.Graphics()), 100),
+	background(content.Textures(), "transparent")
 {
-	background.Initialize(content.Textures(), "transparent");
+	
 }
 
 void GamePausedState::Enter()
 {}
 
-void GamePausedState::Update(float dt, const KeyboardState& keyboardState)
+void GamePausedState::Update(float /*dt*/, const KeyboardState& keyboardState)
 {
 	// Menu handles navigation
 	menu.Update(keyboardState);
@@ -49,7 +50,7 @@ void GamePausedState::Render()
 	parent->GetGameLogic().Render();
 
 	// Partialy obscure the game using translucent texture
-	background.Draw(Vector2(0, 0), Vector2(WINDOW_WIDTH, WINDOW_HEIGHT), 0.7f);
+	background.Draw(Vector2(0, 0), 0.7f);
 
 	// Draw the menu
 	menu.Render();

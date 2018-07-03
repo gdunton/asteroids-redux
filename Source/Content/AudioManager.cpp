@@ -137,7 +137,7 @@ void AudioManager::LoadWavFile(const std::string& filename, const std::string& a
 
 	// Load the file
 	auto* newWave = new MyWav();
-	if(newWave->LoadFile(assetsDir + filename, xAudio2, soundLoops))
+	if(newWave->LoadFile(assetsDir + filename, soundLoops))
 	{
 		// Loaded the file
 		soundMap[assetName] = std::shared_ptr<MyWav>(newWave);

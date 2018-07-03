@@ -24,9 +24,9 @@ std::string const ControlScreenState::controlStrings[] = {
 ControlScreenState::ControlScreenState(const Content& content, GameStateManager* parent) :
 	GameState(parent),
 	titleFont(content.Graphics()),
-	subFont1(content.Graphics())
+	subFont1(content.Graphics()),
+	background(content.Textures(), "transparent")
 {
-	background.Initialize(content.Textures(), "transparent");
 }
 
 void ControlScreenState::Enter()
@@ -87,7 +87,7 @@ void ControlScreenState::Render()
 	parent->GetGameLogic().Render(false, false);
 
 	// Render the background to grey out the game
-	background.Draw(Vector2(0, 0), Vector2(WINDOW_WIDTH, WINDOW_HEIGHT), 0.17f);
+	background.Draw(Vector2(0, 0), 0.17f);
 
 	// Draw the titles
 	Vector2 size = titleFont.GetTextSize("Controls");

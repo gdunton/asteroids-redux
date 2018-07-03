@@ -1,6 +1,6 @@
 //-----------------------------------------------------------
 // File: CollisionShape.h
-// Description: CollisionShape is used by the PhysicsObject to
+// Description: CollisionShape is used by the ActorBase to
 //              determine whether objects have collided or not
 //-----------------------------------------------------------
 

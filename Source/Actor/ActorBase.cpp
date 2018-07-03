@@ -2,18 +2,21 @@
 // File: PhysicsObject.cpp
 //-----------------------------------------------------------
 
-#include "PhysicsObject.h"
+#include "ActorBase.h"
+#include <utility>
 #include "../GameMain/Globals.h"
 
-PhysicsObject::PhysicsObject(const Vector2& pos, const Vector2& size, float rot,
-                             const Model2D& model, const Vector2& velocity, float mass)
-	: GameEntity(pos, size, rot, model), mass(mass), velocity(velocity)
+ActorBase::ActorBase(const Vector2& pos, const Vector2& size, float rot,
+                             const Model2D& model, Vector2 velocity, float mass)
+	: world(std::move(pos), std::move(size), std::move(rot)), 
+	  model(std::move(model)),
+	  mass(mass), velocity(std::move(velocity))
 {
 	// is model set by now?
 	collision.Initialize(model.GetPoints());
 }
 
-bool PhysicsObject::CompleteCollisionCompute(PhysicsObject& object)
+bool ActorBase::CompleteCollisionCompute(ActorBase& object)
 {
 	Vector2 res;
 	if(CheckCollision(object, res)) // if collision occures
@@ -28,7 +31,7 @@ bool PhysicsObject::CompleteCollisionCompute(PhysicsObject& object)
 	return false;
 }
 
-bool PhysicsObject::CheckCollision(PhysicsObject& object, Vector2& minTranslation)
+bool ActorBase::CheckCollision(ActorBase& object, Vector2& minTranslation)
 {
 	// Get the distance between the two objects
 	Vector2 direction;
@@ -57,13 +60,13 @@ bool PhysicsObject::CheckCollision(PhysicsObject& object, Vector2& minTranslatio
 	return false;
 }
 
-bool PhysicsObject::CheckCollision(PhysicsObject& object)
+bool ActorBase::CheckCollision(ActorBase& object)
 {
 	[[maybe_unused]] Vector2 unusedVector2;
 	return CheckCollision(object, unusedVector2);
 }
 
-void PhysicsObject::PerformCollisionCalculation(PhysicsObject& object)
+void ActorBase::PerformCollisionCalculation(ActorBase& object)
 {
 	// Check that the objects are in each other
 	Vector2 direction;
@@ -83,9 +86,6 @@ void PhysicsObject::PerformCollisionCalculation(PhysicsObject& object)
 	Vector2 normal = direction;
 	Normalize(normal);
 	Vector2 tangent = Vector2(-normal.y, normal.x);
-
-	float r1 = GetCircle().radius;
-	float r2 = object.GetCircle().radius;
 
 	{
 		// Change both velocities from the collision
@@ -115,7 +115,7 @@ void PhysicsObject::PerformCollisionCalculation(PhysicsObject& object)
 
 // Moves two physicsObjects apart by minTranslation but takes into account
 // whether the world wraps around
-void PhysicsObject::AdvancedMoveApart(PhysicsObject& ob, Vector2& res)
+void ActorBase::AdvancedMoveApart(ActorBase& ob, Vector2& res)
 {
 	// Work out which object is facing the other
 	Vector2 wrappedDistance(0, 0);
@@ -136,8 +136,22 @@ void PhysicsObject::AdvancedMoveApart(PhysicsObject& ob, Vector2& res)
 	ob.world.pos -= res / 2;
 }
 
-MathTypes::Circle PhysicsObject::GetCircle() const
+MathTypes::Circle ActorBase::GetCircle() const
 {
 	// remember that the circle should be scaled from the model size by the world
 	return MathTypes::Circle(world.pos, model.GetModelRadius() * world.scale.Length());
+}
+
+void ActorBase::Render(Camera& camera) const
+{
+	model.Render(camera, world);
+}
+
+void ActorBase::WrapPosition()
+{
+	if (wrapAroundWorld)
+	{
+		// Wraps position around the world if pos is greater than world size
+		WrapVector2(WORLD_WIDTH, WORLD_HEIGHT, world.pos);
+	}
 }

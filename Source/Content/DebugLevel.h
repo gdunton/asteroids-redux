@@ -13,10 +13,8 @@
 class DebugLevel : public Level
 {
 public:
-	DebugLevel( GameLogic* parent, int difficulty );
-
-	void Initialize();
-	bool Complete();
+	DebugLevel(GameLogic* parent, int difficulty);
+	bool Complete() override;
 };
 
 #endif

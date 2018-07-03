@@ -21,8 +21,9 @@ void GraphicsDeviceManager::CreateBackBuffers()
 	m_pGraphicsDevice->CreateRenderTargetView(backBuffer, nullptr, &m_pRenderTargetView);
 	backBuffer->Release();
 
-	CD3D11_TEXTURE2D_DESC depthStencilDesc(DXGI_FORMAT_D24_UNORM_S8_UINT, 
-	                                       static_cast<unsigned int>(WINDOW_WIDTH), static_cast<unsigned int>(WINDOW_HEIGHT), 1, 1, D3D11_BIND_DEPTH_STENCIL);
+	CD3D11_TEXTURE2D_DESC depthStencilDesc(DXGI_FORMAT_D24_UNORM_S8_UINT,
+	                                       static_cast<unsigned int>(WINDOW_WIDTH),
+	                                       static_cast<unsigned int>(WINDOW_HEIGHT), 1, 1, D3D11_BIND_DEPTH_STENCIL);
 	ID3D11Texture2D* depthStencil;
 	m_pGraphicsDevice->CreateTexture2D(&depthStencilDesc, nullptr, &depthStencil);
 	CD3D11_DEPTH_STENCIL_VIEW_DESC depthStencilViewDesc(D3D11_DSV_DIMENSION_TEXTURE2D);
@@ -30,9 +31,9 @@ void GraphicsDeviceManager::CreateBackBuffers()
 	depthStencil->Release();
 }
 
-GraphicsDeviceManager::GraphicsDeviceManager(IWindow* window, bool windowed)
+GraphicsDeviceManager::GraphicsDeviceManager(IWindow* window)
 {
-	if (window != nullptr)
+	if(window != nullptr)
 	{
 		CreateSwapChainAndDevice(*window);
 	}
@@ -46,18 +47,19 @@ GraphicsDeviceManager::GraphicsDeviceManager(IWindow* window, bool windowed)
 	CreateBatchesAndEffect();
 	CreateSpriteFont();
 
-	if (window != nullptr)
+	if(window != nullptr)
 	{
 		CreateBackBuffers();
 	}
 }
 
 
-void GraphicsDeviceManager::BeginScene( const Color& backColor )
+void GraphicsDeviceManager::BeginScene(const Color& backColor)
 {
 	ASSERT( m_pGraphicsDevice );
 
-	m_pDeviceContext->ClearRenderTargetView(m_pRenderTargetView.Get(), DirectX::Colors::Black);
+	FLOAT clearColor[] = { backColor.x, backColor.y, backColor.z, backColor.w };
+	m_pDeviceContext->ClearRenderTargetView(m_pRenderTargetView.Get(), clearColor);
 	m_pDeviceContext->ClearDepthStencilView(m_pDepthStencilView.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 	m_pDeviceContext->OMSetRenderTargets(1, m_pRenderTargetView.GetAddressOf(), m_pDepthStencilView.Get());
 
@@ -79,7 +81,7 @@ void GraphicsDeviceManager::EndScene()
 {
 	// Stop rendering and present the back buffer
 	ASSERT( sceneStarted );
-	if (m_pSwapChain)
+	if(m_pSwapChain)
 	{
 		m_pSwapChain->Present(1, 0);
 	}
@@ -95,11 +97,11 @@ DirectX::SpriteBatch* GraphicsDeviceManager::GetSpriteBatch() const
 void GraphicsDeviceManager::CreateDeviceOnly()
 {
 	D3D11CreateDevice(nullptr, D3D_DRIVER_TYPE_HARDWARE,
-		nullptr, 0, nullptr, 0, 
-		D3D11_SDK_VERSION, 
-		&m_pGraphicsDevice, 
-		nullptr, 
-		&m_pDeviceContext);
+	                  nullptr, 0, nullptr, 0,
+	                  D3D11_SDK_VERSION,
+	                  &m_pGraphicsDevice,
+	                  nullptr,
+	                  &m_pDeviceContext);
 }
 
 void GraphicsDeviceManager::CreateSwapChainAndDevice(IWindow& window)
@@ -138,7 +140,7 @@ void GraphicsDeviceManager::CreateBatchesAndEffect()
 	primitiveBatch = std::make_unique<DirectX::PrimitiveBatch<DirectX::VertexPositionColor>>(m_pDeviceContext.Get());
 	basicEffect = std::make_unique<DirectX::BasicEffect>(m_pGraphicsDevice.Get());
 	basicEffect->SetProjection(DirectX::XMMatrixOrthographicOffCenterRH(0,
-		WINDOW_WIDTH, WINDOW_HEIGHT, 0, 0, 1));
+	                                                                    WINDOW_WIDTH, WINDOW_HEIGHT, 0, 0, 1));
 	basicEffect->SetVertexColorEnabled(true);
 
 	void const* shaderByteCode;
@@ -161,4 +163,3 @@ void GraphicsDeviceManager::CreateSpriteFont()
 
 	font = std::make_unique<DirectX::SpriteFont>(m_pGraphicsDevice.Get(), wStr.c_str());
 }
-

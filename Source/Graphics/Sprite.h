@@ -15,20 +15,18 @@
 
 class Sprite
 {
-private:
-	Texture* m_pTex;
-
-	static DirectX::SpriteBatch* spriteBatch;
-
-	Vector2 spriteSize;
-
 public:
-	Sprite();
-
-	void Initialize(const TextureManager& textureManager, const std::string& textureName);
-	void Draw( const Vector2& _position, const Vector2& _size, const float alpha );
+	Sprite() = default;
+	Sprite(const TextureManager& textureManager, const std::string& textureName);
+	void Draw(const Vector2& position, float alpha) const;
 
 	static void SetSpriteBatch(DirectX::SpriteBatch* sb);
+
+private:
+	Vector2 spriteSize;
+	Texture* m_pTex = nullptr;
+
+	static DirectX::SpriteBatch* spriteBatch;
 };
 
 #endif

@@ -7,40 +7,38 @@
 #ifndef ASTEROID_H
 #define ASTEROID_H
 
-#include "PhysicsObject.h"
+#include "ActorBase.h"
 #include "../Utilities/Vector2.h"
 
 class Camera;
 class Model2D;
 
-class Asteroid : public PhysicsObject
+class Asteroid : public ActorBase
 {
-private:
-	bool alive;
-
-	int health;
+	int health = 0;
+	bool alive = false;
 
 public:
-	Asteroid();
-	Asteroid(const Vector2& pos, const float& size, float rot, const Model2D& model, 
-		const Vector2& velocity, float mass, int health );
+	Asteroid() = default;
+	Asteroid(const Vector2& pos, const float& size, float rot, const Model2D& model,
+	         const Vector2& velocity, float mass, int health);
 
-	void Update( float dt ) override;
-	void Render( Camera& camera ) const override;
+	void Update(float dt) override;
+	void Render(Camera& camera) const override;
 
-    // Functions give the ability to reduce the health of an asteroid making
-    // it smaller and lighter or outright kill the asteroid
+	// Functions give the ability to reduce the health of an asteroid making
+	// it smaller and lighter or outright kill the asteroid
 	void ReduceHealth();
 	void KillAsteroid();
 
-    // Moves two asteroids away from each other and alters their
-    // velocities to continue that movement
-	void SplitAsteroids( Asteroid& asteroid );
+	// Moves two asteroids away from each other and alters their
+	// velocities to continue that movement
+	void SplitAsteroids(Asteroid& asteroid);
 
 	bool GetAlive() const { return alive; }
-	void SetAlive( bool value ) { alive = value; }
+	void SetAlive(bool value) { alive = value; }
 
-	void SetModel( const Model2D& model ) { this->model = model; }
+	void SetModel(const Model2D& newModel) { this->model = newModel; }
 
 	// pulic constants
 	static const float MAX_SIZE;

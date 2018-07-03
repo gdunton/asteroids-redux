@@ -21,30 +21,25 @@ MeteorShowerLevel::MeteorShowerLevel( GameLogic* parent, int level ) :
 	timeTillAsteroids = MIN_TIME_TILL_ASTEROIDS + Random() * 
 		(MAX_TIME_TILL_ASTEROIDS - MIN_TIME_TILL_ASTEROIDS);
 	asteroidTimer.Start();
-}
 
-// Override of the initialize to set up everything in the level
-void MeteorShowerLevel::Initialize()
-{
 	// Create the camera
-	std::vector<Camera>& cameras = parent->GetCameras();
-	cameras.emplace_back( Vector2( 0, 0 ), Vector2( WORLD_WIDTH*0.99f, WORLD_HEIGHT*0.985f ), WINDOW_WIDTH, WINDOW_HEIGHT );		 // Center-Center
+	parent->AddCameras({ Camera(Vector2(0, 0), Vector2(WORLD_WIDTH*0.99f, WORLD_HEIGHT*0.985f), WINDOW_WIDTH, WINDOW_HEIGHT) });
 
-	int numAsteroids = MIN_ASTEROIDS_PER_COUNTDOWN + static_cast<int>(Random()) * 
+	int numAsteroids = MIN_ASTEROIDS_PER_COUNTDOWN + static_cast<int>(Random()) *
 		(MAX_ASTEROIDS_PER_COUNTDOWN - MIN_ASTEROIDS_PER_COUNTDOWN) * 4;
 
 	// Create the asteroids
 	std::vector<std::shared_ptr<Asteroid>> asteroids;
-	for( int i = 0; i < numAsteroids; i++ )
+	for (int i = 0; i < numAsteroids; i++)
 	{
 		asteroids.push_back(CreateAsteroid());
 	}
 
-	parent->AddAsteroids( asteroids );
+	parent->AddAsteroids(asteroids);
 
 	// Setup the player
 	parent->GetPlayer().Reset();
-	parent->GetPlayer().SetWrapAround( false );
+	parent->GetPlayer().SetWrapAround(false);
 	parent->GetPlayer().KillPlayer();
 }
 

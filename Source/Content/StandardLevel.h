@@ -14,10 +14,8 @@
 class StandardLevel : public Level
 {
 public:
-	StandardLevel( GameLogic* parent, int levelNumber );
-
-	void Initialize();
-	bool Complete();
+	StandardLevel(GameLogic* parent, int levelNumber);
+	bool Complete() override;
 };
 
 #endif

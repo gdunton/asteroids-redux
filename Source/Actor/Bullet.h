@@ -1,23 +1,23 @@
 //-----------------------------------------------------------
 // File: Bullet.h
-// Description: Bullet inherits PhysicsObject adding a count up
+// Description: Bullet inherits ActorBase adding a count up
 //              lifetime.
 //-----------------------------------------------------------
 
 #ifndef BULLET_H
 #define BULLET_H
 
-#include "PhysicsObject.h"
+#include "ActorBase.h"
 #include "../Utilities/MathTypes.h"
 
-class Bullet : public PhysicsObject
+class Bullet : public ActorBase
 {
 public:
 	Bullet() = default;
-	Bullet( const Vector2& pos, const Vector2& size, float rot, const Model2D& model, const Vector2& velocity );
+	Bullet(const Vector2& pos, const Vector2& size, float rot, const Model2D& model, const Vector2& velocity);
 
 	// Move the bullet 
-	void Update( float dt ) override;
+	void Update(float dt) override;
 
 	// Set the lifetime to the max to kill the bullet
 	void KillBullet();

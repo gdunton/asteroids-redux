@@ -25,7 +25,7 @@ class IWindow;
 class Game
 {
 public:
-	explicit Game(IWindow* windowHandle, std::unique_ptr<GraphicsDeviceManager> graphics);
+	explicit Game(IWindow* windowHandle, std::unique_ptr<GraphicsDeviceManager> graphics, bool recordSession = false);
 
 	void Initialize();
 
@@ -58,6 +58,7 @@ private:
 	const int FRAMES_PER_SECOND = 60;
 
 	std::vector<std::pair<double, KeyboardState>> stateBuffer;
+	bool recordSession = false;
 };
 
 #endif

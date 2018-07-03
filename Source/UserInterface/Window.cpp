@@ -10,7 +10,7 @@
 #include "../Utilities/Strings.h"
 
 Window::Window(HINSTANCE hInstance, int clientWidth, int clientHeight,
-               const std::string& _windowTitle)
+               const std::string& windowTitle, bool recordSession)
 {
 	this->clientWidth = clientWidth;
 	this->clientHeight = clientHeight;
@@ -41,10 +41,10 @@ Window::Window(HINSTANCE hInstance, int clientWidth, int clientHeight,
 	windowHeight = wr.bottom - wr.top;
 
 	// Get the window title in correct format
-	std::wstring windowTitle = StringToWString(_windowTitle);
+	std::wstring windowTitleLocal = StringToWString(windowTitle);
 
 	// Create window
-	windowHandle = CreateWindow( L"GameWindow", windowTitle.c_str(),
+	windowHandle = CreateWindow( L"GameWindow", windowTitleLocal.c_str(),
 		(WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | WS_MAXIMIZEBOX),
 		CW_USEDEFAULT, CW_USEDEFAULT,
 		windowWidth, windowHeight,
@@ -52,7 +52,7 @@ Window::Window(HINSTANCE hInstance, int clientWidth, int clientHeight,
 
 	ASSERT( windowHandle );
 
-	game = std::make_unique<Game>(this, std::make_unique<GraphicsDeviceManager>(this, false));
+	game = std::make_unique<Game>(this, std::make_unique<GraphicsDeviceManager>(this), recordSession);
 	game->Initialize();
 
 	// Show window

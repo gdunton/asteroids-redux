@@ -17,9 +17,10 @@ MainMenuState::MainMenuState(const Content& content, GameStateManager* parent) :
 	GameState(parent),
 	titleFont(content.Graphics()),
 	subFont1(content.Graphics()),
-	menu(content, this, MakeMenuItems(content.Graphics()), 100)
+	menu(content, this, MakeMenuItems(content.Graphics()), 100),
+	background(content.Textures(), "transparent")
 {
-	background.Initialize(content.Textures(), "transparent");
+	
 }
 
 void MainMenuState::Enter()
@@ -42,7 +43,7 @@ void MainMenuState::Render()
 	// Render the game
 	parent->GetGameLogic().Render(false, false);
 
-	background.Draw(Vector2(0, 0), Vector2(WINDOW_WIDTH, WINDOW_HEIGHT), 0.6f);
+	background.Draw(Vector2(0, 0), 0.6f);
 
 	menu.Render();
 

@@ -4,7 +4,7 @@
 
 #include "Quadtree.h"
 
-#include "PhysicsObject.h"
+#include "ActorBase.h"
 #include <algorithm>
 #include "../Debugging/Error.h"
 
@@ -60,7 +60,7 @@ void Quadtree::Update()
 
 // Adds an object into the top quad and attempts to send the object lower in
 // the tree
-bool Quadtree::AddPhysicsObject(const std::shared_ptr<PhysicsObject>& object)
+bool Quadtree::AddPhysicsObject(const std::shared_ptr<ActorBase>& object)
 {
 	// Make sure that the quad is top level
 	ASSERT( level == 0 );
@@ -90,7 +90,7 @@ bool Quadtree::AddPhysicsObject(const std::shared_ptr<PhysicsObject>& object)
 
 // Remove the object from it's quad. If a quad recieves a true from a child
 // then it will stop further calculation.
-bool Quadtree::RemovePhysicsObject(const std::shared_ptr<PhysicsObject>& obj)
+bool Quadtree::RemovePhysicsObject(const std::shared_ptr<ActorBase>& obj)
 {
 	// Search in current quad for the object
 	const auto iter = std::find(physObjs.begin(), physObjs.end(), obj);
@@ -115,9 +115,8 @@ bool Quadtree::RemovePhysicsObject(const std::shared_ptr<PhysicsObject>& obj)
 
 
 // Check an individual physicsobject for collision and compute collision after
-bool Quadtree::ComputeIndividual(PhysicsObject& ob)
+bool Quadtree::ComputeIndividual(ActorBase& ob)
 {
-	bool collisionOccured = false;
 	// Check against each object
 	if(bounds.Intersects(ob.GetCircle()))
 	{
@@ -206,7 +205,7 @@ void Quadtree::CheckCollisions()
 
 // Checks an object against any children. Specifically for objects
 // that overlap quads. Can also pass onto other children quads.
-void Quadtree::ComputeCollisionAgainstChildren(PhysicsObject& ob)
+void Quadtree::ComputeCollisionAgainstChildren(ActorBase& ob)
 {
 	// Check the object against the quad
 	if(bounds.Intersects(ob.GetCircle()))
@@ -302,7 +301,7 @@ void Quadtree::ShrinkQuad()
 
 // Insert a physics object called from a lower level quad. Used for moving 
 // objects up the tree until they find a quad they fit in
-void Quadtree::InsertFromLower(std::shared_ptr<PhysicsObject> object)
+void Quadtree::InsertFromLower(std::shared_ptr<ActorBase> object)
 {
 	// Top level needs to accept all objects
 	if(level <= 0)
@@ -336,7 +335,7 @@ void Quadtree::InsertFromLower(std::shared_ptr<PhysicsObject> object)
 
 // Insert from higher add object to lower level quad. Used for attempting 
 // to send object down the tree
-bool Quadtree::InsertFromHigher(std::shared_ptr<PhysicsObject> object)
+bool Quadtree::InsertFromHigher(std::shared_ptr<ActorBase> object)
 {
 	if(level <= 0)
 	{
@@ -375,7 +374,7 @@ bool Quadtree::InsertFromHigher(std::shared_ptr<PhysicsObject> object)
 }
 
 // Inserts the object into the actual array
-void Quadtree::AddObject(const std::shared_ptr<PhysicsObject>& object)
+void Quadtree::AddObject(const std::shared_ptr<ActorBase>& object)
 {
 	physObjs.push_back(object);
 }
@@ -406,6 +405,9 @@ void Quadtree::DrawQuads(Camera& camera, const Model2D& quadModel)
 	{
 		c.DrawQuads(camera, quadModel);
 	}
+#else
+	(void)camera;
+	(void)quadModel;
 #endif
 }
 

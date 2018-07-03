@@ -22,14 +22,14 @@
     <ClCompile Include="Actor\Asteroid.cpp" />
     <ClCompile Include="Actor\Bullet.cpp" />
     <ClCompile Include="Actor\CollisionShape.cpp" />
-    <ClCompile Include="Actor\GameEntity.cpp" />
-    <ClCompile Include="Actor\PhysicsObject.cpp" />
+    <ClCompile Include="Actor\ActorBase.cpp" />
     <ClCompile Include="Actor\Player.cpp" />
     <ClCompile Include="Actor\Quadtree.cpp" />
     <ClCompile Include="Content\AudioManager.cpp" />
     <ClCompile Include="Content\Channel.cpp" />
     <ClCompile Include="Content\Content.cpp" />
     <ClCompile Include="Content\DebugLevel.cpp" />
+    <ClCompile Include="Content\Level.cpp" />
     <ClCompile Include="Content\Menu.cpp" />
     <ClCompile Include="Content\MenuItem.cpp" />
     <ClCompile Include="Content\MeteorShowerLevel.cpp" />
@@ -72,8 +72,7 @@
     <ClInclude Include="Actor\Asteroid.h" />
     <ClInclude Include="Actor\Bullet.h" />
     <ClInclude Include="Actor\CollisionShape.h" />
-    <ClInclude Include="Actor\GameEntity.h" />
-    <ClInclude Include="Actor\PhysicsObject.h" />
+    <ClInclude Include="Actor\ActorBase.h" />
     <ClInclude Include="Actor\Player.h" />
     <ClInclude Include="Actor\Quadtree.h" />
     <ClInclude Include="Content\AudioManager.h" />
@@ -202,7 +201,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>
       </SDLCheck>

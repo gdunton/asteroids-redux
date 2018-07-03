@@ -23,7 +23,7 @@ class Window : public IWindow
 public:
 
 	Window(HINSTANCE hInstance, int clientWidth, int clientHeight,
-	       const std::string& windowTitle);
+	       const std::string& windowTitle, bool recordSession);
 	int Run();
 	void Close() override;
 

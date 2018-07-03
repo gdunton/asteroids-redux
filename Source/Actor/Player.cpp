@@ -29,7 +29,7 @@ Player::Player() {
 Player::Player(const Vector2& _pos, const Vector2& _size, float _rot,
                const Model2D& _model, const Vector2& _velocity, float _mass,
                AudioManager* audioManager)
-	: PhysicsObject(_pos, _size, _rot, _model, _velocity, _mass), audioManager(audioManager) {
+	: ActorBase(_pos, _size, _rot, _model, _velocity, _mass), audioManager(audioManager) {
 	bulletCooldown = 0;
 	lives = STARTING_LIVES;
 
@@ -75,7 +75,7 @@ void Player::Update(float dt) {
 void Player::Render(Camera& camera) {
 	if(Alive())
 	{
-		GameEntity::Render(camera);
+		ActorBase::Render(camera);
 	}
 }
 

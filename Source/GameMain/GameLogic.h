@@ -89,7 +89,7 @@ public:
 	void RemoveAllAsteroids();
 	int NumAsteroids() const;
 
-	std::vector<Camera>& GetCameras() { return cameras; }
+	void AddCameras(std::vector<Camera> cameras);
 
 private:
 

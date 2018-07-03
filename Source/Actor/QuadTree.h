@@ -11,7 +11,7 @@
 #include <vector>
 
 class Model2D;
-class PhysicsObject;
+class ActorBase;
 
 class Quadtree
 {
@@ -29,14 +29,14 @@ public:
 	
 	// Adds an object into the top quad and attempts to send the object lower in
 	// the tree
-	bool AddPhysicsObject(const std::shared_ptr<PhysicsObject>& object);
+	bool AddPhysicsObject(const std::shared_ptr<ActorBase>& object);
 
 	// Remove the object from it's quad. If a quad recieves a true from a child
 	// then it will stop further calculation.
-	bool RemovePhysicsObject(const std::shared_ptr<PhysicsObject>& obj);
+	bool RemovePhysicsObject(const std::shared_ptr<ActorBase>& obj);
 
 	// Check an individual physicsobject for collision and compute collision after
-	bool ComputeIndividual( PhysicsObject& object );
+	bool ComputeIndividual( ActorBase& object );
 
 	// Remove all elements
 	void Reset();
@@ -60,7 +60,7 @@ private:
 
 	// Checks an object against any children. Specifically for objects
 	// that overlap quads. Can also pass onto other children quads.
-	void ComputeCollisionAgainstChildren( PhysicsObject& ob );
+	void ComputeCollisionAgainstChildren( ActorBase& ob );
 
 	// Adds children to the tree and attempts to pass the objects down.
 	// contrained by the maximum levels. returns false if max level reached
@@ -76,14 +76,14 @@ private:
 
 	// Insert a physics object called from a lower level quad. Used for moving 
 	// objects up the tree until they find a quad they fit in
-	void InsertFromLower(std::shared_ptr<PhysicsObject> object);
+	void InsertFromLower(std::shared_ptr<ActorBase> object);
 
 	// Insert from higher add object to lower level quad. Used for attempting 
 	// to send object down the tree
-	bool InsertFromHigher(std::shared_ptr<PhysicsObject> object);
+	bool InsertFromHigher(std::shared_ptr<ActorBase> object);
 
 	// Inserts the object into the actual array
-	void AddObject(const std::shared_ptr<PhysicsObject>& ob);
+	void AddObject(const std::shared_ptr<ActorBase>& ob);
 	
 
 	// Vector with all the different quads. Can have either 4 or 0 children
@@ -93,7 +93,7 @@ private:
 	Quadtree* parent;
 
 	// Container of references to all the physicsObjects
-	std::vector<std::shared_ptr<PhysicsObject>> physObjs;
+	std::vector<std::shared_ptr<ActorBase>> physObjs;
 
 	// Rectangle containing position and size of the quad
 	MathTypes::Rectangle bounds;

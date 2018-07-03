@@ -7,37 +7,32 @@
 #ifndef MYWAV_H
 #define MYWAV_H
 
-#include <XAudio2.h>
+#include <xaudio2.h>
 #include "../Utilities/WinWav.h"
 
-typedef unsigned char Byte;
+using Byte = unsigned char;
 
 class MyWav
 {
+public:
+	MyWav() = default;
+
+	// Loads the wav file via a filename. "loopSound" flags whether the sound is
+	// made for continious play
+	bool LoadFile(const std::string& filename, bool loopSound = false );
+
+	XAUDIO2_BUFFER* GetBuffer() { return &buffer; }
+	WAVEFORMATEX* GetWavFormat();
+	bool GetLooping() const { return looping; }
+
 private:
 	WinWav wav;
 
 	// The actual sound data
-	Byte* wavData;
-	XAUDIO2_BUFFER buffer;
+	std::unique_ptr<Byte[]> wavData;
+	XAUDIO2_BUFFER buffer = {};
 
-	bool looping;
-
-public:
-	MyWav();
-	~MyWav();
-
-	// Denied operations
-	MyWav( const MyWav& wav );
-	MyWav& operator=( const MyWav& wav );
-
-	// Loads the wav file via a filename. "loopSound" flags whether the sound is
-	// made for continious play
-	bool LoadFile(std::string filename, IXAudio2* xAudio2, bool loopSound = false );
-
-	XAUDIO2_BUFFER* GetBuffer() { return &buffer; }
-	WAVEFORMATEX* GetWavFormat();
-	bool GetLooping() { return looping; }
+	bool looping = false;
 };
 
 #endif

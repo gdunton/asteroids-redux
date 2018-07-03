@@ -74,7 +74,6 @@ void GameLogic::StartIdleMode()
 	const int difficulty = 0;
 	currentLevel.reset();
 	currentLevel = std::make_shared<MeteorShowerLevel>(this, difficulty + 1);
-	currentLevel->Initialize();
 }
 
 // Resets the game and starts a level for the controls screen
@@ -88,7 +87,6 @@ void GameLogic::StartPlayerOnlyLevel()
 	player.ResetWorld();
 	currentLevel.reset();
 	currentLevel = std::make_shared<DebugLevel>(this, 0);
-	currentLevel->Initialize();
 }
 
 void GameLogic::Update(const float dt)
@@ -164,8 +162,6 @@ void GameLogic::Update(const float dt)
 
 	// update the quad tree to check the collisions of all asteroids
 	quadtree.Update();
-
-	int numPhys = quadtree.NumPhysicsObjects();
 
 	// Loop all the asteroids to check the player collision
 	if(player.Alive())
@@ -274,7 +270,6 @@ void GameLogic::Reset()
 
 	// Create the first level
 	currentLevel = std::make_shared<StandardLevel>(this, 1);
-	currentLevel->Initialize();
 
 	player.StartInvulnerability();
 }
@@ -297,6 +292,11 @@ void GameLogic::RemoveAllAsteroids()
 int GameLogic::NumAsteroids() const
 {
 	return asteroids.size();
+}
+
+void GameLogic::AddCameras(std::vector<Camera> cameras)
+{
+	this->cameras = std::move(cameras);
 }
 
 void GameLogic::RemoveDeadAsteroids()
@@ -337,11 +337,10 @@ void GameLogic::IncrementLevel()
 	player.ResetWorld();
 
 	// Get the difficulty of the current level
-	int level = currentLevel->GetLevelNumber();
+	const int level = currentLevel->GetLevelNumber();
 	currentLevel.reset();
 	// Create a new level with an incremented difficulty
-	currentLevel = std::static_pointer_cast<Level>(std::make_shared<StandardLevel>(this, level + 1));
-	currentLevel->Initialize();
+	currentLevel = std::make_shared<StandardLevel>(this, level + 1);
 
 	player.StartInvulnerability();
 

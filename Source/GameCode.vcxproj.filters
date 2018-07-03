@@ -1,116 +1,352 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Actor\Asteroid.cpp" />
-    <ClCompile Include="Actor\Bullet.cpp" />
-    <ClCompile Include="Actor\CollisionShape.cpp" />
-    <ClCompile Include="Actor\GameEntity.cpp" />
-    <ClCompile Include="Actor\PhysicsObject.cpp" />
-    <ClCompile Include="Actor\Player.cpp" />
-    <ClCompile Include="Actor\Quadtree.cpp" />
-    <ClCompile Include="Content\AudioManager.cpp" />
-    <ClCompile Include="Content\Channel.cpp" />
-    <ClCompile Include="Content\Content.cpp" />
-    <ClCompile Include="Content\DebugLevel.cpp" />
-    <ClCompile Include="Content\Menu.cpp" />
-    <ClCompile Include="Content\MenuItem.cpp" />
-    <ClCompile Include="Content\MeteorShowerLevel.cpp" />
-    <ClCompile Include="Content\ModelManager.cpp" />
-    <ClCompile Include="Content\MyWav.cpp" />
-    <ClCompile Include="Content\StandardLevel.cpp" />
-    <ClCompile Include="Content\TextureManager.cpp" />
-    <ClCompile Include="Content\WaveCallback.cpp" />
-    <ClCompile Include="EventManager\AnimationClock.cpp" />
-    <ClCompile Include="EventManager\Timer.cpp" />
-    <ClCompile Include="GameMain\ControlScreenState.cpp" />
-    <ClCompile Include="GameMain\Game.cpp" />
-    <ClCompile Include="GameMain\GameLogic.cpp" />
-    <ClCompile Include="GameMain\GameOverState.cpp" />
-    <ClCompile Include="GameMain\GamePausedState.cpp" />
-    <ClCompile Include="GameMain\GameStateManager.cpp" />
-    <ClCompile Include="GameMain\Globals.cpp" />
-    <ClCompile Include="GameMain\LevelCompleteState.cpp" />
-    <ClCompile Include="GameMain\LevelStartState.cpp" />
-    <ClCompile Include="GameMain\MainGameState.cpp" />
-    <ClCompile Include="GameMain\MainMenuState.cpp" />
-    <ClCompile Include="Graphics\Camera.cpp" />
-    <ClCompile Include="Graphics\Font.cpp" />
-    <ClCompile Include="Graphics\GraphicsDeviceManager.cpp" />
-    <ClCompile Include="Graphics\Line.cpp" />
-    <ClCompile Include="Graphics\Model2D.cpp" />
-    <ClCompile Include="Graphics\Particle.cpp" />
-    <ClCompile Include="Graphics\ParticleSystem.cpp" />
-    <ClCompile Include="Graphics\Sprite.cpp" />
-    <ClCompile Include="Input\Keyboard.cpp" />
-    <ClCompile Include="Input\KeyboardState.cpp" />
-    <ClCompile Include="UserInterface\Window.cpp" />
-    <ClCompile Include="Utilities\Functions.cpp" />
-    <ClCompile Include="Utilities\MathTypes.cpp" />
-    <ClCompile Include="Utilities\WinWav.cpp" />
-    <ClCompile Include="Utilities\Random.cpp" />
-    <ClCompile Include="Utilities\Strings.cpp" />
+    <ClCompile Include="Actor\Asteroid.cpp">
+      <Filter>Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\Bullet.cpp">
+      <Filter>Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\CollisionShape.cpp">
+      <Filter>Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\Player.cpp">
+      <Filter>Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\Quadtree.cpp">
+      <Filter>Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="Content\AudioManager.cpp">
+      <Filter>Content</Filter>
+    </ClCompile>
+    <ClCompile Include="Content\Channel.cpp">
+      <Filter>Content</Filter>
+    </ClCompile>
+    <ClCompile Include="Content\Content.cpp">
+      <Filter>Content</Filter>
+    </ClCompile>
+    <ClCompile Include="Content\DebugLevel.cpp">
+      <Filter>Content</Filter>
+    </ClCompile>
+    <ClCompile Include="Content\Menu.cpp">
+      <Filter>Content</Filter>
+    </ClCompile>
+    <ClCompile Include="Content\MenuItem.cpp">
+      <Filter>Content</Filter>
+    </ClCompile>
+    <ClCompile Include="Content\MeteorShowerLevel.cpp">
+      <Filter>Content</Filter>
+    </ClCompile>
+    <ClCompile Include="Content\ModelManager.cpp">
+      <Filter>Content</Filter>
+    </ClCompile>
+    <ClCompile Include="Content\MyWav.cpp">
+      <Filter>Content</Filter>
+    </ClCompile>
+    <ClCompile Include="Content\StandardLevel.cpp">
+      <Filter>Content</Filter>
+    </ClCompile>
+    <ClCompile Include="Content\TextureManager.cpp">
+      <Filter>Content</Filter>
+    </ClCompile>
+    <ClCompile Include="Content\WaveCallback.cpp">
+      <Filter>Content</Filter>
+    </ClCompile>
+    <ClCompile Include="EventManager\AnimationClock.cpp">
+      <Filter>EventManager</Filter>
+    </ClCompile>
+    <ClCompile Include="EventManager\Timer.cpp">
+      <Filter>EventManager</Filter>
+    </ClCompile>
+    <ClCompile Include="GameMain\ControlScreenState.cpp">
+      <Filter>GameMain</Filter>
+    </ClCompile>
+    <ClCompile Include="GameMain\Game.cpp">
+      <Filter>GameMain</Filter>
+    </ClCompile>
+    <ClCompile Include="GameMain\GameLogic.cpp">
+      <Filter>GameMain</Filter>
+    </ClCompile>
+    <ClCompile Include="GameMain\GameOverState.cpp">
+      <Filter>GameMain</Filter>
+    </ClCompile>
+    <ClCompile Include="GameMain\GamePausedState.cpp">
+      <Filter>GameMain</Filter>
+    </ClCompile>
+    <ClCompile Include="GameMain\GameStateManager.cpp">
+      <Filter>GameMain</Filter>
+    </ClCompile>
+    <ClCompile Include="GameMain\Globals.cpp">
+      <Filter>GameMain</Filter>
+    </ClCompile>
+    <ClCompile Include="GameMain\LevelCompleteState.cpp">
+      <Filter>GameMain</Filter>
+    </ClCompile>
+    <ClCompile Include="GameMain\LevelStartState.cpp">
+      <Filter>GameMain</Filter>
+    </ClCompile>
+    <ClCompile Include="GameMain\MainGameState.cpp">
+      <Filter>GameMain</Filter>
+    </ClCompile>
+    <ClCompile Include="GameMain\MainMenuState.cpp">
+      <Filter>GameMain</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Camera.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Font.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\GraphicsDeviceManager.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Line.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Model2D.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Particle.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\ParticleSystem.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Sprite.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Input\Keyboard.cpp">
+      <Filter>Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Input\KeyboardState.cpp">
+      <Filter>Input</Filter>
+    </ClCompile>
+    <ClCompile Include="UserInterface\Window.cpp">
+      <Filter>UserInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="Utilities\Functions.cpp">
+      <Filter>Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="Utilities\MathTypes.cpp">
+      <Filter>Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="Utilities\Random.cpp">
+      <Filter>Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="Utilities\Strings.cpp">
+      <Filter>Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="Utilities\WinWav.cpp">
+      <Filter>Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ActorBase.cpp">
+      <Filter>Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="Content\Level.cpp">
+      <Filter>Content</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Actor\Asteroid.h" />
-    <ClInclude Include="Actor\Bullet.h" />
-    <ClInclude Include="Actor\CollisionShape.h" />
-    <ClInclude Include="Actor\GameEntity.h" />
-    <ClInclude Include="Actor\PhysicsObject.h" />
-    <ClInclude Include="Actor\Player.h" />
-    <ClInclude Include="Actor\Quadtree.h" />
-    <ClInclude Include="Content\AudioManager.h" />
-    <ClInclude Include="Content\Channel.h" />
-    <ClInclude Include="Content\Content.h" />
-    <ClInclude Include="Content\DebugLevel.h" />
-    <ClInclude Include="Content\Level.h" />
-    <ClInclude Include="Content\Menu.h" />
-    <ClInclude Include="Content\MenuItem.h" />
-    <ClInclude Include="Content\MeteorShowerLevel.h" />
-    <ClInclude Include="Content\ModelManager.h" />
-    <ClInclude Include="Content\MyWav.h" />
-    <ClInclude Include="Content\StandardLevel.h" />
-    <ClInclude Include="Content\TextureManager.h" />
-    <ClInclude Include="Content\WaveCallback.h" />
-    <ClInclude Include="Debugging\Error.h" />
-    <ClInclude Include="EventManager\AnimationClock.h" />
-    <ClInclude Include="EventManager\Timer.h" />
-    <ClInclude Include="GameMain\ControlScreenState.h" />
-    <ClInclude Include="GameMain\Game.h" />
-    <ClInclude Include="GameMain\GameLogic.h" />
-    <ClInclude Include="GameMain\GameOverState.h" />
-    <ClInclude Include="GameMain\GamePausedState.h" />
-    <ClInclude Include="GameMain\GameState.h" />
-    <ClInclude Include="GameMain\GameStateManager.h" />
-    <ClInclude Include="GameMain\Globals.h" />
-    <ClInclude Include="GameMain\LevelCompleteState.h" />
-    <ClInclude Include="GameMain\LevelStartState.h" />
-    <ClInclude Include="GameMain\MainGameState.h" />
-    <ClInclude Include="GameMain\MainMenuState.h" />
-    <ClInclude Include="Graphics\Camera.h" />
-    <ClInclude Include="Graphics\Font.h" />
-    <ClInclude Include="Graphics\GraphicsDeviceManager.h" />
-    <ClInclude Include="Graphics\Line.h" />
-    <ClInclude Include="Graphics\Model2D.h" />
-    <ClInclude Include="Graphics\Particle.h" />
-    <ClInclude Include="Graphics\ParticleSystem.h" />
-    <ClInclude Include="Graphics\Sprite.h" />
-    <ClInclude Include="Input\Keyboard.h" />
-    <ClInclude Include="Input\KeyboardState.h" />
-    <ClInclude Include="UserInterface\IWindow.h" />
-    <ClInclude Include="UserInterface\Window.h" />
-    <ClInclude Include="Utilities\Functions.h" />
-    <ClInclude Include="Utilities\MathTypes.h" />
-    <ClInclude Include="Utilities\WinWav.h" />
-    <ClInclude Include="Utilities\Vector2.h" />
-    <ClInclude Include="Utilities\Matrix.h" />
-    <ClInclude Include="Utilities\Color.h" />
-    <ClInclude Include="Utilities\Random.h" />
-    <ClInclude Include="Utilities\Strings.h" />
-    <ClInclude Include="GameMain\Difficulty.h" />
-    <ClInclude Include="Utilities\SimpleMathInc.h" />
+    <ClInclude Include="Actor\Asteroid.h">
+      <Filter>Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\Bullet.h">
+      <Filter>Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\CollisionShape.h">
+      <Filter>Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\Player.h">
+      <Filter>Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\Quadtree.h">
+      <Filter>Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="Content\AudioManager.h">
+      <Filter>Content</Filter>
+    </ClInclude>
+    <ClInclude Include="Content\Channel.h">
+      <Filter>Content</Filter>
+    </ClInclude>
+    <ClInclude Include="Content\Content.h">
+      <Filter>Content</Filter>
+    </ClInclude>
+    <ClInclude Include="Content\DebugLevel.h">
+      <Filter>Content</Filter>
+    </ClInclude>
+    <ClInclude Include="Content\Level.h">
+      <Filter>Content</Filter>
+    </ClInclude>
+    <ClInclude Include="Content\Menu.h">
+      <Filter>Content</Filter>
+    </ClInclude>
+    <ClInclude Include="Content\MenuItem.h">
+      <Filter>Content</Filter>
+    </ClInclude>
+    <ClInclude Include="Content\MeteorShowerLevel.h">
+      <Filter>Content</Filter>
+    </ClInclude>
+    <ClInclude Include="Content\ModelManager.h">
+      <Filter>Content</Filter>
+    </ClInclude>
+    <ClInclude Include="Content\MyWav.h">
+      <Filter>Content</Filter>
+    </ClInclude>
+    <ClInclude Include="Content\StandardLevel.h">
+      <Filter>Content</Filter>
+    </ClInclude>
+    <ClInclude Include="Content\TextureManager.h">
+      <Filter>Content</Filter>
+    </ClInclude>
+    <ClInclude Include="Content\WaveCallback.h">
+      <Filter>Content</Filter>
+    </ClInclude>
+    <ClInclude Include="Debugging\Error.h">
+      <Filter>Debugging</Filter>
+    </ClInclude>
+    <ClInclude Include="EventManager\AnimationClock.h">
+      <Filter>EventManager</Filter>
+    </ClInclude>
+    <ClInclude Include="EventManager\Timer.h">
+      <Filter>EventManager</Filter>
+    </ClInclude>
+    <ClInclude Include="GameMain\ControlScreenState.h">
+      <Filter>GameMain</Filter>
+    </ClInclude>
+    <ClInclude Include="GameMain\Difficulty.h">
+      <Filter>GameMain</Filter>
+    </ClInclude>
+    <ClInclude Include="GameMain\Game.h">
+      <Filter>GameMain</Filter>
+    </ClInclude>
+    <ClInclude Include="GameMain\GameLogic.h">
+      <Filter>GameMain</Filter>
+    </ClInclude>
+    <ClInclude Include="GameMain\GameOverState.h">
+      <Filter>GameMain</Filter>
+    </ClInclude>
+    <ClInclude Include="GameMain\GamePausedState.h">
+      <Filter>GameMain</Filter>
+    </ClInclude>
+    <ClInclude Include="GameMain\GameState.h">
+      <Filter>GameMain</Filter>
+    </ClInclude>
+    <ClInclude Include="GameMain\GameStateManager.h">
+      <Filter>GameMain</Filter>
+    </ClInclude>
+    <ClInclude Include="GameMain\Globals.h">
+      <Filter>GameMain</Filter>
+    </ClInclude>
+    <ClInclude Include="GameMain\LevelCompleteState.h">
+      <Filter>GameMain</Filter>
+    </ClInclude>
+    <ClInclude Include="GameMain\LevelStartState.h">
+      <Filter>GameMain</Filter>
+    </ClInclude>
+    <ClInclude Include="GameMain\MainGameState.h">
+      <Filter>GameMain</Filter>
+    </ClInclude>
+    <ClInclude Include="GameMain\MainMenuState.h">
+      <Filter>GameMain</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Camera.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Font.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\GraphicsDeviceManager.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Line.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Model2D.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Particle.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\ParticleSystem.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Sprite.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Input\Keyboard.h">
+      <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Input\KeyboardState.h">
+      <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="UserInterface\IWindow.h">
+      <Filter>UserInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="UserInterface\Window.h">
+      <Filter>UserInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities\Color.h">
+      <Filter>Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities\Functions.h">
+      <Filter>Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities\MathTypes.h">
+      <Filter>Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities\Matrix.h">
+      <Filter>Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities\Random.h">
+      <Filter>Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities\SimpleMathInc.h">
+      <Filter>Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities\Strings.h">
+      <Filter>Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities\Vector2.h">
+      <Filter>Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities\WinWav.h">
+      <Filter>Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ActorBase.h">
+      <Filter>Actor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="Main\FamilyTree.vcxproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Actor">
+      <UniqueIdentifier>{c9e88e61-db15-4ad3-be35-e56f5098f99a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Content">
+      <UniqueIdentifier>{f9fab15a-31d0-4147-a91f-6313c34d3328}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Debugging">
+      <UniqueIdentifier>{4a08fab2-46e6-462d-b025-bd4bb4da2f45}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EventManager">
+      <UniqueIdentifier>{543ab25f-3edc-415b-9f4f-ef49c644fa8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameMain">
+      <UniqueIdentifier>{5c11572e-eca7-4b12-a163-7a4595b3c50c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Input">
+      <UniqueIdentifier>{bc7ff69b-adb9-4295-86bb-9a86ef1a757c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UserInterface">
+      <UniqueIdentifier>{7a732ef8-4435-43ed-a2e8-026bca0c2fd5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utilities">
+      <UniqueIdentifier>{7323aa30-eb21-453c-ae4c-95dff1ce30bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics">
+      <UniqueIdentifier>{f93c0569-feb3-4591-85cc-ee028ef91d09}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

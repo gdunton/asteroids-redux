@@ -9,12 +9,7 @@
 
 DirectX::SpriteBatch* Sprite::spriteBatch = nullptr;
 
-Sprite::Sprite()
-{
-	m_pTex = nullptr;
-}
-
-void Sprite::Initialize(const TextureManager& textureManager, const std::string& textureName)
+Sprite::Sprite(const TextureManager& textureManager, const std::string& textureName)
 {
 	// Get the texture from the texture manager. If a null
 	// value is returned then stop the program.
@@ -24,10 +19,10 @@ void Sprite::Initialize(const TextureManager& textureManager, const std::string&
 	spriteSize = textureManager.GetDimensions(textureName);
 }
 
-void Sprite::Draw( const Vector2& _pos, const Vector2& _size, const float alpha )
+void Sprite::Draw(const Vector2& position, float alpha) const
 {
 	spriteBatch->Begin();
-	spriteBatch->Draw(m_pTex, _pos, DirectX::SimpleMath::Vector4(0.0f, 0.0f, 0.0f, alpha));
+	spriteBatch->Draw(m_pTex, position, DirectX::SimpleMath::Vector4(0.0f, 0.0f, 0.0f, alpha));
 	spriteBatch->End();
 }
 

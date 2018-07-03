@@ -16,17 +16,12 @@ const int Asteroid::MAX_MASS = 200;
 const int Asteroid::MIN_MASS = 40;
 
 
-Asteroid::Asteroid()
-{
-	alive = false;
-}
-
 Asteroid::Asteroid( const Vector2& pos, const float& size, float rot,
-		const Model2D& model, const Vector2& velocity, float mass, int _health )
-		: PhysicsObject( pos, Vector2(size,size), rot, model, velocity, mass ), 
-		health( _health )
+		const Model2D& model, const Vector2& velocity, float mass, int health ) : 
+	ActorBase(pos, Vector2(size, size), rot, model, velocity, mass), 
+	health(health), alive(true)
 {
-	alive = true;
+	
 }
 
 void Asteroid::Update( float dt )
@@ -43,7 +38,7 @@ void Asteroid::Render( Camera& camera ) const
 	if( alive )
 	{
         // Render the object to screen
-		GameEntity::Render( camera );
+		ActorBase::Render( camera );
 	}
 }
 

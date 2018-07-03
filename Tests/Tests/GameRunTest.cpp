@@ -5,14 +5,14 @@
 
 TEST_CASE("Integration test")
 {
-	auto graphics = std::make_unique<GraphicsDeviceManager>(nullptr, true);
+	auto graphics = std::make_unique<GraphicsDeviceManager>(nullptr);
 	Game testGame(nullptr, std::move(graphics));
 	testGame.Initialize();
 }
 
 TEST_CASE("Test run")
 {
-	auto graphics = std::make_unique<GraphicsDeviceManager>(nullptr, true);
+	auto graphics = std::make_unique<GraphicsDeviceManager>(nullptr);
 	Game testGame(nullptr, std::move(graphics));
 	testGame.Initialize();
 

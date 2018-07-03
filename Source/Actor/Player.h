@@ -7,7 +7,7 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include "PhysicsObject.h"
+#include "ActorBase.h"
 #include "../Graphics/Camera.h"
 #include "Bullet.h"
 #include "../EventManager/AnimationClock.h"
@@ -18,7 +18,7 @@ class Model2D;
 
 const int MAX_BULLETS = 5;
 
-class Player : public PhysicsObject
+class Player : public ActorBase
 {
 private:
 	// Constant for movement

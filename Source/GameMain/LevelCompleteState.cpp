@@ -21,7 +21,7 @@ void LevelCompleteState::Enter()
 	clock.Start();
 }
 
-void LevelCompleteState::Update(float dt, const KeyboardState& keyboardState)
+void LevelCompleteState::Update(float dt, const KeyboardState& /*keyboardState*/)
 {
 	// update the clock and the game
 	clock.Tick( dt );

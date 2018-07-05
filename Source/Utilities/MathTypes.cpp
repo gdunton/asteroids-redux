@@ -123,7 +123,7 @@ namespace MathTypes
 		world.pos = position + static_cast<Vector2>(size / 2);
 		world.rot = 0;
 		world.scale = size / 2.0f;
-		quadModel.Render(camera, world);
+		quadModel.Render(world, camera);
 	}
 
 

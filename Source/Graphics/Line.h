@@ -30,10 +30,10 @@ public:
 	static void SetLine(Batch* line);
 
 	// Initialize creates the line interface from DX and sets the color
-	void Initialize( const Color color );
-	void Render( Camera* camera, const std::vector<Vector2>& points, const World& world ) const;
+	void Initialize(Color color);
+	void Render(const std::vector<Vector2>& points) const;
 
-	void SetColor( const Color _color ) { m_color = _color; }
+	void SetColor(const Color _color) { m_color = _color; }
 };
 
 #endif

@@ -8,6 +8,7 @@
 #include "../GameMain/Globals.h"
 #include "../Actor/Asteroid.h"
 #include "../Utilities/Random.h"
+#include <algorithm>
 
 const float MeteorShowerLevel::MAX_TIME_TILL_ASTEROIDS = 3.0f;
 const float MeteorShowerLevel::MIN_TIME_TILL_ASTEROIDS = 1.5f;
@@ -29,11 +30,8 @@ MeteorShowerLevel::MeteorShowerLevel( GameLogic* parent, int level ) :
 		(MAX_ASTEROIDS_PER_COUNTDOWN - MIN_ASTEROIDS_PER_COUNTDOWN) * 4;
 
 	// Create the asteroids
-	std::vector<std::shared_ptr<Asteroid>> asteroids;
-	for (int i = 0; i < numAsteroids; i++)
-	{
-		asteroids.push_back(CreateAsteroid());
-	}
+	std::vector<std::shared_ptr<Asteroid>> asteroids(numAsteroids);
+	std::generate(asteroids.begin(), asteroids.end(), [this]() { return CreateAsteroid(); });
 
 	parent->AddAsteroids(asteroids);
 

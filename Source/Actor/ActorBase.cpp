@@ -144,7 +144,7 @@ MathTypes::Circle ActorBase::GetCircle() const
 
 void ActorBase::Render(Camera& camera) const
 {
-	model.Render(camera, world);
+	model.Render(world, camera);
 }
 
 void ActorBase::WrapPosition()

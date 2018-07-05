@@ -5,6 +5,7 @@
 #include "Particle.h"
 
 #include "Camera.h"
+#include <algorithm>
 
 Particle::Particle(Vector2 _p1, Vector2 _p2, Vector2 _pos, Vector2 _scale, Vector2 _velocity,
                           float rot, float rotationSpeed, float _lifespan)
@@ -43,14 +44,25 @@ void Particle::Update(float dt)
 	{
 		alpha = 0;
 	}
+
+	// Reset the color of the particle with the alpha
+	//line.SetColor(ColorRGBA(255, 255, 255, alpha));
+	line.SetColor(ColorRGBA(255, 255, 255, 255));
 }
 
-void Particle::Render(Camera& camera)
+void Particle::Render(const Camera& camera) const
 {
-	// Reset the color of the particle with the alpha
-	line.SetColor(ColorRGBA(255, 255, 255, alpha));
+	std::vector<Vector2> screenPoints;
+	screenPoints.reserve(points.size());
 
-	line.Render(&camera, points, World(pos, scale, rotation));
+	std::transform(points.begin(), points.end(), std::back_inserter(screenPoints), 
+		[&camera, world = World(pos, scale, rotation)](const Vector2& p)
+	{
+		auto worldPoint = world.TransformPoint(p);
+		return camera.Transform(worldPoint);
+	});
+
+	line.Render(screenPoints);
 }
 
 bool Particle::Alive() const

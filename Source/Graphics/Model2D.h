@@ -17,8 +17,8 @@ public:
 	Model2D() = default;
 	explicit Model2D(std::vector<Vector2> points);
 
-	void Render( Camera& camera, const World& world ) const;
-	void Render(const Vector2& screenPosition, const Vector2& scale, float rotation) const;
+	void Render(const World& world, const Camera& camera) const;
+	void RenderToScreen(const World& world) const;
 
 	float GetModelRadius() const { return modelRadius; }
 

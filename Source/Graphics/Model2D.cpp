@@ -5,6 +5,9 @@
 #include "Model2D.h"
 #include <numeric>
 #include "../Utilities/MathTypes.h"
+#include "../GameMain/Globals.h"
+#include "Camera.h"
+#include <algorithm>
 
 Model2D::Model2D(std::vector<Vector2> points) :
 	points(std::move(points)),
@@ -13,22 +16,38 @@ Model2D::Model2D(std::vector<Vector2> points) :
 	line.Initialize(WHITE);
 }
 
-void Model2D::Render( Camera& camera, const World& world ) const
+void Model2D::Render(const World& world, const Camera& camera) const
 {
-	line.Render( &camera, points, world );
+	std::vector<Vector2> screenPoints;
+	screenPoints.reserve(points.size());
+
+	std::transform(points.begin(), points.end(), std::back_inserter(screenPoints),
+		[&world, &camera](const Vector2& p)
+	{
+		auto worldPoint = world.TransformPoint(p);
+		return camera.Transform(worldPoint);
+	});
+
+	line.Render(screenPoints);
 }
 
-void Model2D::Render(const Vector2& screenPosition, const Vector2& scale, float rotation) const
+void Model2D::RenderToScreen(const World& world) const
 {
 	// Object already in screen pos so no need for a camera
-	line.Render(nullptr, points, World(screenPosition, scale, rotation) );
+	std::vector<Vector2> screenPoints;
+	screenPoints.reserve(points.size());
+
+	std::transform(points.begin(), points.end(), std::back_inserter(screenPoints),
+		[&world](const Vector2& p)
+	{
+		return world.TransformPoint(p);
+	});
+
+	line.Render(screenPoints);
 }
 
 float Model2D::ModelStats()
 {
 	return std::accumulate(points.begin(), points.end(), 0.0f,
-		[](float currentTotal, const Vector2& point)
-	{
-		return currentTotal += point.Length();
-	}) / points.size();
+		[](float currentTotal, const Vector2& point) { return currentTotal += point.Length(); }) / points.size();
 }

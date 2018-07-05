@@ -22,7 +22,7 @@ public:
 		float rotation, float rotationSpeed, float lifespan );
 
 	void Update( float dt );
-	void Render( Camera& camera );
+	void Render(const Camera& camera) const;
 
 	bool Alive() const;
 

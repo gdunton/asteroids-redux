@@ -16,7 +16,7 @@ public:
 	Camera(const Vector2& center, const Vector2& size, float windowWidth, float windowHeight);
 
 	// Takes world position and outputs a point with coords in the client dimensions
-	Vector2 ConvertWorldToScreenPos( const Vector2& worldPos ) const;
+	Vector2 Transform( const Vector2& worldPos ) const;
 
 	// Get rectangle to help find objects in camera view
 	MathTypes::Rectangle GetScreenRect() const;

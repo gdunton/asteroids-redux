@@ -393,12 +393,12 @@ void Quadtree::DrawQuads(Camera& camera, const Model2D& quadModel)
 #ifdef PHYSICS_DEBUG_INFO
 	bounds.Draw(camera, quadModel);
 	// Draw name of quad
-	Vector2 pos = camera.ConvertWorldToScreenPos(bounds.position + static_cast<Vector2>(bounds.size / 2));
+	Vector2 pos = camera.Transform(bounds.position + static_cast<Vector2>(bounds.size / 2));
 
 	// Draw the id of the quad on the position of each asteroid
 	for(auto& phys : physObjs)
 	{
-		Vector2 pPos = camera.ConvertWorldToScreenPos(phys->GetPos());
+		Vector2 pPos = camera.Transform(phys->GetPos());
 	}
 
 	for(Quadtree& c : children)

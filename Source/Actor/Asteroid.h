@@ -15,16 +15,13 @@ class Model2D;
 
 class Asteroid : public ActorBase
 {
-	int health = 0;
-	bool alive = false;
-
 public:
 	Asteroid() = default;
 	Asteroid(const Vector2& pos, const float& size, float rot, const Model2D& model,
 	         const Vector2& velocity, float mass, int health);
 
 	void Update(float dt) override;
-	void Render(Camera& camera) const override;
+	void Render(const Camera& camera) const override;
 
 	// Functions give the ability to reduce the health of an asteroid making
 	// it smaller and lighter or outright kill the asteroid
@@ -46,6 +43,10 @@ public:
 
 	static const int MAX_MASS;
 	static const int MIN_MASS;
+
+private:
+	int health = 0;
+	bool alive = false;
 };
 
 #endif

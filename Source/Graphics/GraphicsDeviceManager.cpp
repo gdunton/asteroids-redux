@@ -13,6 +13,27 @@
 #include "../Content/Content.h"
 #include "../Utilities/Strings.h"
 
+GraphicsDeviceManager::GraphicsDeviceManager(IWindow* window)
+{
+	if(window != nullptr)
+	{
+		CreateSwapChainAndDevice(*window);
+	}
+	else
+	{
+		CreateDeviceOnly();
+	}
+
+	ASSERT(m_pGraphicsDevice != NULL);
+
+	CreateBatchesAndEffect();
+	CreateSpriteFont();
+
+	if(window != nullptr)
+	{
+		CreateBackBuffers();
+	}
+}
 
 void GraphicsDeviceManager::CreateBackBuffers()
 {
@@ -30,29 +51,6 @@ void GraphicsDeviceManager::CreateBackBuffers()
 	m_pGraphicsDevice->CreateDepthStencilView(depthStencil, &depthStencilViewDesc, &m_pDepthStencilView);
 	depthStencil->Release();
 }
-
-GraphicsDeviceManager::GraphicsDeviceManager(IWindow* window)
-{
-	if(window != nullptr)
-	{
-		CreateSwapChainAndDevice(*window);
-	}
-	else
-	{
-		CreateDeviceOnly();
-	}
-
-	ASSERT( m_pGraphicsDevice != NULL );
-
-	CreateBatchesAndEffect();
-	CreateSpriteFont();
-
-	if(window != nullptr)
-	{
-		CreateBackBuffers();
-	}
-}
-
 
 void GraphicsDeviceManager::BeginScene(const Color& backColor)
 {
@@ -131,6 +129,8 @@ void GraphicsDeviceManager::CreateSwapChainAndDevice(IWindow& window)
 		&m_pGraphicsDevice,
 		nullptr,
 		&m_pDeviceContext);
+
+	ASSERT(hr == S_OK);
 }
 
 void GraphicsDeviceManager::CreateBatchesAndEffect()
@@ -139,8 +139,7 @@ void GraphicsDeviceManager::CreateBatchesAndEffect()
 
 	primitiveBatch = std::make_unique<DirectX::PrimitiveBatch<DirectX::VertexPositionColor>>(m_pDeviceContext.Get());
 	basicEffect = std::make_unique<DirectX::BasicEffect>(m_pGraphicsDevice.Get());
-	basicEffect->SetProjection(DirectX::XMMatrixOrthographicOffCenterRH(0,
-	                                                                    WINDOW_WIDTH, WINDOW_HEIGHT, 0, 0, 1));
+	basicEffect->SetProjection(DirectX::XMMatrixOrthographicOffCenterRH(0, WINDOW_WIDTH, WINDOW_HEIGHT, 0, 0, 1));
 	basicEffect->SetVertexColorEnabled(true);
 
 	void const* shaderByteCode;

@@ -16,19 +16,18 @@ class GraphicsDeviceManager;
 
 class MainGameState : public GameState
 {
-private:
-	KeyboardState prevKbState;
-
 public:
-	MainGameState(const Content&, GameStateManager* _parent );
+	MainGameState(const Content&, GameStateManager* _parent);
 	MainGameState() = default;
 
-	// Virtual functions from GameState
-	void Enter();
-	void Update(float dt, const KeyboardState& keyboardState);
-	void Exit();
+	void Enter() override;
+	void Update(float dt, const KeyboardState& keyboardState) override;
+	void Exit() override;
 
-	void Render();
+	void Render() override;
+
+private:
+	KeyboardState prevKbState;
 };
 
 #endif

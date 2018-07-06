@@ -13,21 +13,11 @@
 
 class ActorBase
 {
-protected:
-	
-	CollisionShape collision;
-	World world;
-	Model2D model;
-
-	float mass = 0.0f;
-	bool wrapAroundWorld = true;
-	Vector2 velocity;
-
 public:
-	
+
 	ActorBase() = default;
 	ActorBase(const Vector2& pos, const Vector2& size, float rot,
-	              const Model2D& model, Vector2 velocity, float mass);
+	          const Model2D& model, Vector2 velocity, float mass);
 	virtual ~ActorBase() = default;
 
 	virtual void Update(float dt) = 0;
@@ -64,10 +54,20 @@ public:
 	void SetWrapAround(bool value) { wrapAroundWorld = value; }
 
 	// Overrideable rendering
-	virtual void Render(Camera& camera) const;
+	virtual void Render(const Camera& camera) const;
 
 	// Wrap the position around the game world
 	void WrapPosition();
+
+protected:
+
+	CollisionShape collision;
+	World world;
+	Model2D model;
+
+	float mass = 0.0f;
+	bool wrapAroundWorld = true;
+	Vector2 velocity;
 };
 
 #endif

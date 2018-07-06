@@ -19,9 +19,7 @@ GamePausedState::GamePausedState(const Content& content, GameStateManager* paren
 	font(content.Graphics()),
 	menu(content, this, MakeMenuItems(content.Graphics()), 100),
 	background(content.Textures(), "transparent")
-{
-	
-}
+{ }
 
 void GamePausedState::Enter()
 {}

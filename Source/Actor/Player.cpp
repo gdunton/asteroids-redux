@@ -20,7 +20,8 @@ const int Player::STARTING_LIVES = 3;
 
 const float Player::DAMAGE_COOLDOWN_SECONDS = 2;
 
-Player::Player() {
+Player::Player()
+{
 	lives = STARTING_LIVES;
 	startingWorld = World();
 	startingVelocity = Vector2(0, 0);
@@ -28,8 +29,9 @@ Player::Player() {
 
 Player::Player(const Vector2& _pos, const Vector2& _size, float _rot,
                const Model2D& _model, const Vector2& _velocity, float _mass,
-               AudioManager* audioManager)
-	: ActorBase(_pos, _size, _rot, _model, _velocity, _mass), audioManager(audioManager) {
+               AudioManager* audioManager) :
+	ActorBase(_pos, _size, _rot, _model, _velocity, _mass), audioManager(audioManager)
+{
 	bulletCooldown = 0;
 	lives = STARTING_LIVES;
 
@@ -44,7 +46,8 @@ Player::Player(const Vector2& _pos, const Vector2& _size, float _rot,
 	playerBoosting = false;
 }
 
-void Player::Update(float dt) {
+void Player::Update(float dt)
+{
 	if(Alive())
 	{
 		if(invulnerable)
@@ -72,14 +75,16 @@ void Player::Update(float dt) {
 	}
 }
 
-void Player::Render(Camera& camera) {
+void Player::Render(const Camera& camera) const
+{
 	if(Alive())
 	{
 		ActorBase::Render(camera);
 	}
 }
 
-void Player::TurnClockwise(float dt) {
+void Player::TurnClockwise(float dt)
+{
 	world.rot += PI * TURNING_SPEED * dt;
 
 	// Ensure the rotation wraps around 360
@@ -89,7 +94,8 @@ void Player::TurnClockwise(float dt) {
 	world.rot = fmod(world.rot, 2 * PI);
 }
 
-void Player::TurnAntiClockwise(float dt) {
+void Player::TurnAntiClockwise(float dt)
+{
 	world.rot -= PI * TURNING_SPEED * dt;
 
 	// Ensure the rotation wraps around 360
@@ -99,7 +105,8 @@ void Player::TurnAntiClockwise(float dt) {
 	world.rot = fmod(world.rot, 2 * PI);
 }
 
-void Player::Boost(float dt) {
+void Player::Boost(float dt)
+{
 	Vector2 direction(0, 1);
 
 	direction = RotatePoint(direction, world.rot);
@@ -114,7 +121,8 @@ void Player::Boost(float dt) {
 }
 
 // Function to stop the boost sound if one is playing
-void Player::EndBoost() {
+void Player::EndBoost()
+{
 	if(playerBoosting)
 	{
 		playerBoosting = false;
@@ -126,7 +134,8 @@ void Player::EndBoost() {
 	}
 }
 
-void Player::FireBullet() {
+void Player::FireBullet()
+{
 	// Make sure that the cooldown is not 0
 	if(bulletCooldown > 0)
 	{
@@ -158,16 +167,19 @@ void Player::FireBullet() {
 	}
 }
 
-Bullet* Player::GetBullets() {
+Bullet* Player::GetBullets()
+{
 	return bulletsArray;
 }
 
 // Override the default
-MathTypes::Circle Player::GetCircle() const {
+MathTypes::Circle Player::GetCircle() const
+{
 	return MathTypes::Circle(world.pos, model.GetModelRadius() * world.scale.Length());
 }
 
-void Player::RemoveLife() {
+void Player::RemoveLife()
+{
 	if(!invulnerable) // may be unncessary but this will stay
 	{
 		lives--;
@@ -177,25 +189,30 @@ void Player::RemoveLife() {
 	}
 }
 
-void Player::AddLife() {
+void Player::AddLife()
+{
 	lives++;
 }
 
-bool Player::Alive() const {
+bool Player::Alive() const
+{
 	return lives > 0;
 }
 
-void Player::KillPlayer() {
+void Player::KillPlayer()
+{
 	lives = 0;
 }
 
-void Player::StartInvulnerability() {
+void Player::StartInvulnerability()
+{
 	invulnerable = true;
 	invulnerabilityClock.Start();
 	pulseClock.Start();
 }
 
-void Player::StopSounds() {
+void Player::StopSounds()
+{
 	if(thrustSound)
 	{
 		thrustSound->Stop();
@@ -204,13 +221,15 @@ void Player::StopSounds() {
 }
 
 // Resets all member variables including lives
-void Player::Reset() {
+void Player::Reset()
+{
 	ResetWorld();
 	lives = STARTING_LIVES;
 }
 
 // Reset all member variables excluding lives
-void Player::ResetWorld() {
+void Player::ResetWorld()
+{
 	world = startingWorld;
 	velocity = startingVelocity;
 
@@ -233,7 +252,8 @@ void Player::ResetWorld() {
 	}
 }
 
-void Player::TickInvulnerability(float dt) {
+void Player::TickInvulnerability(float dt)
+{
 	enum InvulState { inPulse, pulseComplete, stopped };
 	InvulState state;
 	invulnerabilityClock.Tick(dt);

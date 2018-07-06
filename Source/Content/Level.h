@@ -14,15 +14,6 @@ class GameLogic;
 
 class Level
 {
-protected:
-	GameLogic* parent;
-	int levelNumber;
-
-	// Enum for difficulty e.g. Easy, Normal etc
-	Difficulty difficulty;
-
-	static std::vector<Camera> CreateCameraArray();
-
 public:
 	Level(GameLogic* _parent, int _levelNumber) :
 		parent(_parent), levelNumber(_levelNumber), difficulty(LevelToDifficulty(_levelNumber))
@@ -41,6 +32,15 @@ public:
 
 	int GetDifficulty() const { return difficulty; }
 	int GetLevelNumber() const { return levelNumber; }
+
+protected:
+	GameLogic* parent;
+	int levelNumber;
+
+	// Enum for difficulty e.g. Easy, Normal etc
+	Difficulty difficulty;
+
+	static std::vector<Camera> CreateCameraArray();
 };
 
 #endif

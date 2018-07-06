@@ -23,7 +23,7 @@ Game::Game(IWindow* windowHandle, std::unique_ptr<GraphicsDeviceManager> graphic
 {
 	m_desiredTimePerFrame = 1.0 / FRAMES_PER_SECOND;
 
-	if (recordSession)
+	if(recordSession)
 		stateBuffer.reserve(1800);
 }
 
@@ -45,7 +45,7 @@ void Game::Initialize()
 
 void Game::InternalUpdate(const double deltaTime, const KeyboardState& keyboardState)
 {
-	if (recordSession)
+	if(recordSession)
 		stateBuffer.emplace_back(deltaTime, keyboardState);
 
 	fpsString = std::to_string(m_timer.GetFPS());
@@ -75,20 +75,20 @@ void Game::Render()
 void Game::Close() const
 {
 	// Close the window
-	if (windowHandle != nullptr)
+	if(windowHandle != nullptr)
 	{
 		windowHandle->Close();
 	}
 
-	if (recordSession)
+	if(recordSession)
 	{
 		// Save the buffer to disk
 		std::ofstream outStream;
 		outStream.open("run.txt", std::ostream::out);
 		outStream << std::setprecision(10);
-		if (outStream.is_open())
+		if(outStream.is_open())
 		{
-			for (const auto& frame : stateBuffer)
+			for(const auto& frame : stateBuffer)
 			{
 				outStream << frame.first << '|' << frame.second << '\n';
 			}

@@ -6,10 +6,11 @@
 
 #include "MyWav.h"
 
-namespace {
+namespace
+{
 	void DestroySourceVoice(IXAudio2SourceVoice* ptr)
 	{
-		if (ptr)
+		if(ptr)
 		{
 			ptr->DestroyVoice();
 		}

@@ -15,12 +15,11 @@
 class Keyboard
 {
 public:
-	
 	Keyboard();
 
 	// Returns the state of a single key
-	KeyState GetKeyState( KeyCode key );
-	void SetKeyState( KeyCode key, KeyState state );
+	KeyState GetKeyState(KeyCode key);
+	void SetKeyState(KeyCode key, KeyState state);
 
 	// Outputs the state of the entire keyboard
 	KeyboardState GetKeyboardState() const;

@@ -145,7 +145,7 @@ bool Quadtree::ComputeIndividual(ActorBase& ob)
 // the quad. if not send it to the parent quad
 void Quadtree::CheckObjects()
 {
-	for (auto& i : physObjs)
+	for(auto& i : physObjs)
 	{
 		// Check that the object is still contained in the quad
 		if(bounds.Contains(i->GetCircle()))
@@ -243,12 +243,9 @@ bool Quadtree::SplitQuad()
 	Quadtree newChildren[4];
 	// Initialize each of the new children
 	newChildren[0].Initialize(this, MathTypes::Rectangle(bounds.position, bounds.size / 2), level + 1);
-	newChildren[1].Initialize(this, MathTypes::Rectangle(bounds.position + Vector2(bounds.size.x / 2, 0), bounds.size / 2),
-	                          level + 1);
-	newChildren[2].Initialize(this, MathTypes::Rectangle(bounds.position + Vector2(0, bounds.size.y / 2), bounds.size / 2),
-	                          level + 1);
-	newChildren[3].Initialize(
-		this, MathTypes::Rectangle(bounds.position + static_cast<Vector2>(bounds.size / 2), bounds.size / 2), level + 1);
+	newChildren[1].Initialize(this, MathTypes::Rectangle(bounds.position + Vector2(bounds.size.x / 2, 0), bounds.size / 2), level + 1);
+	newChildren[2].Initialize(this, MathTypes::Rectangle(bounds.position + Vector2(0, bounds.size.y / 2), bounds.size / 2), level + 1);
+	newChildren[3].Initialize(this, MathTypes::Rectangle(bounds.position + static_cast<Vector2>(bounds.size / 2), bounds.size / 2), level + 1);
 	children.assign(newChildren, newChildren + 4);
 
 	// Attempt to insert each of the physics objects into the children
@@ -277,7 +274,8 @@ bool Quadtree::Shrinkable()
 {
 	// if Number of physics objects is less than the max children return true
 	bool shrink = NumPhysicsObjects() <= MAX_CHILDREN;
-	if(children.size() == 0) shrink = false;
+	if(children.empty()) 
+		shrink = false;
 	return shrink;
 }
 

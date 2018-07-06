@@ -10,10 +10,9 @@
 
 const float LevelCompleteState::EXIT_TIME = 1.0f;
 
-LevelCompleteState::LevelCompleteState(const Content&, GameStateManager* _parent )
-	: GameState( _parent )
-{
-}
+LevelCompleteState::LevelCompleteState(const Content&, GameStateManager* _parent)
+	: GameState(_parent)
+{}
 
 void LevelCompleteState::Enter()
 {
@@ -24,10 +23,10 @@ void LevelCompleteState::Enter()
 void LevelCompleteState::Update(float dt, const KeyboardState& /*keyboardState*/)
 {
 	// update the clock and the game
-	clock.Tick( dt );
-	parent->GetGameLogic().Update( dt );
+	clock.Tick(dt);
+	parent->GetGameLogic().Update(dt);
 
-	if( clock.GetDeltaTime() >= EXIT_TIME )
+	if(clock.GetDeltaTime() >= EXIT_TIME)
 	{
 		// Move onto the next state
 		parent->SetState<LevelStartState>();

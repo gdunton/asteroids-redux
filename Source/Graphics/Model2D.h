@@ -24,7 +24,7 @@ public:
 
 	const std::vector<Vector2>& GetPoints() const { return points; }
 
-	void SetColor( Color color ) { line.SetColor( color ); }
+	void SetColor(Color color) { line.SetColor(color); }
 
 private:
 	std::vector<Vector2> points;

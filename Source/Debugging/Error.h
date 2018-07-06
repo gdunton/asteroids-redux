@@ -9,10 +9,10 @@
 #define ERROR_H
 
 #if defined(_DEBUG)
-	#include <cassert>
-	#define ASSERT(expr) assert(expr) 
+#include <cassert>
+#define ASSERT(expr) assert(expr)
 
-	#define ASSERTMSG( expr, msg ) assert( expr && msg )
+#define ASSERTMSG( expr, msg ) assert( expr && msg )
 #else
 	#define ASSERT(expr) (expr)
 	#define ASSERTMSG( expr, msg ) (expr, msg)

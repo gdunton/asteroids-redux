@@ -26,8 +26,7 @@ ControlScreenState::ControlScreenState(const Content& content, GameStateManager*
 	titleFont(content.Graphics()),
 	subFont1(content.Graphics()),
 	background(content.Textures(), "transparent")
-{
-}
+{}
 
 void ControlScreenState::Enter()
 {
@@ -40,10 +39,10 @@ void ControlScreenState::Update(float dt, const KeyboardState& keyboardState)
 	Player& playerRef = parent->GetGameLogic().GetPlayer();
 
 	// Handle the keyboard input
-	if((keyboardState.GetKeyState(VK_ESCAPE) == KeyState::pressed && prevKbState.GetKeyState(VK_ESCAPE) == KeyState::
-			unpressed) ||
-		(keyboardState.GetKeyState(VK_RETURN) == KeyState::pressed && prevKbState.GetKeyState(VK_RETURN) == KeyState::
-			unpressed))
+	if((keyboardState.GetKeyState(VK_ESCAPE) == KeyState::pressed && 
+		prevKbState.GetKeyState(VK_ESCAPE) == KeyState::unpressed) ||
+		(keyboardState.GetKeyState(VK_RETURN) == KeyState::pressed && 
+			prevKbState.GetKeyState(VK_RETURN) == KeyState::unpressed))
 	{
 		parent->SetState<MainMenuState>();
 	}

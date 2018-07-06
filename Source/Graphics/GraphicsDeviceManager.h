@@ -24,14 +24,14 @@ using Microsoft::WRL::ComPtr;
 class GraphicsDeviceManager
 {
 public:
-	
+
 	GraphicsDeviceManager(IWindow* window);
 
 	ID3D11Device* GetDevice() const { return m_pGraphicsDevice.Get(); }
 	DirectX::PrimitiveBatch<DirectX::VertexPositionColor>* GetBatch() const { return primitiveBatch.get(); }
 
 	// Gets the graphics device ready for rendering
-	void BeginScene( const Color& backColor );
+	void BeginScene(const Color& backColor);
 
 	// Stops the graphics device rendering
 	void EndScene();

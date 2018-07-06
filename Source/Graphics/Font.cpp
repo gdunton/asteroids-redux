@@ -17,7 +17,7 @@ Font::Font(const GraphicsDeviceManager& graphicsManager, Color color) :
 	std::string assetsDir = Content::GetAssetsDir();
 	assetsDir += "arial.spritefont";
 
-	std::wstring wStr =	StringToWString(assetsDir);
+	std::wstring wStr = StringToWString(assetsDir);
 
 	font = std::make_unique<DirectX::SpriteFont>(graphicsManager.GetDevice(), wStr.c_str());
 
@@ -32,7 +32,7 @@ void Font::DrawString(const std::string& str, const Vector2& position) const
 	// Actually draw the text to screen
 	spriteBatch->Begin();
 
-	std::wstring wStr =	StringToWString(str);
+	std::wstring wStr = StringToWString(str);
 	font->DrawString(spriteBatch, wStr.c_str(), position);
 
 	spriteBatch->End();

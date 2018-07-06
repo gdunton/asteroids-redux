@@ -23,10 +23,10 @@ public:
 
 private:
 	// Collection of all wav sound assets
-	std::map< std::string, std::shared_ptr<MyWav> > soundMap;
+	std::map<std::string, std::shared_ptr<MyWav>> soundMap;
 
 	// List of all the channels
-	std::vector< Channel > channels;
+	std::vector<Channel> channels;
 
 	IXAudio2* xAudio2;
 	IXAudio2MasteringVoice* masteringVoice;

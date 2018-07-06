@@ -11,27 +11,24 @@
 
 class AnimationClock
 {
-private:
-	float deltaTime;
-
-	bool stopped;
-
 public:
-	AnimationClock();
-
 	// Changes the stopped flag
 	void Start();
 
 	// Update the deltatime
-	void Tick( float dt );
+	void Tick(float dt);
 
 	// Resets the clock
 	void Stop();
 
-	bool GetStopped() { return stopped; }
-	float GetDeltaTime() { return deltaTime; }
+	bool GetStopped() const { return stopped; }
+	float GetDeltaTime() const { return deltaTime; }
 
-	void SetStopped( bool value ) { stopped = value; }
+	void SetStopped(bool value) { stopped = value; }
+
+private:
+	float deltaTime = 0;
+	bool stopped = false;
 };
 
 #endif

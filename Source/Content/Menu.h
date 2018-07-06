@@ -18,6 +18,15 @@ class GameState;
 
 class Menu
 {
+public:
+	Menu(const Content& graphics, GameState* parent, std::shared_ptr<std::vector<MenuItem>> items, int pointerOffset);
+
+	// Called each frame to check input
+	void Update(const KeyboardState& keyboardState);
+
+	// Called each frame to draw to screen
+	void Render() const;
+
 private:
 	Font font;
 
@@ -31,15 +40,6 @@ private:
 	int pointerOffset = 0;
 
 	KeyboardState prevKbState;
-
-public:
-	Menu(const Content& graphics, GameState* parent, std::shared_ptr<std::vector<MenuItem>> items, int pointerOffset);
-
-	// Called each frame to check input
-	void Update(const KeyboardState& keyboardState);
-
-	// Called each frame to draw to screen
-	void Render() const;
 };
 
 #endif

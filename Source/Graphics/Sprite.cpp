@@ -26,7 +26,7 @@ void Sprite::Draw(const Vector2& position, float alpha) const
 	spriteBatch->End();
 }
 
-void Sprite::SetSpriteBatch(DirectX::SpriteBatch* sb) 
+void Sprite::SetSpriteBatch(DirectX::SpriteBatch* sb)
 {
 	spriteBatch = sb;
 }

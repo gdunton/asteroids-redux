@@ -39,7 +39,7 @@ public:
 	void InternalUpdate(double deltaTime, const KeyboardState& keyboardState);
 
 private:
-	
+
 	IWindow* windowHandle;
 	std::unique_ptr<GraphicsDeviceManager> graphicsDeviceManager;
 	Content content;

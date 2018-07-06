@@ -10,12 +10,12 @@ Keyboard::Keyboard() :
 	keys.fill(KeyState::unpressed);
 }
 
-KeyState Keyboard::GetKeyState( KeyCode key )
+KeyState Keyboard::GetKeyState(KeyCode key)
 {
 	return keys[key];
 }
 
-void Keyboard::SetKeyState( KeyCode key, KeyState state )
+void Keyboard::SetKeyState(KeyCode key, KeyState state)
 {
 	keys[key] = state;
 }

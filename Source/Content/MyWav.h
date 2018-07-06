@@ -19,7 +19,7 @@ public:
 
 	// Loads the wav file via a filename. "loopSound" flags whether the sound is
 	// made for continious play
-	bool LoadFile(const std::string& filename, bool loopSound = false );
+	bool LoadFile(const std::string& filename, bool loopSound = false);
 
 	XAUDIO2_BUFFER* GetBuffer() { return &buffer; }
 	WAVEFORMATEX* GetWavFormat();

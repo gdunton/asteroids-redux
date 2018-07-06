@@ -95,7 +95,7 @@ namespace MathTypes
 	bool Rectangle::Intersects(const Circle& circle) const
 	{
 		// Check that objects are seperable
-		if (position.x > (circle.position.x + circle.radius) ||
+		if(position.x > (circle.position.x + circle.radius) ||
 			(position.x + size.x) < (circle.position.x - circle.radius) ||
 			position.y > (circle.position.y + circle.radius) ||
 			(position.y + size.y) < (circle.position.y - circle.radius))
@@ -109,7 +109,7 @@ namespace MathTypes
 	{
 		// is circle within a rectangle shrunk by the radius of the circle
 		Vector2 pos = circle.position - position;
-		if ((pos.x - circle.radius) >= 0 && (pos.x + circle.radius) <= size.x &&
+		if((pos.x - circle.radius) >= 0 && (pos.x + circle.radius) <= size.x &&
 			(pos.y - circle.radius) >= 0 && (pos.y + circle.radius) <= size.y)
 		{
 			return true;
@@ -130,7 +130,7 @@ namespace MathTypes
 	bool Circle::Intersects(const Rectangle& rect) const
 	{
 		// if rectangle and circle are seperable
-		if (position.x > (rect.position.x + rect.size.x) ||
+		if(position.x > (rect.position.x + rect.size.x) ||
 			(position.x + radius) < (rect.position.x - rect.size.x) ||
 			position.y > (rect.position.y + rect.size.y) ||
 			(position.y + radius) < (rect.position.y - rect.size.y))

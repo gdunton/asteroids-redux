@@ -10,5 +10,5 @@
 void WaveCallback::OnStreamEnd()
 {
 	// Sets the parents stopped flag
-	parent->SetStopped( true );
-} 
+	parent->SetStopped(true);
+}

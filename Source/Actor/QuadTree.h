@@ -21,12 +21,12 @@ public:
 	Quadtree();
 
 	// Initializer to set the bounding rectangle and the parent
-	void Initialize( Quadtree* parent, MathTypes::Rectangle rect, int level );
+	void Initialize(Quadtree* parent, MathTypes::Rectangle rect, int level);
 
 	// Check all objects are in the right quad. Move if not
 	// perform the collision on the objects
 	void Update();
-	
+
 	// Adds an object into the top quad and attempts to send the object lower in
 	// the tree
 	bool AddPhysicsObject(const std::shared_ptr<ActorBase>& object);
@@ -36,7 +36,7 @@ public:
 	bool RemovePhysicsObject(const std::shared_ptr<ActorBase>& obj);
 
 	// Check an individual physicsobject for collision and compute collision after
-	bool ComputeIndividual( ActorBase& object );
+	bool ComputeIndividual(ActorBase& object);
 
 	// Remove all elements
 	void Reset();
@@ -60,7 +60,7 @@ private:
 
 	// Checks an object against any children. Specifically for objects
 	// that overlap quads. Can also pass onto other children quads.
-	void ComputeCollisionAgainstChildren( ActorBase& ob );
+	void ComputeCollisionAgainstChildren(ActorBase& ob);
 
 	// Adds children to the tree and attempts to pass the objects down.
 	// contrained by the maximum levels. returns false if max level reached
@@ -84,7 +84,7 @@ private:
 
 	// Inserts the object into the actual array
 	void AddObject(const std::shared_ptr<ActorBase>& ob);
-	
+
 
 	// Vector with all the different quads. Can have either 4 or 0 children
 	std::vector<Quadtree> children;
@@ -107,8 +107,6 @@ private:
 	// The maximum number of levels for quads. Higher priority than MAX_CHILDREN
 	// if max levels has been reached then MAX_CHILDREN will be exceeded.
 	static const int MAX_DEPTH;
-
-
 };
 
 #endif

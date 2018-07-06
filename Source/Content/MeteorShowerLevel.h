@@ -17,14 +17,14 @@
 class MeteorShowerLevel : public Level
 {
 public:
-	MeteorShowerLevel( GameLogic* parent, int difficulty );
+	MeteorShowerLevel(GameLogic* parent, int difficulty);
 
 	// Level runs until externaly cancelled
 	bool Complete() override;
 
 	// Update the timer. Check the number of asteroids on screen and add more to come on
 	// if there aren't enough
-	void Update( float dt ) override;
+	void Update(float dt) override;
 
 private:
 	std::shared_ptr<Asteroid> CreateAsteroid();

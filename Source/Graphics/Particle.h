@@ -18,10 +18,10 @@ class Particle
 {
 public:
 
-	Particle( Vector2 p1, Vector2 p2, Vector2 pos, Vector2 scale, Vector2 velocity,
-		float rotation, float rotationSpeed, float lifespan );
+	Particle(Vector2 p1, Vector2 p2, Vector2 pos, Vector2 scale, Vector2 velocity,
+	         float rotation, float rotationSpeed, float lifespan);
 
-	void Update( float dt );
+	void Update(float dt);
 	void Render(const Camera& camera) const;
 
 	bool Alive() const;

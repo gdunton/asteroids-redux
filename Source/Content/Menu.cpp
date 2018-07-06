@@ -11,7 +11,8 @@
 #include "Content.h"
 #include "../Utilities/MathTypes.h"
 
-Menu::Menu(const Content& content, GameState* /*parent*/, std::shared_ptr<std::vector<MenuItem>> items, int _pointerOffset) :
+Menu::Menu(const Content& content, GameState* /*parent*/, std::shared_ptr<std::vector<MenuItem>> items,
+           int _pointerOffset) :
 	font(content.Graphics(), WHITE), menuItems(std::move(items)), pointerOffset(_pointerOffset)
 {
 	// Calculate current Item Index by finding the menu item with the smallest Y position
@@ -33,7 +34,6 @@ Menu::Menu(const Content& content, GameState* /*parent*/, std::shared_ptr<std::v
 
 void Menu::Update(const KeyboardState& keyboardState)
 {
-
 	// Check for up/down keyboard input
 	if(keyboardState.GetKeyState(VK_UP) == KeyState::pressed &&
 		prevKbState.GetKeyState(VK_UP) == KeyState::unpressed)

@@ -17,19 +17,6 @@ class Content;
 
 class GameStateManager
 {
-private:
-	// The state currently running
-	std::shared_ptr<GameState> currentState;
-
-	// The state queued up to become the next state
-	std::shared_ptr<GameState> incomingState;
-
-	// Reference to the logic
-	GameLogic* gameLogic;
-
-	// We need the content to create level states
-	Content* content = nullptr;
-
 public:
 	GameStateManager();
 	GameStateManager(Content* content, GameLogic* logic);
@@ -51,6 +38,19 @@ public:
 		static_assert(std::is_base_of_v<GameState, T>, "T must be a GameState subtype");
 		SetState(std::make_shared<T>(*content, this));
 	}
+
+private:
+	// The state currently running
+	std::shared_ptr<GameState> currentState;
+
+	// The state queued up to become the next state
+	std::shared_ptr<GameState> incomingState;
+
+	// Reference to the logic
+	GameLogic* gameLogic;
+
+	// We need the content to create level states
+	Content* content = nullptr;
 };
 
 #endif

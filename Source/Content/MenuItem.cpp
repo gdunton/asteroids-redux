@@ -5,13 +5,13 @@
 #include "MenuItem.h"
 #include <utility>
 
-MenuItem::MenuItem(const GraphicsDeviceManager& graphics, std::function<void()> selectAction, Vector2 pos, std::string text, Color /*color*/) : 
-	centerPos(pos), 
-	text(std::move(text)), 
+MenuItem::MenuItem(const GraphicsDeviceManager& graphics, std::function<void()> selectAction,
+                   Vector2 pos, std::string text, Color /*color*/) :
+	centerPos(pos),
+	text(std::move(text)),
 	font(graphics),
 	selectAction(std::move(selectAction))
-{
-}
+{}
 
 void MenuItem::Select() const
 {

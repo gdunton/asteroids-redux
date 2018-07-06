@@ -24,7 +24,44 @@ class Content;
 
 class GameLogic
 {
+public:
+	explicit GameLogic(Content& content);
+
+	void Initialize(Game* _game);
+
+	void Update(float dt);
+	void Render(bool showLives = true, bool showLevelNum = true);
+
+	// Sets all ojects to starting values
+	void Reset();
+
+	// Level based functions for classes to be able to control level progression
+	bool LevelComplete() const;
+	void IncrementLevel();
+
+	// Set the game into idle mode. Used for main menu
+	void StartIdleMode();
+	// Create player only level. Used for controls screen
+	void StartPlayerOnlyLevel();
+
+	Player& GetPlayer() { return player; }
+	Game& GetParent() { return *game; }
+
+	const std::vector<Model2D>& GetAsteroidModels() const { return asteroidModels; }
+
+	// Functions to add and remove asteroids from the list. Used for levels
+	void AddAsteroids(const std::vector<std::shared_ptr<Asteroid>>& asteroids);
+	void RemoveAllAsteroids();
+	int NumAsteroids() const;
+
+	void SetCameras(std::vector<Camera> newCameras);
+
 private:
+
+	void RemoveDeadAsteroids();
+
+	void AddAsteroidsToQuadTree();
+
 	// Pointer to the parent game
 	Game* game;
 
@@ -58,44 +95,6 @@ private:
 
 	// Quad model for debugging
 	Model2D quadModel;
-
-public:
-	GameLogic(Content& content);
-
-	void Initialize(Game* _game);
-
-	void Update(float dt);
-	void Render(bool showLives = true, bool showLevelNum = true);
-
-	// Sets all ojects to starting values
-	void Reset();
-
-	// Level based functions for classes to be able to control level progression
-	bool LevelComplete() const;
-	void IncrementLevel();
-
-	// Set the game into idle mode. Used for main menu
-	void StartIdleMode();
-	// Create player only level. Used for controls screen
-	void StartPlayerOnlyLevel();
-
-	Player& GetPlayer() { return player; }
-	Game& GetParent() { return *game; }
-
-	const std::vector<Model2D>& GetAsteroidModels() const { return asteroidModels; }
-
-	// Functions to add and remove asteroids from the list. Used for levels
-	void AddAsteroids(const std::vector<std::shared_ptr<Asteroid>>& asteroids);
-	void RemoveAllAsteroids();
-	int NumAsteroids() const;
-
-	void AddCameras(std::vector<Camera> cameras);
-
-private:
-
-	void RemoveDeadAsteroids();
-
-	void AddAsteroidsToQuadTree();
 };
 
 

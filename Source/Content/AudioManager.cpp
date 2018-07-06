@@ -20,7 +20,7 @@ AudioManager::AudioManager()
 	unsigned int flags = 0;
 #ifdef DEBUG
 	flags |= XAUDIO2_DEBUG_ENGINE;
-#endif   
+#endif
 
 	HRESULT hr = XAudio2Create(&xAudio2/*, flags*/);
 	if(hr != S_OK)
@@ -105,8 +105,9 @@ Channel* AudioManager::PlaySoundByName(const std::string& soundName)
 		return nullptr;
 	}
 
-	auto beg = std::find_if(channels.begin(), channels.end(), [](const Channel& channel) { return !channel.PlayingSound(); });
-	if (beg == channels.end())
+	auto beg = std::find_if(channels.begin(), channels.end(),
+	                        [](const Channel& channel) { return !channel.PlayingSound(); });
+	if(beg == channels.end())
 	{
 		return nullptr;
 	}

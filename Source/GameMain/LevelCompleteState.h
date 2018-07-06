@@ -16,20 +16,20 @@ class GraphicsDeviceManager;
 
 class LevelCompleteState : public GameState
 {
-private:
-	AnimationClock clock;
-
-	const static float EXIT_TIME;
-
 public:
-	LevelCompleteState( const Content&, GameStateManager* _parent );
+	LevelCompleteState(const Content&, GameStateManager* _parent);
 
 	// Virtual functions from GameState
-	void Enter();
-	void Update(float dt, const KeyboardState& keyboardState);
-	void Exit();
+	void Enter() override;
+	void Update(float dt, const KeyboardState& keyboardState) override;
+	void Exit() override;
 
-	void Render();
+	void Render() override;
+
+private:
+	AnimationClock clock;
+	
+	const static float EXIT_TIME;
 };
 
 #endif

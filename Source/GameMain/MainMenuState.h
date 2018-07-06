@@ -18,7 +18,7 @@
 class MainMenuState : public GameState
 {
 public:
-	MainMenuState(const Content& content, GameStateManager* parent );
+	MainMenuState(const Content& content, GameStateManager* parent);
 
 	// Virtual functions from GameState
 	void Enter() override;

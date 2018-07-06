@@ -8,10 +8,10 @@
 #include "../GameMain/GameLogic.h"
 #include "../Actor/Player.h"
 
-DebugLevel::DebugLevel( GameLogic* _parent, int difficulty )
-	: Level( _parent, difficulty ) 
+DebugLevel::DebugLevel(GameLogic* _parent, int difficulty)
+	: Level(_parent, difficulty)
 {
-	parent->AddCameras(CreateCameraArray());
+	parent->SetCameras(CreateCameraArray());
 
 	parent->GetPlayer().Reset();
 	parent->GetPlayer().SetWrapAround(true);

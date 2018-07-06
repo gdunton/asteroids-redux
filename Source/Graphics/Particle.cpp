@@ -8,7 +8,7 @@
 #include <algorithm>
 
 Particle::Particle(Vector2 _p1, Vector2 _p2, Vector2 _pos, Vector2 _scale, Vector2 _velocity,
-                          float rot, float rotationSpeed, float _lifespan)
+                   float rot, float rotationSpeed, float _lifespan)
 {
 	points = std::vector<Vector2>(2, Vector2());
 	points[0] = _p1;
@@ -55,12 +55,12 @@ void Particle::Render(const Camera& camera) const
 	std::vector<Vector2> screenPoints;
 	screenPoints.reserve(points.size());
 
-	std::transform(points.begin(), points.end(), std::back_inserter(screenPoints), 
-		[&camera, world = World(pos, scale, rotation)](const Vector2& p)
-	{
-		auto worldPoint = world.TransformPoint(p);
-		return camera.Transform(worldPoint);
-	});
+	std::transform(points.begin(), points.end(), std::back_inserter(screenPoints),
+	               [&camera, world = World(pos, scale, rotation)](const Vector2& p)
+	               {
+		               auto worldPoint = world.TransformPoint(p);
+		               return camera.Transform(worldPoint);
+	               });
 
 	line.Render(screenPoints);
 }

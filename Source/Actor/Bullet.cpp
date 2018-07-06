@@ -4,7 +4,8 @@
 
 #include "Bullet.h"
 
-Bullet::Bullet(const Vector2& pos, const Vector2& size, float rot, const Model2D& model, const Vector2& velocity) : 
+Bullet::Bullet(const Vector2& pos, const Vector2& size, float rot,
+               const Model2D& model, const Vector2& velocity) :
 	ActorBase(pos, size, rot, model, velocity, 10)
 {
 	lifetime = 0.0f;

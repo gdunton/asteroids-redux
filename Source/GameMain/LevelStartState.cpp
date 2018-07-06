@@ -13,13 +13,11 @@
 
 const float LevelStartState::INTRO_TIME = 3.0f;
 
-LevelStartState::LevelStartState(const Content& content, GameStateManager* _parent) : 
+LevelStartState::LevelStartState(const Content& content, GameStateManager* _parent) :
 	GameState(_parent),
 	font(content.Graphics()),
 	background(content.Textures(), "transparent")
 {
-	
-
 	// Set the initial text
 	onScreenText = "Level Starts In";
 	countDownText = "3";

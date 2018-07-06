@@ -41,7 +41,7 @@ private:
 	// Return true if the two arrays of points can be seperated.
 	// Gives back the minimum resolution vector
 	static bool CheckPointListSeperability(std::vector<Vector2>& p1, std::vector<Vector2>& p2,
-	                                Vector2& outMtd);
+	                                       Vector2& outMtd);
 
 	// If an object has been moved due to world wrap then move it back
 	void RestorePosition(Vector2& moveDistance, Vector2& outPosition);

@@ -20,10 +20,10 @@ public:
 	void Reset();
 
 	// Adds new particles to the array
-	void AddParticles( std::vector<Particle>& newParticles );
+	void AddParticles(std::vector<Particle>& newParticles);
 
-	void Update( float dt );
-	void Render( Camera& camera );
+	void Update(float dt);
+	void Render(Camera& camera);
 
 private:
 	std::vector<Particle> particleArray;

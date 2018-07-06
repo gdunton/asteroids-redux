@@ -14,12 +14,9 @@ class KeyboardState;
 
 class GameState
 {
-protected:
-	GameStateManager* parent;
-
 public:
 	GameState() { parent = nullptr; }
-	GameState( GameStateManager* _parent ) : parent(_parent) { } 
+	GameState(GameStateManager* _parent) : parent(_parent) { }
 
 	virtual ~GameState() = default;
 
@@ -41,6 +38,9 @@ public:
 
 	// Called each frame
 	virtual void Render() = 0;
+
+protected:
+	GameStateManager * parent;
 };
 
 #endif

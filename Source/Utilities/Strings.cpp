@@ -23,20 +23,20 @@ std::string WStringToString(const std::wstring& wStr)
 std::vector<std::string_view> SplitString(std::string_view text, char separator)
 {
 	std::vector<std::string_view> results;
-	
-	while (!text.empty())
+
+	while(!text.empty())
 	{
 		const auto until = text.find(separator);
 
 		results.emplace_back(text.substr(0, until));
 
-		if (until == std::string_view::npos)
+		if(until == std::string_view::npos)
 		{
 			break;
 		}
-		
+
 		text.remove_prefix(until + 1);
-	} 
+	}
 
 	return results;
 }

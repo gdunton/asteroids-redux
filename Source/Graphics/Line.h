@@ -20,10 +20,6 @@ using Batch = DirectX::PrimitiveBatch<DirectX::VertexPositionColor>;
 
 class Line
 {
-private:
-	static Batch* m_pLine;
-	Color m_color;
-
 public:
 	Line();
 
@@ -34,6 +30,10 @@ public:
 	void Render(const std::vector<Vector2>& points) const;
 
 	void SetColor(const Color _color) { m_color = _color; }
+
+private:
+	static Batch* m_pLine;
+	Color m_color;
 };
 
 #endif

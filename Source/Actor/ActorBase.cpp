@@ -7,10 +7,8 @@
 #include "../GameMain/Globals.h"
 
 ActorBase::ActorBase(const Vector2& pos, const Vector2& size, float rot,
-                             const Model2D& model, Vector2 velocity, float mass)
-	: world(std::move(pos), std::move(size), std::move(rot)), 
-	  model(std::move(model)),
-	  mass(mass), velocity(std::move(velocity))
+                     const Model2D& model, Vector2 velocity, float mass)
+	: world(pos, size, rot), model(model), mass(mass), velocity(std::move(velocity))
 {
 	// is model set by now?
 	collision.Initialize(model.GetPoints());
@@ -142,14 +140,14 @@ MathTypes::Circle ActorBase::GetCircle() const
 	return MathTypes::Circle(world.pos, model.GetModelRadius() * world.scale.Length());
 }
 
-void ActorBase::Render(Camera& camera) const
+void ActorBase::Render(const Camera& camera) const
 {
 	model.Render(world, camera);
 }
 
 void ActorBase::WrapPosition()
 {
-	if (wrapAroundWorld)
+	if(wrapAroundWorld)
 	{
 		// Wraps position around the world if pos is greater than world size
 		WrapVector2(WORLD_WIDTH, WORLD_HEIGHT, world.pos);

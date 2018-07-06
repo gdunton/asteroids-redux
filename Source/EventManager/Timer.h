@@ -12,51 +12,35 @@
 
 class Timer
 {
-private:
-	// The frequency of the high res timer
-	double secondsPerCount;
-
-	// is updated every second to give an accurate (not calculated) value
-	int fps;
-	double fpsDelta;
-	__int64 prevFPSTime;
-
-	__int64 startTime;
-
 public:
-	Timer();
-
 	// Determines the frequency 
 	void Start();
+
 	// Returns the high res counter in seconds
-	inline double GetCurrTimeSecs()
-	{
-		__int64 currTime;
-		QueryPerformanceCounter( (LARGE_INTEGER*) &currTime );
-		return currTime * secondsPerCount;
-	}
+	double GetCurrTimeSecs() const;
+
 	// Returns the high res counter in number of ticks
-	inline __int64 GetHighResTimer()
-	{
-		__int64 currTime;
-		QueryPerformanceCounter( (LARGE_INTEGER*) &currTime );
-		return currTime;
-	}
+	__int64 GetHighResTimer() const;
+
 	// Gets the time since the timer was started in seconds
-	inline double GetDeltaTime()
-	{
-		__int64 currTime;
-		QueryPerformanceCounter( (LARGE_INTEGER*) &currTime );
-		return (currTime - startTime) * secondsPerCount;
-	}
+	double GetDeltaTime() const;
 
 	// Counts up until a new fps amount can be determined
 	void TickFPSCounter();
 
-	inline double GetSecsPerCount() { return secondsPerCount; }
-	inline int GetFPS() { return fps; }
+	double GetSecsPerCount() const { return secondsPerCount; }
+	int GetFPS() const { return fps; }
 
-	
+private:
+	// The frequency of the high res timer
+	double secondsPerCount = 0;
+
+	// is updated every second to give an accurate (not calculated) value
+	int fps = 0;
+	double fpsDelta = 0;
+	__int64 prevFPSTime = 0;
+
+	__int64 startTime = 0;
 };
 
 #endif

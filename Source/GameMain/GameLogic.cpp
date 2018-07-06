@@ -42,7 +42,7 @@ void GameLogic::Initialize(Game* _game)
 
 	// Initialize the models for all asteroids
 	asteroidModels = {
-		content.Models().CreateAsteroidModel1(), 
+		content.Models().CreateAsteroidModel1(),
 		content.Models().CreateAsteroidModel2(),
 		content.Models().CreateAsteroidModel3()
 	};
@@ -157,8 +157,8 @@ void GameLogic::Update(const float dt)
 
 	// Add any new asteroids
 	asteroids.insert(asteroids.end(), newAsteroids.begin(), newAsteroids.end());
-	std::for_each(newAsteroids.begin(), newAsteroids.end(), 
-		[this](const auto& asteroid) { quadtree.AddPhysicsObject(asteroid); });
+	std::for_each(newAsteroids.begin(), newAsteroids.end(),
+	              [this](const auto& asteroid) { quadtree.AddPhysicsObject(asteroid); });
 
 	// update the quad tree to check the collisions of all asteroids
 	quadtree.Update();
@@ -276,7 +276,7 @@ void GameLogic::Reset()
 
 void GameLogic::AddAsteroids(const std::vector<std::shared_ptr<Asteroid>>& newAsteroids)
 {
-	for (const auto& asteroid : newAsteroids)
+	for(const auto& asteroid : newAsteroids)
 	{
 		quadtree.AddPhysicsObject(asteroid);
 	}
@@ -294,23 +294,23 @@ int GameLogic::NumAsteroids() const
 	return asteroids.size();
 }
 
-void GameLogic::AddCameras(std::vector<Camera> cameras)
+void GameLogic::SetCameras(std::vector<Camera> newCameras)
 {
-	this->cameras = std::move(cameras);
+	cameras = std::move(newCameras);
 }
 
 void GameLogic::RemoveDeadAsteroids()
 {
 	for(const auto& asteroid : asteroids)
 	{
-		if (!asteroid->GetAlive())
+		if(!asteroid->GetAlive())
 		{
- 			quadtree.RemovePhysicsObject(asteroid);
+			quadtree.RemovePhysicsObject(asteroid);
 		}
 	}
 
 	asteroids.erase(
-		std::remove_if(asteroids.begin(), asteroids.end(), [](auto asteroid) { return !asteroid->GetAlive(); }), 
+		std::remove_if(asteroids.begin(), asteroids.end(), [](auto asteroid) { return !asteroid->GetAlive(); }),
 		asteroids.end());
 }
 

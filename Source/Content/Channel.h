@@ -22,15 +22,15 @@ public:
 	Channel();
 
 	// Creates sourceVoice and supplies callbacks
-	void Init( IXAudio2* xAudio2, WAVEFORMATEX* format );
+	void Init(IXAudio2* xAudio2, WAVEFORMATEX* format);
 
 	// submit sound effect to the buffer and start playback
-	void PlayWav( MyWav* myWav );
+	void PlayWav(MyWav* myWav);
 	bool PlayingSound() const;
 
 	void Stop();
 
-	void SetStopped( bool value ) { stopped = value; }
+	void SetStopped(bool value) { stopped = value; }
 
 private:
 	SourceVoicePtr sourceVoice;

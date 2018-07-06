@@ -4,31 +4,29 @@
 
 #include "GameStateManager.h"
 
-GameStateManager::GameStateManager( ) :
-	gameLogic(nullptr )
-{
-}
+GameStateManager::GameStateManager() :
+	gameLogic(nullptr)
+{}
 
-GameStateManager::GameStateManager(Content* content, GameLogic* logic ) :
-	gameLogic( logic ),
+GameStateManager::GameStateManager(Content* content, GameLogic* logic) :
+	gameLogic(logic),
 	content(content)
-{
-}
+{}
 
-void GameStateManager::SetInitialState( std::shared_ptr< GameState > initialState )
+void GameStateManager::SetInitialState(std::shared_ptr<GameState> initialState)
 {
 	// If current state hasn't yet been set
-	if( !currentState.get() )
+	if(!currentState.get())
 	{
 		currentState = initialState;
 		currentState->Enter();
 	}
 }
 
-void GameStateManager::SetState( std::shared_ptr<GameState> state )
+void GameStateManager::SetState(std::shared_ptr<GameState> state)
 {
 	// If the incoming state hasn't been set then set it
-	if( !incomingState.get() )
+	if(!incomingState.get())
 	{
 		incomingState = state;
 	}
@@ -37,7 +35,7 @@ void GameStateManager::SetState( std::shared_ptr<GameState> state )
 void GameStateManager::ResolveIncomingState()
 {
 	// If there is an incoming state
-	if( incomingState.get() )
+	if(incomingState.get())
 	{
 		// Exit the current state
 		currentState->Exit();
@@ -54,7 +52,7 @@ void GameStateManager::ResolveIncomingState()
 	}
 }
 
-GameState& GameStateManager::GetCurrentState() 
+GameState& GameStateManager::GetCurrentState()
 {
 	return *currentState.get();
 }

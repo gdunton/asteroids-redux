@@ -12,10 +12,9 @@
 
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
-
-#include "../Input/Keyboard.h"
-#include "IWindow.h"
 #include <memory>
+#include "IWindow.h"
+#include "../Input/Keyboard.h"
 #include "../GameMain/Game.h"
 
 class Window : public IWindow
@@ -36,12 +35,11 @@ public:
 	int GetClientHeight() const { return clientHeight; }
 
 private:
-	// Windows' own procedure function
+	// Windows own procedure function
 	LRESULT WndProc(UINT message, WPARAM wParam, LPARAM lParam);
 
 	// Static function passes on messages to internal procedure
 	static LRESULT CALLBACK CallbackWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
-
 
 	// Reference to the parent game
 	std::unique_ptr<Game> game;

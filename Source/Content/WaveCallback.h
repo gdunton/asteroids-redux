@@ -18,10 +18,10 @@ private:
 	Channel* parent;
 
 public:
-	WaveCallback() : parent( nullptr ) {}
-	~WaveCallback(){}
+	WaveCallback() : parent(nullptr) {}
+	~WaveCallback() {}
 
-	void Init( Channel* _parent )
+	void Init(Channel* _parent)
 	{
 		parent = _parent;
 	}
@@ -30,12 +30,12 @@ public:
 	void __stdcall OnStreamEnd();
 
 	// Unused method stubs
-	void __stdcall OnVoiceProcessingPassEnd(){}
-	void __stdcall OnVoiceProcessingPassStart( UINT32 /*SamplesRequired*/ ) {}
-	void __stdcall OnBufferEnd( void* /*bufferContext*/ ) {}
-	void __stdcall OnBufferStart( void* /*bufferContext*/ ) {}
-	void __stdcall OnLoopEnd( void* /*bufferContext*/ ) {}
-	void __stdcall OnVoiceError( void* /*bufferContext*/, HRESULT /*error*/ ) {}
+	void __stdcall OnVoiceProcessingPassEnd() {}
+	void __stdcall OnVoiceProcessingPassStart(UINT32 /*SamplesRequired*/) {}
+	void __stdcall OnBufferEnd(void* /*bufferContext*/) {}
+	void __stdcall OnBufferStart(void* /*bufferContext*/) {}
+	void __stdcall OnLoopEnd(void* /*bufferContext*/) {}
+	void __stdcall OnVoiceError(void* /*bufferContext*/, HRESULT /*error*/) {}
 };
 
 #endif

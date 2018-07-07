@@ -21,10 +21,10 @@ const int MAX_BULLETS = 5;
 class Player : public ActorBase
 {
 public:
-	Player();
+	Player() noexcept;
 	Player(const Vector2& pos, const Vector2& size, float rot,
 	       const Model2D& model, const Vector2& velocity, float mass,
-	       AudioManager* audioManager);
+	       AudioManager* audioManager) noexcept;
 
 	void Update(float dt) override;
 	void Render(const Camera& camera) const override;

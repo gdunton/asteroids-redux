@@ -18,8 +18,8 @@ enum class KeyState { unpressed = 0, pressed = 1 };
 class KeyboardState
 {
 public:
-	KeyboardState();
-	explicit KeyboardState(const std::array<KeyState, 256>& keyList);
+	KeyboardState() noexcept;
+	explicit KeyboardState(const std::array<KeyState, 256>& keyList) noexcept;
 
 	KeyState GetKeyState(KeyCode key) const;
 

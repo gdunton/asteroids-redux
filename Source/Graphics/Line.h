@@ -13,15 +13,12 @@
 #include "../Utilities/Color.h"
 #include "../Utilities/Vector2.h"
 
-struct World;
-class Camera;
-
 using Batch = DirectX::PrimitiveBatch<DirectX::VertexPositionColor>;
 
 class Line
 {
 public:
-	Line();
+	Line() noexcept;
 
 	static void SetLine(Batch* line);
 

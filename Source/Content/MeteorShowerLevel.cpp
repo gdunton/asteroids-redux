@@ -28,7 +28,7 @@ MeteorShowerLevel::MeteorShowerLevel(GameLogic* parent, int level) :
 		Camera(Vector2(0, 0), Vector2(WORLD_WIDTH * 0.99f, WORLD_HEIGHT * 0.985f), WINDOW_WIDTH, WINDOW_HEIGHT)
 	});
 
-	int numAsteroids = MIN_ASTEROIDS_PER_COUNTDOWN + static_cast<int>(Random()) *
+	const int numAsteroids = MIN_ASTEROIDS_PER_COUNTDOWN + static_cast<int>(Random()) *
 		(MAX_ASTEROIDS_PER_COUNTDOWN - MIN_ASTEROIDS_PER_COUNTDOWN) * 4;
 
 	// Create the asteroids
@@ -59,7 +59,7 @@ void MeteorShowerLevel::Update(float dt)
 	if(asteroidTimer.GetDeltaTime() >= timeTillAsteroids)
 	{
 		// Add some more asteroids
-		int numAsteroids = MIN_ASTEROIDS_PER_COUNTDOWN + static_cast<int>(Random()) *
+		const int numAsteroids = MIN_ASTEROIDS_PER_COUNTDOWN + static_cast<int>(Random()) *
 			(MAX_ASTEROIDS_PER_COUNTDOWN - MIN_ASTEROIDS_PER_COUNTDOWN);
 
 		std::vector<std::shared_ptr<Asteroid>> newAsteroids;
@@ -76,19 +76,19 @@ void MeteorShowerLevel::Update(float dt)
 	}
 }
 
-std::shared_ptr<Asteroid> MeteorShowerLevel::CreateAsteroid()
+std::shared_ptr<Asteroid> MeteorShowerLevel::CreateAsteroid() const
 {
 	Vector2 pos = Vector2(
 		Random((WORLD_WIDTH / 2) + 30, WORLD_WIDTH + WORLD_WIDTH / 2),
 		Random(-WORLD_HEIGHT / 2, WORLD_HEIGHT / 2));
 	float rot = Random(-PI, PI);
 	// Create the health then base the size, mass and velocity on health
-	float random = Random();
+	const float random = Random();
 	int health;
 	if(random <= 0.1) health = 1;
 	else if(random > 0.1 && random <= 0.3) health = 2;
 	else if(random > 0.3 && random <= 0.96) health = 3;
-	else if(random > 0.96 && difficulty > 1) health = 5;
+	else if(random > 0.96 && difficulty != EASY) health = 5;
 	else health = 3;
 
 	// Create the size
@@ -97,8 +97,8 @@ std::shared_ptr<Asteroid> MeteorShowerLevel::CreateAsteroid()
 	float size = sizeScale * (Asteroid::MAX_SIZE - Asteroid::MIN_SIZE) + Asteroid::MIN_SIZE;
 	float mass = sizeScale * (Asteroid::MAX_MASS - Asteroid::MIN_MASS) + Asteroid::MIN_MASS;
 
-	float maxVelY = WORLD_HEIGHT / 2 - 20;
-	float minVelY = -WORLD_WIDTH / 2 + 20;
+	const float maxVelY = WORLD_HEIGHT / 2 - 20;
+	const float minVelY = -WORLD_WIDTH / 2 + 20;
 	Vector2 vel = Vector2(-WORLD_WIDTH / 2, minVelY + Random() * (maxVelY - minVelY));
 	vel -= pos;
 	Normalize(vel);

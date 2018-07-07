@@ -14,20 +14,13 @@
 
 class CollisionShape
 {
-private:
-	std::vector<Vector2> points;
-	World world;
-
-	// Whether the object need to wrap around the edge of the world
-	bool wrapAround;
-
 public:
-	CollisionShape();
+	CollisionShape() noexcept;
 
-	void Initialize(const std::vector<Vector2>& points);
+	void Initialize(const std::vector<Vector2>& newPoints);
 
 	// Set the coordinates which creates adjusted
-	void SetWorld(const World& world);
+	void SetWorld(const World& newWorld);
 
 	// Returns true if a collision occurs and sets a push resolution vector
 	bool CheckCollision(CollisionShape& shape, Vector2& outResolution);
@@ -44,7 +37,13 @@ private:
 	                                       Vector2& outMtd);
 
 	// If an object has been moved due to world wrap then move it back
-	void RestorePosition(Vector2& moveDistance, Vector2& outPosition);
+	void RestorePosition(const Vector2& moveDistance, Vector2& outPosition) const;
+
+	std::vector<Vector2> points;
+	World world;
+
+	// Whether the object need to wrap around the edge of the world
+	bool wrapAround;
 };
 
 #endif

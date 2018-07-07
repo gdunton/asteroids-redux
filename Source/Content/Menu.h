@@ -19,7 +19,7 @@ class GameState;
 class Menu
 {
 public:
-	Menu(const Content& graphics, GameState* parent, std::shared_ptr<std::vector<MenuItem>> items, int pointerOffset);
+	Menu(const Content& content, std::shared_ptr<std::vector<MenuItem>> items, int pointerOffset);
 
 	// Called each frame to check input
 	void Update(const KeyboardState& keyboardState);

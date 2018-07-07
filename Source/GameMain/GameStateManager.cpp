@@ -4,16 +4,16 @@
 
 #include "GameStateManager.h"
 
-GameStateManager::GameStateManager() :
+GameStateManager::GameStateManager() noexcept :
 	gameLogic(nullptr)
 {}
 
-GameStateManager::GameStateManager(Content* content, GameLogic* logic) :
+GameStateManager::GameStateManager(Content* content, GameLogic* logic) noexcept :
 	gameLogic(logic),
 	content(content)
 {}
 
-void GameStateManager::SetInitialState(std::shared_ptr<GameState> initialState)
+void GameStateManager::SetInitialState(const std::shared_ptr<GameState>& initialState)
 {
 	// If current state hasn't yet been set
 	if(!currentState.get())
@@ -23,7 +23,7 @@ void GameStateManager::SetInitialState(std::shared_ptr<GameState> initialState)
 	}
 }
 
-void GameStateManager::SetState(std::shared_ptr<GameState> state)
+void GameStateManager::SetState(const std::shared_ptr<GameState>& state)
 {
 	// If the incoming state hasn't been set then set it
 	if(!incomingState.get())
@@ -35,7 +35,7 @@ void GameStateManager::SetState(std::shared_ptr<GameState> state)
 void GameStateManager::ResolveIncomingState()
 {
 	// If there is an incoming state
-	if(incomingState.get())
+	if(incomingState)
 	{
 		// Exit the current state
 		currentState->Exit();

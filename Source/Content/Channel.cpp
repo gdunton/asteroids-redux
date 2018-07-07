@@ -17,7 +17,7 @@ namespace
 	}
 }
 
-Channel::Channel() :
+Channel::Channel() noexcept :
 	sourceVoice(nullptr, &DestroySourceVoice)
 {
 	stopped = true;
@@ -40,9 +40,9 @@ bool Channel::PlayingSound() const
 	return !stopped;
 }
 
-void Channel::PlayWav(MyWav* wav)
+void Channel::PlayWav(MyWav* myWav)
 {
-	sourceVoice->SubmitSourceBuffer(wav->GetBuffer());
+	sourceVoice->SubmitSourceBuffer(myWav->GetBuffer());
 	sourceVoice->Start(0);
 	stopped = false;
 }

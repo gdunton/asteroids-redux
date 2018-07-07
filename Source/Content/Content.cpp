@@ -1,5 +1,4 @@
 ﻿#include "Content.h"
-#include "../Utilities/Strings.h"
 #include <filesystem>
 
 Content::Content(GraphicsDeviceManager& graphics) :

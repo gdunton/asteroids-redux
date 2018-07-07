@@ -18,12 +18,12 @@ class Content;
 class GameStateManager
 {
 public:
-	GameStateManager();
-	GameStateManager(Content* content, GameLogic* logic);
+	GameStateManager() noexcept;
+	GameStateManager(Content* content, GameLogic* logic) noexcept;
 
 	// Set state functions
-	void SetInitialState(std::shared_ptr<GameState> initialState);
-	void SetState(std::shared_ptr<GameState> state);
+	void SetInitialState(const std::shared_ptr<GameState>& initialState);
+	void SetState(const std::shared_ptr<GameState>& state);
 
 	// Moves the incoming state into the currentState. Calls corrent GameState 
 	// functions

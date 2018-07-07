@@ -8,7 +8,7 @@
 #ifndef AUDIOMANAGER_H
 #define AUDIOMANAGER_H
 
-#include <XAudio2.h>
+#include <xaudio2.h>
 #include "MyWav.h"
 #include "Channel.h"
 #include <map>
@@ -20,6 +20,11 @@ class AudioManager
 public:
 	AudioManager();
 	~AudioManager();
+
+	AudioManager(const AudioManager& other) = delete;
+	AudioManager(AudioManager&& other) noexcept = delete;
+	AudioManager& operator=(const AudioManager& other) = delete;
+	AudioManager& operator=(AudioManager&& other) noexcept = delete;
 
 private:
 	// Collection of all wav sound assets

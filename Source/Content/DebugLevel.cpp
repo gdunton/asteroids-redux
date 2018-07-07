@@ -4,12 +4,11 @@
 
 #include "DebugLevel.h"
 
-#include "../GameMain/Globals.h"
 #include "../GameMain/GameLogic.h"
 #include "../Actor/Player.h"
 
-DebugLevel::DebugLevel(GameLogic* _parent, int difficulty)
-	: Level(_parent, difficulty)
+DebugLevel::DebugLevel(GameLogic* parent, int difficulty)
+	: Level(parent, difficulty)
 {
 	parent->SetCameras(CreateCameraArray());
 

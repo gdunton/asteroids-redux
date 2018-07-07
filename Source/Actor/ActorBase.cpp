@@ -7,7 +7,7 @@
 #include "../GameMain/Globals.h"
 
 ActorBase::ActorBase(const Vector2& pos, const Vector2& size, float rot,
-                     const Model2D& model, Vector2 velocity, float mass)
+                     const Model2D& model, Vector2 velocity, float mass) noexcept
 	: world(pos, size, rot), model(model), mass(mass), velocity(std::move(velocity))
 {
 	// is model set by now?
@@ -83,28 +83,28 @@ void ActorBase::PerformCollisionCalculation(ActorBase& object)
 	// Get normalized distance and tangents between two objects
 	Vector2 normal = direction;
 	Normalize(normal);
-	Vector2 tangent = Vector2(-normal.y, normal.x);
+	const Vector2 tangent = Vector2(-normal.y, normal.x);
 
 	{
 		// Change both velocities from the collision
 		// Get both masses
-		float m1 = mass;
-		float m2 = object.GetMass();
+		const float m1 = mass;
+		const float m2 = object.GetMass();
 
 		// Get both the velocities
-		Vector2 v1 = velocity;
-		Vector2 v2 = object.GetVelocity();
+		const Vector2 v1 = velocity;
+		const Vector2 v2 = object.GetVelocity();
 
 		// Create the normal and tangent velocities using the dot product
-		float v1n = Dot(normal, v1);
-		float v1t = Dot(tangent, v1);
-		float v2n = Dot(normal, v2);
-		float v2t = Dot(tangent, v2);
+		const float v1n = Dot(normal, v1);
+		const float v1t = Dot(tangent, v1);
+		const float v2n = Dot(normal, v2);
+		const float v2t = Dot(tangent, v2);
 
 		// use the elastic collision equation to get the new normal velocity for 
 		// both physics components
-		float v1nFinal = (v1n * (m1 - m2) + 2 * m2 * v2n) / (m1 + m2);
-		float v2nFinal = (v2n * (m2 - m1) + 2 * m1 * v1n) / (m1 + m2);
+		const float v1nFinal = (v1n * (m1 - m2) + 2 * m2 * v2n) / (m1 + m2);
+		const float v2nFinal = (v2n * (m2 - m1) + 2 * m1 * v1n) / (m1 + m2);
 
 		velocity = (v1nFinal * normal) + (v1t * tangent);
 		object.velocity = (v2nFinal * normal) + (v2t * tangent);
@@ -113,7 +113,7 @@ void ActorBase::PerformCollisionCalculation(ActorBase& object)
 
 // Moves two physicsObjects apart by minTranslation but takes into account
 // whether the world wraps around
-void ActorBase::AdvancedMoveApart(ActorBase& ob, Vector2& res)
+void ActorBase::AdvancedMoveApart(ActorBase& ob, Vector2& minTranslation)
 {
 	// Work out which object is facing the other
 	Vector2 wrappedDistance(0, 0);
@@ -126,12 +126,12 @@ void ActorBase::AdvancedMoveApart(ActorBase& ob, Vector2& res)
 		//wrappedDistance = ob.GetPos() - world.pos;
 		wrappedDistance = world.pos - ob.GetPos();
 	}
-	if(Dot(res, wrappedDistance) < 0.0f)
+	if(Dot(minTranslation, wrappedDistance) < 0.0f)
 	{
-		res = -res;
+		minTranslation = -minTranslation;
 	}
-	world.pos += res / 2;
-	ob.world.pos -= res / 2;
+	world.pos += minTranslation / 2;
+	ob.world.pos -= minTranslation / 2;
 }
 
 MathTypes::Circle ActorBase::GetCircle() const

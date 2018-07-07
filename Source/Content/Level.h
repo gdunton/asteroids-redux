@@ -20,6 +20,10 @@ public:
 	{ }
 
 	virtual ~Level() = default;
+	Level(const Level& other) = default;
+	Level(Level&& other) noexcept = default;
+	Level& operator=(const Level& other) = default;
+	Level& operator=(Level&& other) noexcept = default;
 
 	// Called per frame to check when the level is completed
 	virtual bool Complete() = 0;

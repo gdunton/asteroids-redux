@@ -6,6 +6,7 @@
 #ifndef MATH_TYPES_H
 #define MATH_TYPES_H
 
+#include <utility>
 #include "Vector2.h"
 
 class Model2D;
@@ -90,8 +91,11 @@ struct World
 	Vector2 scale;
 	float rot;
 
-	World() : pos(0, 0), scale{ 1, 1 }, rot(0) { }
-	World(const Vector2& _pos, const Vector2& _scale, const float _rot) : pos(_pos), scale(_scale), rot(_rot) { }
+	World() noexcept : pos(0, 0), scale{ 1, 1 }, rot(0) { }
+
+	World(Vector2 _pos, Vector2 _scale, const float _rot) noexcept :
+		pos(std::move(_pos)), scale(std::move(_scale)), rot(_rot)
+	{ }
 
 	// transform object position by the world
 	Vector2 TransformPoint(const Vector2& p) const
@@ -119,23 +123,21 @@ namespace MathTypes
 		Vector2 position;
 		Vector2 size;
 
-		Rectangle(Vector2 pos, Vector2 _size) : position(pos), size(_size) { }
-		Rectangle() : position(Vector2(0, 0)), size(Vector2(0, 0)) { }
+		Rectangle(Vector2 pos, Vector2 size) : 
+			position(std::move(pos)), size(std::move(size)) 
+		{ }
+		Rectangle() noexcept = default;
 
 		bool Intersects(const Rectangle& rect2) const
 		{
 			// if second box is seperable from box
-			if(rect2.position.x > (position.x + size.x) ||
-				(rect2.position.x + size.x) < position.x ||
-				rect2.position.y > (position.y + size.y) ||
-				(rect2.position.y + rect2.size.y) < position.y)
-			{
-				return false;
-			}
-			return true;
+			return !(rect2.position.x > (position.x + size.x) || 
+				(rect2.position.x + size.x) < position.x || 
+				rect2.position.y > (position.y + size.y) || 
+				(rect2.position.y + rect2.size.y) < position.y);
 		}
 
-		void Draw(Camera& camera, const Model2D& quadModel) const;
+		void Draw(const Camera& camera, const Model2D& quadModel) const;
 
 		bool Intersects(const Circle& circle) const;
 		bool Contains(const Circle& circle) const;
@@ -149,7 +151,9 @@ namespace MathTypes
 		float radius = 0.0f;
 
 		Circle() = default;
-		Circle(const Vector2& pos, const float _radius) : position(pos), radius(_radius) { }
+		Circle(Vector2 pos, const float radius) : 
+			position(std::move(pos)), radius(radius) 
+		{ }
 
 		bool Intersects(const Circle& circle) const
 		{

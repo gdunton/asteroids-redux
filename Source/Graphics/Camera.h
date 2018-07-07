@@ -13,7 +13,7 @@ class Camera
 {
 public:
 
-	Camera(const Vector2& center, const Vector2& size, float windowWidth, float windowHeight);
+	Camera(Vector2 center, Vector2 size, float windowWidth, float windowHeight);
 
 	// Takes world position and outputs a point with coords in the client dimensions
 	Vector2 Transform(const Vector2& worldPos) const;

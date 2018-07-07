@@ -242,7 +242,7 @@ void GameLogic::Render(bool showLives, bool showLevelNum)
 	{
 		for(int i = 0; i < player.GetLives(); i++)
 		{
-			Vector2 pos(15 + (static_cast<float>(i) * 20), 18);
+			const Vector2 pos(15 + (static_cast<float>(i) * 20), 18);
 			lifeModel.RenderToScreen(World(pos, Vector2(6, 6), PI));
 		}
 	}

@@ -5,22 +5,19 @@
 #include "AudioManager.h"
 #include <algorithm>
 #include "Content.h"
+#include "../Debugging/Error.h"
 
 const int AudioManager::NUM_CHANNELS = 10;
 
 AudioManager::AudioManager()
 {
-	CoInitialize(nullptr);
+	const auto result = CoInitialize(nullptr);
+	ASSERT(result == S_OK);
 	assetsDir = Content::GetAssetsDir();
 
 	// Create the audio device and mastering voice
 	xAudio2 = nullptr;
 	masteringVoice = nullptr;
-
-	unsigned int flags = 0;
-#ifdef DEBUG
-	flags |= XAUDIO2_DEBUG_ENGINE;
-#endif
 
 	HRESULT hr = XAudio2Create(&xAudio2/*, flags*/);
 	if(hr != S_OK)

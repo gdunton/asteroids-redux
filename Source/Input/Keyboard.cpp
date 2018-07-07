@@ -4,7 +4,7 @@
 
 #include "Keyboard.h"
 
-Keyboard::Keyboard() :
+Keyboard::Keyboard() noexcept :
 	keys()
 {
 	keys.fill(KeyState::unpressed);

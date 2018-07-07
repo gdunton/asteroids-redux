@@ -15,7 +15,7 @@ class KeyboardState;
 class GameState
 {
 public:
-	GameState() { parent = nullptr; }
+	GameState() noexcept { parent = nullptr; }
 	GameState(GameStateManager* _parent) : parent(_parent) { }
 
 	virtual ~GameState() = default;

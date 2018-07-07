@@ -20,23 +20,24 @@ const int Player::STARTING_LIVES = 3;
 
 const float Player::DAMAGE_COOLDOWN_SECONDS = 2;
 
-Player::Player()
+Player::Player() noexcept : 
+	thrustSound(nullptr)
 {
 	lives = STARTING_LIVES;
 	startingWorld = World();
 	startingVelocity = Vector2(0, 0);
 }
 
-Player::Player(const Vector2& _pos, const Vector2& _size, float _rot,
-               const Model2D& _model, const Vector2& _velocity, float _mass,
-               AudioManager* audioManager) :
-	ActorBase(_pos, _size, _rot, _model, _velocity, _mass), audioManager(audioManager)
+Player::Player(const Vector2& pos, const Vector2& size, float rot,
+               const Model2D& model, const Vector2& velocity, float mass,
+               AudioManager* audioManager) noexcept :
+	ActorBase(pos, size, rot, model, velocity, mass), audioManager(audioManager)
 {
 	bulletCooldown = 0;
 	lives = STARTING_LIVES;
 
-	startingWorld = World(_pos, _size, _rot);
-	startingVelocity = _velocity;
+	startingWorld = World(pos, size, rot);
+	startingVelocity = velocity;
 
 	invulnerable = false;
 	pulseSeconds = 0.2f;
@@ -143,15 +144,15 @@ void Player::FireBullet()
 	}
 
 	// Search for a bullet that isn't alive
-	for(int i = 0; i < MAX_BULLETS; ++i)
+	for(auto& i : bulletsArray)
 	{
-		if(!bulletsArray[i].IsAlive()) // bullet not alive
+		if(!i.IsAlive()) // bullet not alive
 		{
 			// Get the player direction
 			Vector2 direction(0, 1);
 			direction = RotatePoint(direction, world.rot);
 			// Create new bullet
-			bulletsArray[i] = Bullet(world.pos, Vector2(1, 1), world.rot,
+			i = Bullet(world.pos, Vector2(1, 1), world.rot,
 			                         model,
 			                         direction * Bullet::FIRING_SPEED);
 
@@ -289,7 +290,7 @@ void Player::TickInvulnerability(float dt)
 	case inPulse:
 	{
 		// recalculate the alpha
-		float ratio = pulseClock.GetDeltaTime() / pulseSeconds;
+		const float ratio = pulseClock.GetDeltaTime() / pulseSeconds;
 		alpha = 255.0f * sin(ratio) + 64.0f;
 		if(alpha > 255.0f) alpha = 255.0f;
 		break;
@@ -321,7 +322,7 @@ void Player::TickInvulnerability(float dt)
 	}
 
 	// Set the model color
-	float alphaFactor = alpha / 255.0f;
+	const float alphaFactor = alpha / 255.0f;
 	const Color col(1.0f * alphaFactor, 1.0f * alphaFactor, 1.0f * alphaFactor, 1.0f);
 	model.SetColor(col);
 }

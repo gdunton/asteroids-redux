@@ -18,10 +18,10 @@ class Quadtree
 public:
 	friend Quadtree;
 
-	Quadtree();
+	Quadtree() noexcept;
 
 	// Initializer to set the bounding rectangle and the parent
-	void Initialize(Quadtree* parent, MathTypes::Rectangle rect, int level);
+	void Initialize(Quadtree* newParent, MathTypes::Rectangle newRect, int newLevel);
 
 	// Check all objects are in the right quad. Move if not
 	// perform the collision on the objects
@@ -41,7 +41,7 @@ public:
 	// Remove all elements
 	void Reset();
 
-	void DrawQuads(Camera& camera, const Model2D& quadModel);
+	void DrawQuads(const Camera& camera, const Model2D& quadModel);
 
 	// Get the number of physics objects in the quad and children
 	int NumPhysicsObjects();
@@ -76,14 +76,14 @@ private:
 
 	// Insert a physics object called from a lower level quad. Used for moving 
 	// objects up the tree until they find a quad they fit in
-	void InsertFromLower(std::shared_ptr<ActorBase> object);
+	void InsertFromLower(const std::shared_ptr<ActorBase>& object);
 
 	// Insert from higher add object to lower level quad. Used for attempting 
 	// to send object down the tree
-	bool InsertFromHigher(std::shared_ptr<ActorBase> object);
+	bool InsertFromHigher(const std::shared_ptr<ActorBase>& object);
 
 	// Inserts the object into the actual array
-	void AddObject(const std::shared_ptr<ActorBase>& ob);
+	void AddObject(const std::shared_ptr<ActorBase>& object);
 
 
 	// Vector with all the different quads. Can have either 4 or 0 children

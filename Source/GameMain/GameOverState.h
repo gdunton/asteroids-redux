@@ -18,7 +18,7 @@ class Content;
 class GameOverState : public GameState
 {
 public:
-	explicit GameOverState(const Content& graphics, GameStateManager* parent);
+	explicit GameOverState(const Content& content, GameStateManager* parent);
 
 	// Virtuals from GameState
 	void Enter() override;

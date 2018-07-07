@@ -4,10 +4,10 @@
 
 #include "Camera.h"
 
-Camera::Camera(const Vector2& center, const Vector2& size,
+Camera::Camera(Vector2 center, Vector2 size,
                float windowWidth, float windowHeight) :
-	center(center),
-	size(size),
+	center(std::move(center)),
+	size(std::move(size)),
 	windowWidth(static_cast<int>(windowWidth)),
 	windowHeight(static_cast<int>(windowHeight))
 {}
@@ -25,6 +25,6 @@ Vector2 Camera::Transform(const Vector2& worldPos) const
 
 MathTypes::Rectangle Camera::GetScreenRect() const
 {
-	Vector2 offset = size * 1.05f;
+	const Vector2 offset = size * 1.05f;
 	return MathTypes::Rectangle(center - static_cast<Vector2>(size / 2) - offset, size + (offset * 2.0f));
 }

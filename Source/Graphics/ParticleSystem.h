@@ -15,7 +15,7 @@ class Camera;
 class ParticleSystem
 {
 public:
-	ParticleSystem();
+	ParticleSystem() noexcept;
 
 	void Reset();
 
@@ -23,7 +23,7 @@ public:
 	void AddParticles(std::vector<Particle>& newParticles);
 
 	void Update(float dt);
-	void Render(Camera& camera);
+	void Render(const Camera& camera);
 
 private:
 	std::vector<Particle> particleArray;

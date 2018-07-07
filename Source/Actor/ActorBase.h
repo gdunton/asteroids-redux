@@ -15,10 +15,15 @@ class ActorBase
 {
 public:
 
-	ActorBase() = default;
+	ActorBase() noexcept = default;
 	ActorBase(const Vector2& pos, const Vector2& size, float rot,
-	          const Model2D& model, Vector2 velocity, float mass);
+	          const Model2D& model, Vector2 velocity, float mass) noexcept;
 	virtual ~ActorBase() = default;
+
+	ActorBase(const ActorBase& other) = default;
+	ActorBase(ActorBase&& other) noexcept = default;
+	ActorBase& operator=(const ActorBase& other) = default;
+	ActorBase& operator=(ActorBase&& other) noexcept = default;
 
 	virtual void Update(float dt) = 0;
 

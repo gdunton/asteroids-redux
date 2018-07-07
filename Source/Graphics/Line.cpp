@@ -3,14 +3,12 @@
 //-----------------------------------------------------------
 
 #include <algorithm>
-#include "../Utilities/MathTypes.h"
 #include "Line.h"
-#include "Camera.h"
 #include "GraphicsDeviceManager.h"
 
 Batch* Line::m_pLine = nullptr;
 
-Line::Line() :
+Line::Line() noexcept :
 	m_color(WHITE)
 {}
 

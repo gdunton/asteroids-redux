@@ -7,21 +7,19 @@
 #include "Camera.h"
 #include <algorithm>
 
-Particle::Particle(Vector2 _p1, Vector2 _p2, Vector2 _pos, Vector2 _scale, Vector2 _velocity,
-                   float rot, float rotationSpeed, float _lifespan)
+Particle::Particle(Vector2 p1, Vector2 p2, Vector2 pos, Vector2 scale, Vector2 velocity,
+                   float rotation, float rotationSpeed, float lifespan) :
+	lifespan(lifespan),
+	rotation(rotation),
+	scale(std::move(scale)),
+	pos(std::move(pos)),
+	velocity(std::move(velocity))
 {
 	points = std::vector<Vector2>(2, Vector2());
-	points[0] = _p1;
-	points[1] = _p2;
-	velocity = _velocity;
+	points[0] = p1;
+	points[1] = p2;
 	rotSpeed = rotationSpeed;
-	lifespan = _lifespan;
-	initialLife = _lifespan;
-
-	rotation = rot;
-	scale = _scale;
-
-	pos = _pos;
+	initialLife = lifespan;
 
 	alpha = 255;
 }

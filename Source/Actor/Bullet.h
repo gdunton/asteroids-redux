@@ -13,7 +13,7 @@
 class Bullet : public ActorBase
 {
 public:
-	Bullet() = default;
+	Bullet() noexcept = default;
 	Bullet(const Vector2& pos, const Vector2& size, float rot, const Model2D& model, const Vector2& velocity);
 
 	// Move the bullet 

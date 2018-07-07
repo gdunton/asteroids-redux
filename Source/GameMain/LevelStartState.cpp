@@ -13,10 +13,10 @@
 
 const float LevelStartState::INTRO_TIME = 3.0f;
 
-LevelStartState::LevelStartState(const Content& content, GameStateManager* _parent) :
-	GameState(_parent),
-	font(content.Graphics()),
-	background(content.Textures(), "transparent")
+LevelStartState::LevelStartState(const Content& content, GameStateManager* parent) :
+	GameState(parent),
+	background(content.Textures(), "transparent"),
+	font(content.Graphics())
 {
 	// Set the initial text
 	onScreenText = "Level Starts In";
@@ -42,7 +42,7 @@ void LevelStartState::Update(float dt, const KeyboardState& /*keyboardState*/)
 	clock.Tick(dt);
 
 	// Check the time until the level starts
-	float delta = clock.GetDeltaTime();
+	const float delta = clock.GetDeltaTime();
 	if(delta >= INTRO_TIME)
 	{
 		// Begin the level

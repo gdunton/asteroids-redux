@@ -17,7 +17,7 @@ MainMenuState::MainMenuState(const Content& content, GameStateManager* parent) :
 	GameState(parent),
 	titleFont(content.Graphics()),
 	subFont1(content.Graphics()),
-	menu(content, this, MakeMenuItems(content.Graphics()), 100),
+	menu(content, MakeMenuItems(content.Graphics()), 100),
 	background(content.Textures(), "transparent")
 { }
 

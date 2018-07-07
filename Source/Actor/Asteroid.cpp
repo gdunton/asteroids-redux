@@ -74,7 +74,7 @@ void Asteroid::SplitAsteroids(Asteroid& asteroid)
 		AdvancedMoveApart(asteroid, res);
 		PerformCollisionCalculation(asteroid);
 
-		Vector2 tangent = Vector2(-velocity.y, velocity.x);
+		const Vector2 tangent = Vector2(-velocity.y, velocity.x);
 
 		// Set the velocity to push the objects apart
 		velocity += tangent * 0.5f;

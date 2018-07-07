@@ -15,8 +15,6 @@
 
 #include "../Graphics/Font.h"
 #include "../Graphics/GraphicsDeviceManager.h"
-#include "../Content/TextureManager.h"
-#include "../Content/ModelManager.h"
 #include "../Content/Content.h"
 #include "../Input/KeyboardState.h"
 

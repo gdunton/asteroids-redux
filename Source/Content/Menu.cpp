@@ -5,25 +5,23 @@
 #include "Menu.h"
 #include <utility>
 
-#include "../GameMain/GameState.h"
 #include "../Input/Keyboard.h"
 #include "../Content/ModelManager.h"
 #include "Content.h"
 #include "../Utilities/MathTypes.h"
 
-Menu::Menu(const Content& content, GameState* /*parent*/, std::shared_ptr<std::vector<MenuItem>> items,
-           int _pointerOffset) :
-	font(content.Graphics(), WHITE), menuItems(std::move(items)), pointerOffset(_pointerOffset)
+Menu::Menu(const Content& content, std::shared_ptr<std::vector<MenuItem>> items, int pointerOffset) :
+	font(content.Graphics(), WHITE), menuItems(std::move(items)), pointerOffset(pointerOffset)
 {
 	// Calculate current Item Index by finding the menu item with the smallest Y position
 	float y = 10000;
 
 	for(size_t i = 0; i < menuItems->size(); ++i)
 	{
-		if((*menuItems)[i].GetPosition().y <= y) // if y smaller
+		if(menuItems->at(i).GetPosition().y <= y) // if y smaller
 		{
 			// store smaller position and item index
-			y = (*menuItems)[i].GetPosition().y;
+			y = menuItems->at(i).GetPosition().y;
 			currentItemIndex = i;
 		}
 	}

@@ -41,7 +41,7 @@ void Font::DrawString(const std::string& str, const Vector2& position) const
 Vector2 Font::GetTextSize(const std::string& str) const
 {
 	std::wstring wStr = StringToWString(str);
-	DirectX::XMVECTOR result = font->MeasureString(wStr.c_str());
+	const DirectX::XMVECTOR result = font->MeasureString(wStr.c_str());
 
 	return Vector2(DirectX::XMVectorGetX(result), DirectX::XMVectorGetY(result));
 }

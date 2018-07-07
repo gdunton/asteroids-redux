@@ -55,7 +55,7 @@ void TextureManager::CreateTransparencyRect(GraphicsDeviceManager& graphicsManag
 
 	ID3D11Texture2D* texture = nullptr;
 
-	float* buffer = new float[static_cast<int>(WINDOW_WIDTH) * static_cast<int>(WINDOW_HEIGHT) * 4];
+	auto buffer = std::make_unique<float[]>(static_cast<int>(WINDOW_WIDTH) * static_cast<int>(WINDOW_HEIGHT) * 4);
 
 	for(int y = 0; y < WINDOW_HEIGHT * WINDOW_WIDTH * 4; ++y)
 	{
@@ -65,12 +65,10 @@ void TextureManager::CreateTransparencyRect(GraphicsDeviceManager& graphicsManag
 	D3D11_SUBRESOURCE_DATA texData;
 	texData.SysMemPitch = static_cast<int>(WINDOW_WIDTH) * sizeof(float) * 4;
 	texData.SysMemSlicePitch = static_cast<int>(WINDOW_WIDTH) * static_cast<int>(WINDOW_HEIGHT) * sizeof(float) * 4;
-	texData.pSysMem = static_cast<void*>(buffer);
+	texData.pSysMem = static_cast<void*>(buffer.get());
 
 	HRESULT hr = graphicsManager.GetDevice()->CreateTexture2D(&desc, &texData, &texture);
 	ASSERT(hr == S_OK);
-
-	delete[] buffer;
 
 	ID3D11ShaderResourceView* resourceView = nullptr;
 	D3D11_SHADER_RESOURCE_VIEW_DESC viewDesc;

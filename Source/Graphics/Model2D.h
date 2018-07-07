@@ -9,12 +9,13 @@
 
 #include "Line.h"
 
+struct World;
 class Camera;
 
 class Model2D
 {
 public:
-	Model2D() = default;
+	Model2D() noexcept = default;
 	explicit Model2D(std::vector<Vector2> points);
 
 	void Render(const World& world, const Camera& camera) const;

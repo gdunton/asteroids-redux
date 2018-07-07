@@ -24,20 +24,20 @@ std::vector<Particle> AsteroidToParticles(Asteroid& asteroid)
 		p2 -= asteroid.GetPos();
 
 		// Particle pos
-		Vector2 pos = 0.5f * (p1 + p2);
+		const Vector2 pos = 0.5f * (p1 + p2);
 		p1 = p1 - pos; // new object space
 		p2 = p2 - pos;
 
 		Vector2 direction = pos;
 		Normalize(direction);
-		Vector2 velocity = asteroid.GetVelocity() + (direction * Random() * 2);
+		const Vector2 velocity = asteroid.GetVelocity() + (direction * Random() * 2);
 
 		// Create a rotation value for each particle
 		float rand = Random();
 		rand *= 2;
 		rand -= 1;
 
-		Particle p(p1, p2, pos + asteroid.GetPos(), Vector2(1, 1), velocity, 0, (PI / 10) * rand, 2);
+		const Particle p(p1, p2, pos + asteroid.GetPos(), Vector2(1, 1), velocity, 0, (PI / 10) * rand, 2);
 		outVec.push_back(p);
 	}
 	return outVec;

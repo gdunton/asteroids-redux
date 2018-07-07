@@ -8,7 +8,7 @@
 #ifndef CHANNEL_H
 #define CHANNEL_H
 
-#include <XAudio2.h>
+#include <xaudio2.h>
 #include <memory>
 #include "WaveCallback.h"
 
@@ -19,7 +19,7 @@ using SourceVoicePtr = std::unique_ptr<IXAudio2SourceVoice, void(*)(IXAudio2Sour
 class Channel
 {
 public:
-	Channel();
+	Channel() noexcept;
 
 	// Creates sourceVoice and supplies callbacks
 	void Init(IXAudio2* xAudio2, WAVEFORMATEX* format);

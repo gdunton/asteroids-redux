@@ -6,7 +6,7 @@
 
 const int ParticleSystem::BUFFER_SIZE = 20;
 
-ParticleSystem::ParticleSystem()
+ParticleSystem::ParticleSystem() noexcept
 {
 	// reserve memory for the array to reduce excessive reallocation in the early game
 	particleArray.reserve(BUFFER_SIZE);
@@ -17,7 +17,7 @@ void ParticleSystem::Reset()
 	particleArray.clear();
 }
 
-void ParticleSystem::AddParticles(std::vector<Particle>& particles)
+void ParticleSystem::AddParticles(std::vector<Particle>& newParticles)
 {
 	// Index for the objects in "particles"
 	size_t preAllocated = 0;
@@ -28,16 +28,16 @@ void ParticleSystem::AddParticles(std::vector<Particle>& particles)
 		if(!particle.Alive())
 		{
 			// insert from beginning of newArray
-			particle = particles[preAllocated];
+			particle = newParticles.at(preAllocated);
 			preAllocated++;
 
 			// Ran out particles to allocate
-			if(preAllocated >= (particles.size() - 1)) return;
+			if(preAllocated >= (newParticles.size() - 1)) return;
 		}
 	}
 
 	// Insert the remaining particles at the end of the array
-	particleArray.insert(particleArray.end(), particles.begin() + preAllocated, particles.end());
+	particleArray.insert(particleArray.end(), newParticles.begin() + preAllocated, newParticles.end());
 }
 
 void ParticleSystem::Update(float dt)
@@ -51,7 +51,7 @@ void ParticleSystem::Update(float dt)
 	}
 }
 
-void ParticleSystem::Render(Camera& camera)
+void ParticleSystem::Render(const Camera& camera)
 {
 	for(auto& particle : particleArray)
 	{

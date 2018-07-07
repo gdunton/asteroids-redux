@@ -17,7 +17,7 @@
 GamePausedState::GamePausedState(const Content& content, GameStateManager* parent) :
 	GameState(parent),
 	font(content.Graphics()),
-	menu(content, this, MakeMenuItems(content.Graphics()), 100),
+	menu(content, MakeMenuItems(content.Graphics()), 100),
 	background(content.Textures(), "transparent")
 { }
 
@@ -54,8 +54,8 @@ void GamePausedState::Render()
 	menu.Render();
 
 	// Render the title
-	Vector2 size = font.GetTextSize("Paused");
-	Vector2 textPos((WINDOW_WIDTH / 2) - (size.x / 2), (WINDOW_HEIGHT / 2) - (size.y / 2) - (WINDOW_HEIGHT / 4));
+	const Vector2 size = font.GetTextSize("Paused");
+	const Vector2 textPos((WINDOW_WIDTH / 2) - (size.x / 2), (WINDOW_HEIGHT / 2) - (size.y / 2) - (WINDOW_HEIGHT / 4));
 	font.DrawString("Paused", textPos);
 }
 

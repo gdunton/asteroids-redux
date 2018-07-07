@@ -8,7 +8,6 @@
 #include "../Graphics/Line.h"
 #include <CommonStates.h>
 #include "../GameMain/Globals.h"
-#include <DirectXColors.h>
 #include "../Debugging/Error.h"
 #include "../Content/Content.h"
 #include "../Utilities/Strings.h"
@@ -45,7 +44,7 @@ void GraphicsDeviceManager::CreateBackBuffers()
 	CD3D11_TEXTURE2D_DESC depthStencilDesc(DXGI_FORMAT_D24_UNORM_S8_UINT,
 	                                       static_cast<unsigned int>(WINDOW_WIDTH),
 	                                       static_cast<unsigned int>(WINDOW_HEIGHT), 1, 1, D3D11_BIND_DEPTH_STENCIL);
-	ID3D11Texture2D* depthStencil;
+	ID3D11Texture2D* depthStencil = nullptr;
 	m_pGraphicsDevice->CreateTexture2D(&depthStencilDesc, nullptr, &depthStencil);
 	CD3D11_DEPTH_STENCIL_VIEW_DESC depthStencilViewDesc(D3D11_DSV_DIMENSION_TEXTURE2D);
 	m_pGraphicsDevice->CreateDepthStencilView(depthStencil, &depthStencilViewDesc, &m_pDepthStencilView);
@@ -118,7 +117,7 @@ void GraphicsDeviceManager::CreateSwapChainAndDevice(IWindow& window)
 	swapDesc.OutputWindow = static_cast<HWND>(window.GetWindowHandle());
 	swapDesc.Windowed = TRUE;
 
-	HRESULT hr = D3D11CreateDeviceAndSwapChain(
+	const HRESULT hr = D3D11CreateDeviceAndSwapChain(
 		nullptr,
 		D3D_DRIVER_TYPE_HARDWARE,
 		nullptr, 0,

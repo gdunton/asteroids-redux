@@ -5,7 +5,6 @@
 #include "Model2D.h"
 #include <numeric>
 #include "../Utilities/MathTypes.h"
-#include "../GameMain/Globals.h"
 #include "Camera.h"
 #include <algorithm>
 

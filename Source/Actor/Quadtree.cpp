@@ -11,7 +11,7 @@
 const int Quadtree::MAX_CHILDREN = 5;
 const int Quadtree::MAX_DEPTH = 6;
 
-Quadtree::Quadtree()
+Quadtree::Quadtree() noexcept
 {
 	children = std::vector<Quadtree>();
 	children.reserve(4);
@@ -24,12 +24,12 @@ Quadtree::Quadtree()
 
 
 // Initializer to set the bounding rectangle and the parent
-void Quadtree::Initialize(Quadtree* _parent, MathTypes::Rectangle _rect, int _level)
+void Quadtree::Initialize(Quadtree* newParent, MathTypes::Rectangle newRect, int newLevel)
 {
-	parent = _parent;
+	parent = newParent;
 
-	bounds = _rect;
-	level = _level;
+	bounds = newRect;
+	level = newLevel;
 }
 
 
@@ -115,14 +115,14 @@ bool Quadtree::RemovePhysicsObject(const std::shared_ptr<ActorBase>& obj)
 
 
 // Check an individual physicsobject for collision and compute collision after
-bool Quadtree::ComputeIndividual(ActorBase& ob)
+bool Quadtree::ComputeIndividual(ActorBase& object)
 {
 	// Check against each object
-	if(bounds.Intersects(ob.GetCircle()))
+	if(bounds.Intersects(object.GetCircle()))
 	{
 		for(auto& phys : physObjs)
 		{
-			if(phys->CompleteCollisionCompute(ob))
+			if(phys->CompleteCollisionCompute(object))
 			{
 				return true;
 			}
@@ -130,7 +130,7 @@ bool Quadtree::ComputeIndividual(ActorBase& ob)
 		// Then check against each child
 		for(Quadtree& child : children)
 		{
-			if(child.ComputeIndividual(ob))
+			if(child.ComputeIndividual(object))
 			{
 				return true;
 			}
@@ -234,7 +234,7 @@ void Quadtree::ComputeCollisionAgainstChildren(ActorBase& ob)
 // contrained by the maximum levels. returns false if max level reached
 bool Quadtree::SplitQuad()
 {
-	if((level >= MAX_DEPTH) || (children.size() > 0))
+	if((level >= MAX_DEPTH) || (!children.empty()))
 	{
 		return false; // Cannot create more levels
 	}
@@ -299,7 +299,7 @@ void Quadtree::ShrinkQuad()
 
 // Insert a physics object called from a lower level quad. Used for moving 
 // objects up the tree until they find a quad they fit in
-void Quadtree::InsertFromLower(std::shared_ptr<ActorBase> object)
+void Quadtree::InsertFromLower(const std::shared_ptr<ActorBase>& object)
 {
 	// Top level needs to accept all objects
 	if(level <= 0)
@@ -333,7 +333,7 @@ void Quadtree::InsertFromLower(std::shared_ptr<ActorBase> object)
 
 // Insert from higher add object to lower level quad. Used for attempting 
 // to send object down the tree
-bool Quadtree::InsertFromHigher(std::shared_ptr<ActorBase> object)
+bool Quadtree::InsertFromHigher(const std::shared_ptr<ActorBase>& object)
 {
 	if(level <= 0)
 	{
@@ -386,7 +386,7 @@ void Quadtree::Reset()
 	}
 }
 
-void Quadtree::DrawQuads(Camera& camera, const Model2D& quadModel)
+void Quadtree::DrawQuads(const Camera& camera, const Model2D& quadModel)
 {
 #ifdef PHYSICS_DEBUG_INFO
 	bounds.Draw(camera, quadModel);
@@ -411,7 +411,7 @@ void Quadtree::DrawQuads(Camera& camera, const Model2D& quadModel)
 
 int Quadtree::NumPhysicsObjects()
 {
-	int amount = static_cast<int>(physObjs.size());
+	auto amount = static_cast<int>(physObjs.size());
 
 	// Add the number in each child
 	for(Quadtree& child : children)

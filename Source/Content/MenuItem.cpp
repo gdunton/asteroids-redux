@@ -7,7 +7,7 @@
 
 MenuItem::MenuItem(const GraphicsDeviceManager& graphics, std::function<void()> selectAction,
                    Vector2 pos, std::string text, Color /*color*/) :
-	centerPos(pos),
+	centerPos(std::move(pos)),
 	text(std::move(text)),
 	font(graphics),
 	selectAction(std::move(selectAction))
@@ -20,8 +20,8 @@ void MenuItem::Select() const
 
 void MenuItem::Render() const
 {
-	Vector2 size = font.GetTextSize(text);
-	Vector2 position = centerPos - static_cast<Vector2>(size / 2);
+	const Vector2 size = font.GetTextSize(text);
+	const Vector2 position = centerPos - static_cast<Vector2>(size / 2);
 	font.DrawString(text, position);
 }
 

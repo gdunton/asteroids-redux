@@ -31,7 +31,7 @@ void Game::Initialize()
 {
 	// Start the gameTimer
 	m_timer.Start();
-	lastFrame = m_timer.GetHighResTimer();
+	lastFrame = Timer::GetHighResTimer();
 
 	// Initialize the game logic
 	m_gameLogic.Initialize(this);
@@ -100,7 +100,7 @@ void Game::Close() const
 void Game::Update(const KeyboardState& keyboardState)
 {
 	// Get the current time in seconds
-	const __int64 begin = m_timer.GetHighResTimer();
+	const __int64 begin = Timer::GetHighResTimer();
 
 	double dt = (begin - lastFrame) * m_timer.GetSecsPerCount();
 	const bool runUpdate = dt > m_desiredTimePerFrame;

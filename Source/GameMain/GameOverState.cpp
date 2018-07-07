@@ -10,14 +10,13 @@
 #include "GameLogic.h"
 
 #include "Globals.h"
-#include "../Input/Keyboard.h"
 #include "LevelStartState.h"
 #include "MainMenuState.h"
 
 GameOverState::GameOverState(const Content& content, GameStateManager* parent) :
 	GameState(parent),
 	font(content.Graphics()),
-	menu(content, this, MakeMenuItems(content.Graphics()), 100),
+	menu(content, MakeMenuItems(content.Graphics()), 100),
 	background(content.Textures(), "transparent")
 {}
 
@@ -45,8 +44,8 @@ void GameOverState::Render()
 	menu.Render();
 
 	// Draw the title
-	Vector2 size = font.GetTextSize("Game Over");
-	Vector2 textPos((WINDOW_WIDTH / 2) - (size.x / 2), (WINDOW_HEIGHT / 2) - (size.y / 2) - (WINDOW_HEIGHT / 4));
+	const Vector2 size = font.GetTextSize("Game Over");
+	const Vector2 textPos((WINDOW_WIDTH / 2) - (size.x / 2), (WINDOW_HEIGHT / 2) - (size.y / 2) - (WINDOW_HEIGHT / 4));
 	font.DrawString("Game Over", textPos);
 }
 

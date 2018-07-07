@@ -15,7 +15,7 @@
 class Keyboard
 {
 public:
-	Keyboard();
+	Keyboard() noexcept;
 
 	// Returns the state of a single key
 	KeyState GetKeyState(KeyCode key);

@@ -20,7 +20,7 @@ public:
 	double GetCurrTimeSecs() const;
 
 	// Returns the high res counter in number of ticks
-	__int64 GetHighResTimer() const;
+	static __int64 GetHighResTimer();
 
 	// Gets the time since the timer was started in seconds
 	double GetDeltaTime() const;

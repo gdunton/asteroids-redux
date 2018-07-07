@@ -8,12 +8,12 @@
 void Timer::Start()
 {
 	__int64 countsPerSec;
-	QueryPerformanceFrequency((LARGE_INTEGER*)&countsPerSec);
+	QueryPerformanceFrequency(reinterpret_cast<LARGE_INTEGER*>(&countsPerSec));
 	secondsPerCount = 1.0 / countsPerSec;
 
 	// Get the current time
 	__int64 currTime;
-	QueryPerformanceCounter((LARGE_INTEGER*)&currTime);
+	QueryPerformanceCounter(reinterpret_cast<LARGE_INTEGER*>(&currTime));
 	startTime = currTime;
 
 	fpsDelta = 0;
@@ -24,7 +24,7 @@ void Timer::TickFPSCounter()
 {
 	// add to the delta (in seconds)
 	__int64 currTime;
-	QueryPerformanceCounter((LARGE_INTEGER*)&currTime);
+	QueryPerformanceCounter(reinterpret_cast<LARGE_INTEGER*>(&currTime));
 	fpsDelta += ((currTime - prevFPSTime) * secondsPerCount);
 
 	// Static counter. Incremented each tick
@@ -45,7 +45,7 @@ void Timer::TickFPSCounter()
 	prevFPSTime = currTime;
 }
 
-__int64 Timer::GetHighResTimer() const
+__int64 Timer::GetHighResTimer()
 {
 	__int64 currTime;
 	QueryPerformanceCounter(reinterpret_cast<LARGE_INTEGER*>(&currTime));

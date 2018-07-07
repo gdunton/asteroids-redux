@@ -6,13 +6,13 @@
 #include <string>
 #include "Strings.h"
 
-KeyboardState::KeyboardState() :
+KeyboardState::KeyboardState() noexcept :
 	keyList()
 {
 	keyList.fill(KeyState::unpressed);
 }
 
-KeyboardState::KeyboardState(const std::array<KeyState, 256>& keyList) :
+KeyboardState::KeyboardState(const std::array<KeyState, 256>& keyList) noexcept :
 	keyList(keyList)
 {}
 

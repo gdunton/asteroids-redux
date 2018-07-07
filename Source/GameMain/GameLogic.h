@@ -11,7 +11,6 @@
 
 #include "../Actor/Asteroid.h"
 #include "../Actor/Player.h"
-#include "../Actor/Bullet.h"
 #include "../Graphics/Camera.h"
 #include "../Actor/Quadtree.h"
 #include "../Graphics/ParticleSystem.h"
@@ -50,7 +49,7 @@ public:
 	const std::vector<Model2D>& GetAsteroidModels() const { return asteroidModels; }
 
 	// Functions to add and remove asteroids from the list. Used for levels
-	void AddAsteroids(const std::vector<std::shared_ptr<Asteroid>>& asteroids);
+	void AddAsteroids(const std::vector<std::shared_ptr<Asteroid>>& newAsteroids);
 	void RemoveAllAsteroids();
 	int NumAsteroids() const;
 

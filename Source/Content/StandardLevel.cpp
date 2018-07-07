@@ -5,7 +5,6 @@
 #include "StandardLevel.h"
 
 #include "../GameMain/GameLogic.h"
-#include "../GameMain/Globals.h"
 
 #include "../Actor/Asteroid.h"
 #include "../Utilities/Random.h"
@@ -16,25 +15,26 @@ StandardLevel::StandardLevel(GameLogic* parent, int levelNumber)
 {
 	parent->SetCameras(CreateCameraArray());
 
-	int numAsteroids = 0;
-	switch(difficulty)
-	{
-	case EASY:
-		numAsteroids = 5;
-		break;
-	case NORMAL:
-		numAsteroids = 10;
-		break;
-	case HARD:
-		numAsteroids = 17;
-		break;
-	case EXTREME:
-		numAsteroids = 25;
-		break;
+	const int numAsteroids = [this]() {
+		switch (difficulty)
+		{
+		case EASY:
+			return 5;
+			break;
+		case NORMAL:
+			return 10;
+			break;
+		case HARD:
+			return 17;
+			break;
+		case EXTREME:
+			return 25;
+			break;
 
-	default:
-		numAsteroids = 10;
-	}
+		default:
+			return 10;
+		}
+	}();
 
 	std::vector<std::shared_ptr<Asteroid>> asteroids;
 
@@ -45,12 +45,12 @@ StandardLevel::StandardLevel(GameLogic* parent, int levelNumber)
 		Vector2 pos = Vector2(Random(-100, 100), Random(-100, 100));
 		float rot = Random(-PI, PI);
 		// Create the health then base the size, mass and velocity on health
-		float random = Random();
+		const float random = Random();
 		int health;
 		if(random <= 0.1) health = 1;
 		else if(random > 0.1 && random <= 0.3) health = 2;
 		else if(random > 0.3 && random <= 0.96) health = 3;
-		else if(random > 0.96 && difficulty > 1) health = 5;
+		else if(random > 0.96 && difficulty != EASY) health = 5;
 		else health = 3;
 
 		// Create the size

@@ -3,7 +3,5 @@ Asteroids-Redux is a clone of Asteroids, written in C++ for Windows 10. The code
 
 I have spent a little time in 2018 modernizing and cleaning up the code as well as porting to DirectX 11. 
 
-**This is still a work in progress**
-
 ## Building the code
 The code requires Microsoft Visual Studio 2017 with the games packages to compile. It requires DirectXTK Nuget package too but VS should automatically install this.
